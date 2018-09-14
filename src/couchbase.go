@@ -43,7 +43,8 @@ func main() {
 
 	// Add Metric
 	if args.All() || args.Metrics {
-		m1 := e1.NewMetricSet("CustomSample")
+		m1, err := e1.NewMetricSet("CustomSample")
+		panicOnErr(err)
 		err = m1.SetMetric("some-data", 1000, metric.GAUGE)
 		panicOnErr(err)
 	}
@@ -58,7 +59,8 @@ func main() {
 	}
 
 	if args.All() || args.Metrics {
-		m2 := e2.NewMetricSet("CustomSample")
+		m2, err := e2.NewMetricSet("CustomSample")
+		panicOnErr(err)
 		err = m2.SetMetric("some-data", 2000, metric.GAUGE)
 		panicOnErr(err)
 	}
