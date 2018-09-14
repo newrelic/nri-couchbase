@@ -7,7 +7,7 @@ import (
 )
 
 // JSON type, to be used from the arguments structs.
-// This argument type will parse a serialized JSON string into a map
+// This argument type will parse a serialized JSON string into a map which
 type JSON struct {
 	value interface{}
 }

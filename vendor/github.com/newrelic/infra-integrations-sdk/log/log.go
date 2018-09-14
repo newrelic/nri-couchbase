@@ -1,11 +1,11 @@
 package log
 
 import (
-	"fmt"
+	"os"
+
 	"io"
 	"io/ioutil"
 	"log"
-	"os"
 )
 
 // Logger defines a facade for a simple logger
@@ -34,7 +34,7 @@ func NewStdErr(debug bool) Logger {
 // New creates a logger using the provided writer. The 'debug' argument enables Debug (verbose) output
 func New(debug bool, w io.Writer) Logger {
 	return &defaultLogger{
-		logger: log.New(w, "", log.Lmicroseconds),
+		logger: log.New(w, "", 0),
 		debug:  debug,
 	}
 }
@@ -62,10 +62,13 @@ func (l *defaultLogger) Warnf(format string, args ...interface{}) {
 }
 
 func (l *defaultLogger) prefixPrint(prefix string, format string, args ...interface{}) {
-	l.logger.Printf(fmt.Sprintf("[%s] %s", prefix, format), args...)
+	prev := log.Prefix()
+	log.SetPrefix(prefix)
+	l.logger.Printf(format, args...)
+	log.SetPrefix(prev)
 }
 
-// Global logger instance to provide easy access and retro-compatibility.
+// Deprecated methods, kept to do v2 to v3 migration less painful
 
 var globalLogger defaultLogger
 
@@ -74,6 +77,7 @@ func init() {
 }
 
 // SetupLogging redirects global logs to stderr and configures the log level.
+// Deprecated. Use log.NewWriter, log.NewStdErr or any custom implementation of the log.Logger interface.
 func SetupLogging(verbose bool) {
 	globalLogger = defaultLogger{
 		logger: log.New(os.Stderr, "", 0),
@@ -82,26 +86,31 @@ func SetupLogging(verbose bool) {
 }
 
 // Debug logs a formatted message at level Debug.
+// Deprecated. Use Debugf function of the log.Logger interface.
 func Debug(format string, args ...interface{}) {
 	globalLogger.Debugf(format, args...)
 }
 
 // Info logs a formatted message at level Info.
+// Deprecated. Use Infof function of the log.Logger interface.
 func Info(format string, args ...interface{}) {
 	globalLogger.Infof(format, args...)
 }
 
 // Warn logs a formatted message at level Warn.
+// Deprecated. Use the log.Logger interface.
 func Warn(format string, args ...interface{}) {
 	globalLogger.Warnf(format, args...)
 }
 
 // Error logs a formatted message at level Error.
+// Deprecated. Use Errorf function of the log.Logger interface.
 func Error(format string, args ...interface{}) {
 	globalLogger.Errorf(format, args...)
 }
 
 // Fatal logs an error at level Fatal, and makes the program exit with an error code.
+// Deprecated. Use the log.Logger interface.
 func Fatal(err error) {
 	globalLogger.prefixPrint("FATAL", "can't continue: %v", err)
 	panic(err)

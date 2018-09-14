@@ -57,7 +57,8 @@ type Set struct {
 
 // NewSet creates new metrics set, optionally related to a list of attributes. These attributes makes the metric-set unique.
 // If related attributes are used, then new attributes are added.
-func NewSet(eventType string, storer persist.Storer, attributes ...Attribute) (s *Set) {
+// TODO remove obsolete returned error
+func NewSet(eventType string, storer persist.Storer, attributes ...Attribute) (s *Set, err error) {
 	s = &Set{
 		Metrics:      make(map[string]interface{}),
 		storer:       storer,
