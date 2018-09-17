@@ -10,27 +10,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-// SourceType defines the kind of data source. Based on this SourceType, metric
-// package performs some calculations with it. Check below the description for
-// each one.
-type SourceType int
-
 // Attribute represents an attribute metric in key-value pair format.
 type Attribute struct {
 	Key   string
 	Value string
 }
-
-const (
-	// GAUGE is a value that may increase and decrease. It is stored as-is.
-	GAUGE SourceType = iota
-	// RATE is an ever-growing value which might be reset. The package calculates the change rate.
-	RATE SourceType = iota
-	// DELTA is an ever-growing value which might be reset. The package calculates the difference between samples.
-	DELTA SourceType = iota
-	// ATTRIBUTE is any string value
-	ATTRIBUTE SourceType = iota
-)
 
 const (
 	// nsSeparator is the metric namespace separator
@@ -57,8 +41,7 @@ type Set struct {
 
 // NewSet creates new metrics set, optionally related to a list of attributes. These attributes makes the metric-set unique.
 // If related attributes are used, then new attributes are added.
-// TODO remove obsolete returned error
-func NewSet(eventType string, storer persist.Storer, attributes ...Attribute) (s *Set, err error) {
+func NewSet(eventType string, storer persist.Storer, attributes ...Attribute) (s *Set) {
 	s = &Set{
 		Metrics:      make(map[string]interface{}),
 		storer:       storer,
@@ -128,6 +111,13 @@ func (ms *Set) setSetAttribute(name string, value string) {
 }
 
 func castToFloat(value interface{}) (float64, error) {
+	if b, ok := value.(bool); ok {
+		if b {
+			return 1, nil
+		}
+		return 0, nil
+	}
+
 	return strconv.ParseFloat(fmt.Sprintf("%v", value), 64)
 }
 
@@ -195,8 +185,13 @@ func (a *Attribute) Namespace() string {
 }
 
 // MarshalJSON adapts the internal structure of the metrics Set to the payload that is compliant with the protocol
-func (ms Set) MarshalJSON() ([]byte, error) {
+func (ms *Set) MarshalJSON() ([]byte, error) {
 	return json.Marshal(ms.Metrics)
+}
+
+// UnmarshalJSON unserializes protocol compliant JSON metrics into the metric set.
+func (ms *Set) UnmarshalJSON(data []byte) error {
+	return json.Unmarshal(data, &ms.Metrics)
 }
 
 // Required for Go < v.18, as these do not include sort.Slice
