@@ -10,17 +10,18 @@ import (
 
 type clusterCollector struct {
 	defaultCollector
+	clusterDetails *definition.PoolsDefaultResponse
 }
 
 // CollectCluster creates entities for the cluster and its nodes,
 // adding inventory and metrics according to flags
 func (c *clusterCollector) Collect(collectInventory bool, collectMetrics bool) error {
-	clusterResponse, clusterDetails, err := getClusterResponses(c.GetClient())
+	clusterResponse, err := getClusterResponse(c.GetClient())
 	if err != nil {
 		return err
 	}	
 
-	clusterEntity, err := c.GetIntegration().Entity(*clusterDetails.ClusterName, "cluster")
+	clusterEntity, err := c.GetIntegration().Entity(*c.clusterDetails.ClusterName, "cluster")
 	if err != nil {
 		return err
 	}
@@ -30,23 +31,17 @@ func (c *clusterCollector) Collect(collectInventory bool, collectMetrics bool) e
 	}
 
 	if collectMetrics {
-		collectClusterMetrics(clusterEntity, clusterDetails)
+		collectClusterMetrics(clusterEntity, c.clusterDetails)
 	}
 
 	return nil
 }
 
-func getClusterResponses(client *client.HTTPClient) (clusterResponse *definition.PoolsResponse, clusterDetailsResponse *definition.PoolsDefaultResponse, err error) {
-	clusterResponse = new(definition.PoolsResponse)
-	clusterDetailsResponse = new(definition.PoolsDefaultResponse)
+func getClusterResponse(client *client.HTTPClient) (*definition.PoolsResponse, error) {
+	clusterResponse := new(definition.PoolsResponse)
 
-	err = client.Request("/pools", &clusterResponse)
-	if err != nil {
-		return
-	}
-
-	err = client.Request("/pools/default", &clusterDetailsResponse)
-	return
+	err := client.Request("/pools", &clusterResponse)
+	return clusterResponse, err
 }
 
 func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse *definition.PoolsResponse) {

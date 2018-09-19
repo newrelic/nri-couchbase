@@ -1,8 +1,10 @@
 package entities
 
 import (
+	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
 // Collector is an interface which represents an entity.
@@ -39,12 +41,41 @@ func (d *defaultCollector) GetClient() *client.HTTPClient {
 	return d.client
 }
 
-func GetClusterCollector(i *integration.Integration, client *client.HTTPClient) Collector {
-	return &clusterCollector{
+// GetClusterCollectors returns a slice of collectors, one for the cluster and one for each node.
+// Each collector collects metrics and inventory for its entity
+func GetClusterCollectors(i *integration.Integration, client *client.HTTPClient) ([]Collector, error) {
+
+	var clusterDetails definition.PoolsDefaultResponse
+	err := client.Request("/pools/default", &clusterDetails)
+	if err != nil {
+		return nil, err
+	}
+
+	collectors := make([]Collector, 0, 10)
+	clusterCollector := &clusterCollector{
 		defaultCollector{
 			name: "cluster-test",
 			client: client,
 			integration: i,
 		},
+		&clusterDetails,
 	}
+
+	collectors = append(collectors, clusterCollector)
+
+	for _, node := range *clusterDetails.Nodes {
+		log.Info("Creating node... %s", *node.Hostname)
+		nodeCollector := &nodeCollector{
+			defaultCollector{
+				name: *node.Hostname,
+				client: client,
+				integration: i,
+			},
+			&node,
+		}
+
+		collectors = append(collectors, nodeCollector)
+	}
+
+	return collectors, nil
 }

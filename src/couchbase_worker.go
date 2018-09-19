@@ -5,6 +5,7 @@ import (
 	"github.com/newrelic/nri-couchbase/src/entities"
 	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
 // StartCollectorWorkerPool starts a pool of workers to handle collecting each entity
@@ -44,12 +45,25 @@ func FeedWorkerPool(client *client.HTTPClient, collectorChan chan entities.Colle
 	getWg := new(sync.WaitGroup)
 
 	getWg.Add(1)
-	go createClusterCollector(getWg, client, collectorChan, integration)
+	go createClusterAndNodeCollectors(getWg, client, collectorChan, integration)
 
 	getWg.Wait()
 }
 
-func createClusterCollector(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
+func createClusterAndNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
 	defer wg.Done()
-	channel <- entities.GetClusterCollector(integration, client)
+	clusterAndNodeCollectors, err := entities.GetClusterCollectors(integration, client)
+	if err != nil {
+		log.Error("Could not create cluster and node collectors: %v", err)
+	}
+	for _, collector := range clusterAndNodeCollectors {
+		channel <- collector
+	}
+}
+
+func createNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
+	defer wg.Done()
+
+	// get list of nodes
+	// spin up collectors for each.
 }
