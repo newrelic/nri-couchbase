@@ -2,17 +2,28 @@ package main
 
 import (
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
-	"github.com/newrelic/infra-integrations-sdk/data/event"
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
 type argumentList struct {
 	sdkArgs.DefaultArgumentList
+	Hostname              string `default:"localhost" help:"The hostname or IP of the Couchbase node being monitored"`
+	Port                  int    `default:"8091" help:"The port used to connect to the Couchbase API"`
+	QueryPort			  int    `default:"8093" help:"The port used to connect to the N1QL service"`
+	Username              string `default:"" help:"The username used to connect to the Couchbase API"`
+	Password              string `default:"" help:"The password used to connect to the Couchbase API"`
+	UseSSL                bool   `default:"false" help:"Signals whether to use SSL or not. Certificate bundle must be supplied"`
+	CABundleFile          string `default:"" help:"Alternative Certificate Authority bundle file"`
+	CABundleDir           string `default:"" help:"Alternative Certificate Authority bundle directory"`
+	EnableClusterAndNodes bool   `default:"true" help:"If true, collects cluster and node resources"`
+	EnableBuckets         bool   `default:"true" help:"If true, collects bucket resources"`
+	EnableBucketStats     bool   `default:"true" help:"If true, collects additional bucket statistics"`
+	Timeout               int    `default:"30" help:"Timeout for an API call"`
 }
 
 const (
-	integrationName    = "com.testco.nri-couchbase"
+	integrationName    = "com.newrelic.couchbase"
 	integrationVersion = "0.1.0"
 )
 
@@ -25,47 +36,21 @@ func main() {
 	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
 	panicOnErr(err)
 
-	// Create Entity, entities name must be unique
-	e1, err := i.Entity("instance-1", "custom")
+	client, err := CreateClient()
 	panicOnErr(err)
 
-	// Add Event
-	if args.All() || args.Events {
-		err = e1.AddEvent(event.New("restart", "status"))
-		panicOnErr(err)
-	}
-
-	// Add Inventory item
-	if args.All() || args.Inventory {
-		err = e1.SetInventoryItem("instance", "version", "3.0.1")
-		panicOnErr(err)
-	}
-
-	// Add Metric
-	if args.All() || args.Metrics {
-		m1, err := e1.NewMetricSet("CustomSample")
-		panicOnErr(err)
-		err = m1.SetMetric("some-data", 1000, metric.GAUGE)
-		panicOnErr(err)
-	}
-
-	// Create another Entity
-	e2, err := i.Entity("instance-2", "custom")
-	panicOnErr(err)
-
-	if args.All() || args.Inventory {
-		err = e2.SetInventoryItem("instance", "version", "3.0.4")
-		panicOnErr(err)
-	}
-
-	if args.All() || args.Metrics {
-		m2, err := e2.NewMetricSet("CustomSample")
-		panicOnErr(err)
-		err = m2.SetMetric("some-data", 2000, metric.GAUGE)
-		panicOnErr(err)
-	}
+	// collect cluster/nodes?
+	CollectCluster(i, client)
+	// collect buckets?
 
 	panicOnErr(i.Publish())
+}
+
+// checkErr logs an error if it exists
+func checkErr(f func() error) {
+	if err := f(); err != nil {
+		log.Error("%v", err)
+	}
 }
 
 func panicOnErr(err error) {

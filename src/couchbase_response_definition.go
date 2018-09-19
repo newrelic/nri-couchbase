@@ -13,7 +13,8 @@ type PoolsDefaultResponse struct {
 	AutoCompactionSettings *AutoCompactionSettings `json:"autoCompactionSettings"`
 	StorageTotals          *StorageTotals          `json:"storageTotals"`
 	Nodes                  *[]Node                 `json:"nodes"`
-	MaxBucketCount         *int                    `json:"maxBucketCount" metric_name:"cluster.maximumBucketCount" metric_type:"gauge"`
+	MaxBucketCount         *int                    `json:"maxBucketCount" metric_name:"cluster.maximumBucketCount" source_type:"gauge"`
+	ClusterName            *string                 `json:"clusterName"`
 }
 
 // AutoCompactionSettings struct for pools/default endpoint, autoCompactionSettings object
@@ -25,17 +26,17 @@ type AutoCompactionSettings struct {
 
 // DatabaseFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/databaseFragmentationThreshold object
 type DatabaseFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.databaseFragmentationThreshold" metric_type:"gauge"`
+	Percentage *int `json:"percentage" metric_name:"cluster.databaseFragmentationThreshold" source_type:"gauge"`
 }
 
 // IndexFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/indexFragmentationThreshold object
 type IndexFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.indexFragmentationThreshold" metric_type:"gauge"`
+	Percentage *int `json:"percentage" metric_name:"cluster.indexFragmentationThreshold" source_type:"gauge"`
 }
 
 // ViewFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/viewFragmentationThreshold object
 type ViewFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.viewFragmentationThreshold" metric_type:"gauge"`
+	Percentage *int `json:"percentage" metric_name:"cluster.viewFragmentationThreshold" source_type:"gauge"`
 }
 
 // StorageTotals struct for pools/default endpoint, storageTotals object
@@ -46,31 +47,31 @@ type StorageTotals struct {
 
 // StorageTotalsRAM struct for pools/default endpoint, storageTotals/ram object
 type StorageTotalsRAM struct {
-	Total             *int64 `json:"total" metric_name:"cluster.memoryTotalInBytes" metric_type:"gauge"`
-	QuotaTotal        *int64 `json:"quotaTotal" metric_name:"cluster.memoryQuotaTotalInBytes" metric_type:"gauge"`
-	QuotaUsed         *int64 `json:"quotaUsed" metric_name:"cluster.memoryQuotaUsedInBytes" metric_type:"gauge"`
-	Used              *int64 `json:"used" metric_name:"cluster.memoryUsedInBytes" metric_type:"gauge"`
-	UsedByData        *int64 `json:"usedByData" metric_name:"cluster.memoryUsedByDataInBytes" metric_type:"gauge"`
-	QuotaUsedPerNode  *int64 `json:"quotaUsedPerNode" metric_name:"cluster.memoryQuotaUsedPerNodeInBytes" metric_type:"gauge"`
-	QuotaTotalPerNode *int64 `json:"quotaTotalPerNode" metric_name:"cluster.memoryQuotaTotalPerNodeInBytes" metric_type:"gauge"`
+	Total             *int64 `json:"total" metric_name:"cluster.memoryTotalInBytes" source_type:"gauge"`
+	QuotaTotal        *int64 `json:"quotaTotal" metric_name:"cluster.memoryQuotaTotalInBytes" source_type:"gauge"`
+	QuotaUsed         *int64 `json:"quotaUsed" metric_name:"cluster.memoryQuotaUsedInBytes" source_type:"gauge"`
+	Used              *int64 `json:"used" metric_name:"cluster.memoryUsedInBytes" source_type:"gauge"`
+	UsedByData        *int64 `json:"usedByData" metric_name:"cluster.memoryUsedByDataInBytes" source_type:"gauge"`
+	QuotaUsedPerNode  *int64 `json:"quotaUsedPerNode" metric_name:"cluster.memoryQuotaUsedPerNodeInBytes" source_type:"gauge"`
+	QuotaTotalPerNode *int64 `json:"quotaTotalPerNode" metric_name:"cluster.memoryQuotaTotalPerNodeInBytes" source_type:"gauge"`
 }
 
 // StorageTotalsHDD struct for pools/default endpoint, storageTotals/hdd object
 type StorageTotalsHDD struct {
-	Total      *int64 `json:"total" metric_name:"cluster.diskTotalInBytes" metric_type:"gauge"`
-	QuotaTotal *int64 `json:"quotaTotal" metric_name:"cluster.diskQuotaTotalInBytes" metric_type:"gauge"`
-	Used       *int64 `json:"used" metric_name:"cluster.diskUsedInBytes" metric_type:"gauge"`
-	UsedByData *int64 `json:"usedByData" metric_name:"cluster.diskUsedByDataInBytes" metric_type:"gauge"`
-	Free       *int64 `json:"free" metric_name:"cluster.diskFreeInBytes" metric_type:"gauge"`
+	Total      *int64 `json:"total" metric_name:"cluster.diskTotalInBytes" source_type:"gauge"`
+	QuotaTotal *int64 `json:"quotaTotal" metric_name:"cluster.diskQuotaTotalInBytes" source_type:"gauge"`
+	Used       *int64 `json:"used" metric_name:"cluster.diskUsedInBytes" source_type:"gauge"`
+	UsedByData *int64 `json:"usedByData" metric_name:"cluster.diskUsedByDataInBytes" source_type:"gauge"`
+	Free       *int64 `json:"free" metric_name:"cluster.diskFreeInBytes" source_type:"gauge"`
 }
 
 // Node struct for pools/default endpoint, nodes objects
 type Node struct {
 	SystemStats       *SystemStats `json:"systemStats"`
-	RecoveryType      *string      `json:"recoveryType" metric_name:"node.recoveryType" metric_type:"attribute"`
+	RecoveryType      *string      `json:"recoveryType" metric_name:"node.recoveryType" source_type:"attribute"`
 	Services          *[]string    `json:"services"` // will require postprocessing
-	Status            *string      `json:"status" metric_name:"node.status" metric_type:"attribute"`
-	Uptime            *string      `json:"uptime" metric_name:"node.uptime" metric_type:"gauge"`
+	Status            *string      `json:"status" metric_name:"node.status" source_type:"attribute"`
+	Uptime            *string      `json:"uptime" metric_name:"node.uptime" source_type:"gauge"`
 	ClusterMembership *string      `json:"clusterMembership"`
 	Hostname          *string      `json:"hostname"`
 	OS                *string      `json:"os"`
@@ -80,11 +81,11 @@ type Node struct {
 
 // SystemStats struct for pools/default endpoint, nodes/systemStats objects
 type SystemStats struct {
-	CPUUtilization *float64 `json:"cpu_utilization_rate" metric_name:"node.cpuUtilization" metric_type:"gauge"`
-	SwapTotal      *int64   `json:"swap_total" metric_name:"node.swapTotalInBytes" metric_type:"gauge"`
-	SwapUsed       *int64   `json:"swap_used" metric_name:"node.swapUsedInBytes" metric_type:"gauge"`
-	MemoryTotal    *int64   `json:"mem_total" metric_name:"node.memoryTotalInBytes" metric_type:"gauge"`
-	MemoryFree     *int64   `json:"mem_free" metric_name:"node.memoryUsedInBytes" metric_type:"gauge"`
+	CPUUtilization *float64 `json:"cpu_utilization_rate" metric_name:"node.cpuUtilization" source_type:"gauge"`
+	SwapTotal      *int64   `json:"swap_total" metric_name:"node.swapTotalInBytes" source_type:"gauge"`
+	SwapUsed       *int64   `json:"swap_used" metric_name:"node.swapUsedInBytes" source_type:"gauge"`
+	MemoryTotal    *int64   `json:"mem_total" metric_name:"node.memoryTotalInBytes" source_type:"gauge"`
+	MemoryFree     *int64   `json:"mem_free" metric_name:"node.memoryUsedInBytes" source_type:"gauge"`
 }
 
 // =========
@@ -93,11 +94,11 @@ type SystemStats struct {
 type PoolsDefaultBucket struct {
 	BucketName     *string     `json:"name"`
 	BasicStats     *BasicStats `json:"basicStats"`
-	EvictionPolicy *string     `json:"evictionPolicy" metric_name:"bucket.evictionPolicy" metric_type:"attribute"`
-	NodeLocator    *string     `json:"nodeLocator" metric_name:"bucket.nodeLocator" metric_type:"attribute"`
-	ReplicaIndex   *bool       `json:"replicaIndex" metric_name:"bucket.replicaIndex" metric_type:"attribute"`
-	ReplicaNumber  *int        `json:"replicaNumber" metric_name:"bucket.replicaNumber" metric_type:"gauge"`
-	ThreadsNumber  *int        `json:"threadsNumber" metric_name:"bucket.threadsNumber" metric_type:"gauge"`
+	EvictionPolicy *string     `json:"evictionPolicy" metric_name:"bucket.evictionPolicy" source_type:"attribute"`
+	NodeLocator    *string     `json:"nodeLocator" metric_name:"bucket.nodeLocator" source_type:"attribute"`
+	ReplicaIndex   *bool       `json:"replicaIndex" metric_name:"bucket.replicaIndex" source_type:"attribute"`
+	ReplicaNumber  *int        `json:"replicaNumber" metric_name:"bucket.replicaNumber" source_type:"gauge"`
+	ThreadsNumber  *int        `json:"threadsNumber" metric_name:"bucket.threadsNumber" source_type:"gauge"`
 	ProxyPort      *int        `json:"proxyPort"`
 	BucketType     *string     `json:"bucketType"`
 	UUID           *string     `json:"uuid"`
@@ -105,13 +106,13 @@ type PoolsDefaultBucket struct {
 
 // BasicStats struct for pools/default/buckets endpoint, basicStats objects
 type BasicStats struct {
-	QuotaPercentUsed *float64 `json:"quotaPercentUsed" metric_name:"bucket.quotaUtilization" metric_type:"gauge"`
-	OpsPerSec        *int     `json:"opsPerSec" metric_name:"bucket.totalOperationsPerSecond" metric_type:"gauge"`
-	DiskFetches      *int     `json:"diskFetches" metric_name:"bucket.diskFetchesPerSecond" metric_type:"gauge"`
-	ItemCount        *int     `json:"itemCount" metric_name:"bucket.itemCount" metric_type:"gauge"`
-	DiskUsed         *int64   `json:"diskUsed" metric_name:"bucket.diskUsedInBytes" metric_type:"gauge"`
-	DataUsed         *int64   `json:"dataUsed" metric_name:"bucket.dataUsedInBytes" metric_type:"gauge"`
-	MemUsed          *int64   `json:"memUsed" metric_name:"bucket.memoryUsedInBytes" metric_type:"gauge"`
+	QuotaPercentUsed *float64 `json:"quotaPercentUsed" metric_name:"bucket.quotaUtilization" source_type:"gauge"`
+	OpsPerSec        *int     `json:"opsPerSec" metric_name:"bucket.totalOperationsPerSecond" source_type:"gauge"`
+	DiskFetches      *int     `json:"diskFetches" metric_name:"bucket.diskFetchesPerSecond" source_type:"gauge"`
+	ItemCount        *int     `json:"itemCount" metric_name:"bucket.itemCount" source_type:"gauge"`
+	DiskUsed         *int64   `json:"diskUsed" metric_name:"bucket.diskUsedInBytes" source_type:"gauge"`
+	DataUsed         *int64   `json:"dataUsed" metric_name:"bucket.dataUsedInBytes" source_type:"gauge"`
+	MemUsed          *int64   `json:"memUsed" metric_name:"bucket.memoryUsedInBytes" source_type:"gauge"`
 }
 
 // =========
@@ -167,8 +168,8 @@ type SampleStats struct {
 
 // AutoFailover struct for settings/autoFailover endpoint
 type AutoFailover struct {
-	Count *int `json:"count" metric_name:"cluster.autoFailoverCount" metric_type:"gauge"`
-	Enabled *bool `json:"enabled" metric_name:"cluster.autoFailoverEnabled" metric_type:"attribute"`
+	Count *int `json:"count" metric_name:"cluster.autoFailoverCount" source_type:"gauge"`
+	Enabled *bool `json:"enabled" metric_name:"cluster.autoFailoverEnabled" source_type:"attribute"`
 }
 
 // =========
@@ -177,33 +178,33 @@ type AutoFailover struct {
 type AdminVitals struct {
 	Uptime *string `json:"uptime"` // requires postprocessing
 	Version *string `json:"version"`
-	TotalThreads *int `json:"total.threads" metric_name:"queryengine.totalThreads" metric_type:"gauge"`
-	Cores *int `json:"cores" metric_name:"queryengine.cores" metric_type:"gauge"`
-	GCNum *int `json:"gc.num" metric_name:"queryengine.garbageCollectionNumber" metric_type:"attribute"`
+	TotalThreads *int `json:"total.threads" metric_name:"queryengine.totalThreads" source_type:"gauge"`
+	Cores *int `json:"cores" metric_name:"queryengine.cores" source_type:"gauge"`
+	GCNum *int `json:"gc.num" metric_name:"queryengine.garbageCollectionNumber" source_type:"attribute"`
 	GCPauseTime *string `json:"gc.pause.time"` // requires postprocessing
-	GCPausePercent *int `json:"gc.pause.percent" metric_name:"queryengine.garbageCollectionPaused" metric_type:"gauge"`
-	MemoryUsage *int64 `json:"memory.usage" metric_name:"queryengine.usedMemoryInBytes" metric_type:"gauge"`
-	MemoryTotal *int64 `json:"memory.total" metric_name:"queryengine.totalMemoryInBytes" metric_type:"gauge"`
-	MemorySystem *int64 `json:"memory.system" metric_name:"queryengine.systemMemoryInBytes" metric_type:"gauge"`
-	CPUUserPercent *float64 `json:"cpu.user.percent" metric_name:"queryengine.userCPUUtilization" metric_type:"gauge"`
-	CPUSystemPercent *float64 `json:"cpu.system.percent" metric_name:"queryengine.systemCPUUtilization" metric_type:"gauge"`
-	RequestCompletedCount *int `json:"request.completed.count" metric_name:"queryengine.completedRequests" metric_type:"gauge"`
-	RequestActiveCount *int `json:"request.active.count" metric_name:"queryengine.activeRequests" metric_type:"gauge"`
-	RequestPerSec1Min *float64 `json:"request.per.sec.1min" metric_name:"queryengine.requestsLast1MinutesPerSecond" metric_type:"rate"`
-	RequestPerSec5Min *float64 `json:"request.per.sec.5min" metric_name:"queryengine.requestsLast5MinutesPerSecond" metric_type:"rate"`
-	RequestPerSec15Min *float64 `json:"request.per.sec.15min" metric_name:"queryengine.requestsLast15MinutesPerSecond" metric_type:"rate"`
+	GCPausePercent *int `json:"gc.pause.percent" metric_name:"queryengine.garbageCollectionPaused" source_type:"gauge"`
+	MemoryUsage *int64 `json:"memory.usage" metric_name:"queryengine.usedMemoryInBytes" source_type:"gauge"`
+	MemoryTotal *int64 `json:"memory.total" metric_name:"queryengine.totalMemoryInBytes" source_type:"gauge"`
+	MemorySystem *int64 `json:"memory.system" metric_name:"queryengine.systemMemoryInBytes" source_type:"gauge"`
+	CPUUserPercent *float64 `json:"cpu.user.percent" metric_name:"queryengine.userCPUUtilization" source_type:"gauge"`
+	CPUSystemPercent *float64 `json:"cpu.system.percent" metric_name:"queryengine.systemCPUUtilization" source_type:"gauge"`
+	RequestCompletedCount *int `json:"request.completed.count" metric_name:"queryengine.completedRequests" source_type:"gauge"`
+	RequestActiveCount *int `json:"request.active.count" metric_name:"queryengine.activeRequests" source_type:"gauge"`
+	RequestPerSec1Min *float64 `json:"request.per.sec.1min" metric_name:"queryengine.requestsLast1MinutesPerSecond" source_type:"rate"`
+	RequestPerSec5Min *float64 `json:"request.per.sec.5min" metric_name:"queryengine.requestsLast5MinutesPerSecond" source_type:"rate"`
+	RequestPerSec15Min *float64 `json:"request.per.sec.15min" metric_name:"queryengine.requestsLast15MinutesPerSecond" source_type:"rate"`
 	RequestTimeMean *string `json:"request_time.mean"` // requires postprocessing
 	RequestTimeMedian *string `json:"request_time.median"` // requires postprocessing
 	RequestTime80Percentile *string `json:"request_time.80percentile"` // requires postprocessing
 	RequestTime95Percentile *string `json:"request_time.95percentile"` // requires postprocessing
 	RequestTime99Percentile *string `json:"request_time.99percentile"` // requires postprocessing
-	RequestPreparedPercent *float64 `json:"request.prepared.percent" metric_name:"queryengine.preparedStatementUtilization" metric_type:"gauge"`
+	RequestPreparedPercent *float64 `json:"request.prepared.percent" metric_name:"queryengine.preparedStatementUtilization" source_type:"gauge"`
 }
 
 // =========
 
 // AdminSettings struct for admin/settings endpoint
 type AdminSettings struct {
-	CompletedLimit *int `json:"completed-limit" metric_name:"queryengine.completedLimit" metric_type:"gauge"`
-	CompletedThreshold *int `json:"completed-threshold" metric_name:"queryengine.completedThresholdInMilliseconds" metric_type:"gauge"`
+	CompletedLimit *int `json:"completed-limit" metric_name:"queryengine.completedLimit" source_type:"gauge"`
+	CompletedThreshold *int `json:"completed-threshold" metric_name:"queryengine.completedThresholdInMilliseconds" source_type:"gauge"`
 }
