@@ -1,4 +1,4 @@
-package main
+package definition
 
 // PoolsResponse struct for pools endpoint
 type PoolsResponse struct {

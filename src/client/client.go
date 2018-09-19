@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"encoding/json"
@@ -9,6 +9,8 @@ import (
 
 	nrHttp "github.com/newrelic/infra-integrations-sdk/http"
 	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/nri-couchbase/src/arguments"
+	"github.com/newrelic/nri-couchbase/src/definition"
 )
 
 // HTTPClient represents a single connection to an Elasticsearch host
@@ -23,7 +25,7 @@ type HTTPClient struct {
 // CreateClient creates a new http client for Couchbase.
 // The hostnameOverride parameter specifies a hostname that the client should connect to.
 // Passing in an empty string causes the client to use the hostname specified in the command-line args. (default behavior)
-func CreateClient() (*HTTPClient, error) {
+func CreateClient(args *arguments.ArgumentList) (*HTTPClient, error) {
 	httpClient, err := nrHttp.New(args.CABundleFile, args.CABundleDir, time.Duration(args.Timeout)*time.Second)
 	if err != nil {
 		return nil, err
@@ -47,10 +49,10 @@ func getBaseURL(useSSL bool, hostname string, port int) string {
 }
 
 // RequestAllBuckets takes a listing of bucket names (retrieved from the buckets endpoint) and returns each bucket's stats
-func (c *HTTPClient) RequestAllBuckets(bucketList []string) map[string]*BucketStats {
-	var bucketStats = map[string]*BucketStats{}
+func (c *HTTPClient) RequestAllBuckets(bucketList []string) map[string]*definition.BucketStats {
+	var bucketStats = map[string]*definition.BucketStats{}
 	for _, bucketName := range bucketList {
-		bucketStatResponse := &BucketStats{}
+		bucketStatResponse := &definition.BucketStats{}
 		endpoint := fmt.Sprintf("/pools/default/buckets/%s/stats", bucketName)
 		err := c.Request(endpoint, bucketStatResponse)
 		if err != nil {
@@ -81,7 +83,6 @@ func (c *HTTPClient) Request(endpoint string, model interface{}) error {
 	if err != nil {
 		return fmt.Errorf("could not complete request for endpoint '%s': %v", endpoint, err)
 	}
-	defer checkErr(response.Body.Close)
 
 	err = c.checkStatusCode(response)
 	if err != nil {
@@ -92,6 +93,11 @@ func (c *HTTPClient) Request(endpoint string, model interface{}) error {
 	err = json.NewDecoder(response.Body).Decode(model)
 	if err != nil {
 		return fmt.Errorf("received an unexpected response from endpoint '%s': %v", endpoint, err)
+	}
+
+	err = response.Body.Close()
+	if err != nil {
+		log.Error("Could not close response body: %v", err)
 	}
 
 	return nil

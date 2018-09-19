@@ -1,38 +1,44 @@
-package main
+package entities
 
 import (
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/definition"
 )
+
+type clusterCollector struct {
+	defaultCollector
+}
 
 // CollectCluster creates entities for the cluster and its nodes,
 // adding inventory and metrics according to flags
-func CollectCluster(i *integration.Integration, client *HTTPClient) error {
-	clusterResponse, clusterDetails, err := getClusterResponses(client)
+func (c *clusterCollector) Collect(collectInventory bool, collectMetrics bool) error {
+	clusterResponse, clusterDetails, err := getClusterResponses(c.GetClient())
 	if err != nil {
 		return err
 	}	
 
-	clusterEntity, err := i.Entity(*clusterDetails.ClusterName, "cluster")
+	clusterEntity, err := c.GetIntegration().Entity(*clusterDetails.ClusterName, "cluster")
 	if err != nil {
 		return err
 	}
 
-	if args.HasInventory() {
+	if collectInventory {
 		collectClusterInventory(clusterEntity, clusterResponse)
 	}
 
-	if args.HasMetrics() {
+	if collectMetrics {
 		collectClusterMetrics(clusterEntity, clusterDetails)
 	}
 
 	return nil
 }
 
-func getClusterResponses(client *HTTPClient) (clusterResponse *PoolsResponse, clusterDetailsResponse *PoolsDefaultResponse, err error) {
-	clusterResponse = new(PoolsResponse)
-	clusterDetailsResponse = new(PoolsDefaultResponse)
+func getClusterResponses(client *client.HTTPClient) (clusterResponse *definition.PoolsResponse, clusterDetailsResponse *definition.PoolsDefaultResponse, err error) {
+	clusterResponse = new(definition.PoolsResponse)
+	clusterDetailsResponse = new(definition.PoolsDefaultResponse)
 
 	err = client.Request("/pools", &clusterResponse)
 	if err != nil {
@@ -43,7 +49,7 @@ func getClusterResponses(client *HTTPClient) (clusterResponse *PoolsResponse, cl
 	return
 }
 
-func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse *PoolsResponse) {
+func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse *definition.PoolsResponse) {
 	inventoryItems := []struct{
 		key string
 		value interface{}
@@ -59,7 +65,7 @@ func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse 
 	}
 }
 
-func collectClusterMetrics(clusterEntity *integration.Entity, clusterDetailsResponse *PoolsDefaultResponse) {
+func collectClusterMetrics(clusterEntity *integration.Entity, clusterDetailsResponse *definition.PoolsDefaultResponse) {
 	clusterMetricSet := clusterEntity.NewMetricSet("CouchbaseClusterSample",
 		metric.Attribute{Key: "displayName", Value: clusterEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: clusterEntity.Metadata.Namespace + ":" + clusterEntity.Metadata.Name},
@@ -69,4 +75,13 @@ func collectClusterMetrics(clusterEntity *integration.Entity, clusterDetailsResp
 	if err != nil {
 		log.Error("Could not marshal cluster metrics")
 	}
+}
+
+func (c *clusterCollector) GetEntity() (*integration.Entity, error) {
+	e, err := c.GetIntegration().Entity(c.name, "cluster")
+	if err != nil {
+		return nil, err
+	}
+
+	return e, nil
 }
