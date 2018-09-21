@@ -15,28 +15,39 @@ import (
 
 // HTTPClient represents a single connection to an Elasticsearch host
 type HTTPClient struct {
-	baseURL  string
+	baseURL      string
 	baseQueryURL string
-	username string
-	password string
-	client   *http.Client
+	username     string
+	password     string
+	client       *http.Client
+	Hostname     string
+	Port         int
+	QueryPort    int
 }
 
 // CreateClient creates a new http client for Couchbase.
 // The hostnameOverride parameter specifies a hostname that the client should connect to.
 // Passing in an empty string causes the client to use the hostname specified in the command-line args. (default behavior)
-func CreateClient(args *arguments.ArgumentList) (*HTTPClient, error) {
+func CreateClient(args *arguments.ArgumentList, hostnameOverride string) (*HTTPClient, error) {
+	hostname := args.Hostname
+	if hostnameOverride != "" {
+		hostname = hostnameOverride
+	}
+
 	httpClient, err := nrHttp.New(args.CABundleFile, args.CABundleDir, time.Duration(args.Timeout)*time.Second)
 	if err != nil {
 		return nil, err
 	}
 
 	return &HTTPClient{
-		client:   httpClient,
-		username: args.Username,
-		password: args.Password,
-		baseURL: getBaseURL(args.UseSSL, args.Hostname, args.Port),
-		baseQueryURL: getBaseURL(args.UseSSL, args.Hostname, args.QueryPort),
+		client:       httpClient,
+		username:     args.Username,
+		password:     args.Password,
+		baseURL:      getBaseURL(args.UseSSL, hostname, args.Port),
+		baseQueryURL: getBaseURL(args.UseSSL, hostname, args.QueryPort),
+		Hostname:     hostname,
+		Port:         args.Port,
+		QueryPort:    args.QueryPort,
 	}, nil
 }
 
@@ -67,9 +78,11 @@ func (c *HTTPClient) RequestAllBuckets(bucketList []string) map[string]*definiti
 // Request attempts to make a request to the Couchbase API, storing the result in the given model if successful.
 // Returns an error if the request cannot be completed or a non-200 status code is returned.
 func (c *HTTPClient) Request(endpoint string, model interface{}) error {
+	log.Info("[Client %s] Making request to %s", c.baseURL, endpoint)
 	// make sure we point to the query engine port for query engine metrics
 	url := c.baseURL + endpoint
 	if strings.HasPrefix(endpoint, "/admin/") {
+		log.Info("Using query port.")
 		url = c.baseQueryURL + endpoint
 	}
 

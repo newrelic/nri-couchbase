@@ -22,7 +22,7 @@ func main() {
 	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
 	panicOnErr(err)
 
-	client, err := client.CreateClient(&args)
+	client, err := client.CreateClient(&args, "")
 	panicOnErr(err)
 
 	// create worker pool
@@ -31,7 +31,7 @@ func main() {
 	collectorChan := StartCollectorWorkerPool(100, &wg)
 
 	// Feed the worker pool with entities to be collected
-	go FeedWorkerPool(client, collectorChan, i)
+	go FeedWorkerPool(&args, client, collectorChan, i)
 
 	// Wait for workers to finish
 	wg.Wait()
