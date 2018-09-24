@@ -95,7 +95,7 @@ type PoolsDefaultBucket struct {
 	BasicStats     *BasicStats `json:"basicStats"`
 	EvictionPolicy *string     `json:"evictionPolicy" metric_name:"bucket.evictionPolicy" source_type:"attribute"`
 	NodeLocator    *string     `json:"nodeLocator" metric_name:"bucket.nodeLocator" source_type:"attribute"`
-	ReplicaIndex   *bool       `json:"replicaIndex" metric_name:"bucket.replicaIndex" source_type:"attribute"`
+	ReplicaIndex   *bool       `json:"replicaIndex" metric_name:"bucket.replicaIndex" source_type:"gauge"`
 	ReplicaNumber  *int        `json:"replicaNumber" metric_name:"bucket.replicaNumber" source_type:"gauge"`
 	ThreadsNumber  *int        `json:"threadsNumber" metric_name:"bucket.threadsNumber" source_type:"gauge"`
 	ProxyPort      *int        `json:"proxyPort"`

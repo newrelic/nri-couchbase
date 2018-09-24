@@ -111,3 +111,30 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 
 	return collectors, nil
 }
+
+// GetBucketCollectors returns a slice of collectors, one for each bucket.
+// Each collector collects metrics and inventory for its bucket
+func GetBucketCollectors(args *arguments.ArgumentList, i *integration.Integration, nodeClient *client.HTTPClient) ([]Collector, error) {
+	var bucketsResponses []definition.PoolsDefaultBucket
+	err := nodeClient.Request("/pools/default/buckets", &bucketsResponses)
+	if err != nil {
+		return nil, err
+	}
+
+	collectors := make([]Collector, 0, 10)
+
+	for _, bucketResponse := range bucketsResponses {
+		// spin up a bucket collector to collect on this response
+		bucketCollector := &bucketCollector{
+			defaultCollector{
+				name: *bucketResponse.BucketName,
+				client: nodeClient,
+				integration: i,
+			},
+			&bucketResponse,
+		}
+		collectors = append(collectors, bucketCollector)
+	}
+
+	return collectors, nil
+}

@@ -46,8 +46,12 @@ func FeedWorkerPool(args *arguments.ArgumentList, client *client.HTTPClient, col
 	// Create a wait group for each of the get*Collectors calls
 	getWg := new(sync.WaitGroup)
 
+	// these two can run concurrent as they use different API calls to get a listing of resources
 	getWg.Add(1)
 	go createClusterAndNodeCollectors(getWg, client, collectorChan, integration)
+
+	getWg.Add(1)
+	go createBucketCollectors(getWg, client, collectorChan, integration)
 
 	getWg.Wait()
 }
@@ -59,6 +63,17 @@ func createClusterAndNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClien
 		log.Error("Could not create cluster and node collectors: %v", err)
 	}
 	for _, collector := range clusterAndNodeCollectors {
+		channel <- collector
+	}
+}
+
+func createBucketCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
+	defer wg.Done()
+	bucketCollectors, err := entities.GetBucketCollectors(&args, integration, client)
+	if err != nil {
+		log.Error("Could not create bucket collectors: %v", err)
+	}
+	for _, collector := range bucketCollectors {
 		channel <- collector
 	}
 }
