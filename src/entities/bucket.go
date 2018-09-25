@@ -4,16 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"github.com/newrelic/nri-couchbase/src/definition"
+
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/definition"
 )
 
 type bucketCollector struct {
 	defaultCollector
-	bucketResponse *definition.PoolsDefaultBucket
+	bucketResponse         *definition.PoolsDefaultBucket
 	collectExtendedMetrics bool
 }
 
@@ -30,7 +31,7 @@ func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
 	if err != nil {
 		return err
 	}
-	
+
 	if collectMetrics {
 		collectBucketMetrics(bucketEntity, b.bucketResponse, b.client)
 	}
@@ -73,7 +74,7 @@ func collectExtendedBucketMetrics(metricSet *metric.Set, bucketClient *client.HT
 		if err != nil {
 			log.Error("Could not get metric value for %s: %v", field.Name, err)
 		}
-		
+
 		metricName := field.Tag.Get("metric_name")
 		metricType := field.Tag.Get("source_type")
 		sourceType := getSourceTypeFromTag(metricType)
@@ -96,9 +97,12 @@ func getValueFromArray(values reflect.Value) (float64, error) {
 
 func getSourceTypeFromTag(metricType string) metric.SourceType {
 	switch metricType {
-	case "gauge": return metric.GAUGE
-	case "rate": return metric.RATE
-	default: return metric.ATTRIBUTE
+	case "gauge":
+		return metric.GAUGE
+	case "rate":
+		return metric.RATE
+	default:
+		return metric.ATTRIBUTE
 	}
 }
 

@@ -56,11 +56,11 @@ func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsRe
 			log.Error("Could not marshal query engine metrics from : %v", err)
 		}
 	}
-	
+
 	// metrics that need time conversion
-	for _, metric := range []struct{
-		metricName string
-		sourceType metric.SourceType
+	for _, metric := range []struct {
+		metricName  string
+		sourceType  metric.SourceType
 		metricValue string
 	}{
 		{"queryengine.averageRequestTimeInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTimeMean},
@@ -110,7 +110,6 @@ func getQueryEngineResponses(client *client.HTTPClient) (settings *definition.Ad
 	return
 }
 
-
 func convertTimeUnits(time string) (float64, error) {
 	// go's regexp package does not support lookaround,
 	// which would have been a lot cleaner.
@@ -139,7 +138,7 @@ func convertTimeUnit(time string) (float64, error) {
 	if err != nil {
 		return 0, err
 	}
- 
+
 	timeValue, err := strconv.ParseFloat(timeRegex.FindString(time), 64)
 	if err != nil {
 		return 0, err
@@ -148,15 +147,24 @@ func convertTimeUnit(time string) (float64, error) {
 
 	var milliseconds float64
 	switch timeUnit {
-	case "d": milliseconds = timeValue * 1000 * 60 * 60 * 24
-	case "h": milliseconds = timeValue * 1000 * 60 * 60
-	case "m": milliseconds = timeValue * 1000 * 60
-	case "s": milliseconds = timeValue * 1000
-	case "ms": milliseconds = timeValue
-	case "us": milliseconds = timeValue / 1000
-	case "µs": milliseconds = timeValue / 1000
-	case "ns": milliseconds = timeValue / 1000 / 1000
-	default: err = fmt.Errorf("unknown time unit '%s'", timeUnit)
+	case "d":
+		milliseconds = timeValue * 1000 * 60 * 60 * 24
+	case "h":
+		milliseconds = timeValue * 1000 * 60 * 60
+	case "m":
+		milliseconds = timeValue * 1000 * 60
+	case "s":
+		milliseconds = timeValue * 1000
+	case "ms":
+		milliseconds = timeValue
+	case "us":
+		milliseconds = timeValue / 1000
+	case "µs":
+		milliseconds = timeValue / 1000
+	case "ns":
+		milliseconds = timeValue / 1000 / 1000
+	default:
+		err = fmt.Errorf("unknown time unit '%s'", timeUnit)
 	}
 
 	return milliseconds, nil

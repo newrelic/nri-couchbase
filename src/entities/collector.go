@@ -99,7 +99,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 
 				queryEngineCollector := &queryEngineCollector{
 					defaultCollector{
-						name:        nodeHost+":"+strconv.Itoa(args.QueryPort),
+						name:        nodeHost + ":" + strconv.Itoa(args.QueryPort),
 						client:      queryEngineClient,
 						integration: i,
 					},
@@ -127,8 +127,8 @@ func GetBucketCollectors(args *arguments.ArgumentList, i *integration.Integratio
 		// spin up a bucket collector to collect on this response
 		bucketCollector := &bucketCollector{
 			defaultCollector{
-				name: *bucketResponse.BucketName,
-				client: nodeClient,
+				name:        *bucketResponse.BucketName,
+				client:      nodeClient,
 				integration: i,
 			},
 			&bucketResponse,
