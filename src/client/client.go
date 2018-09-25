@@ -10,7 +10,6 @@ import (
 	nrHttp "github.com/newrelic/infra-integrations-sdk/http"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/arguments"
-	"github.com/newrelic/nri-couchbase/src/definition"
 )
 
 // HTTPClient represents a single connection to an Elasticsearch host
@@ -59,22 +58,6 @@ func getBaseURL(useSSL bool, hostname string, port int) string {
 	return fmt.Sprintf("%s://%s:%d", protocol, hostname, port)
 }
 
-// RequestAllBuckets takes a listing of bucket names (retrieved from the buckets endpoint) and returns each bucket's stats
-func (c *HTTPClient) RequestAllBuckets(bucketList []string) map[string]*definition.BucketStats {
-	var bucketStats = map[string]*definition.BucketStats{}
-	for _, bucketName := range bucketList {
-		bucketStatResponse := &definition.BucketStats{}
-		endpoint := fmt.Sprintf("/pools/default/buckets/%s/stats", bucketName)
-		err := c.Request(endpoint, bucketStatResponse)
-		if err != nil {
-			log.Error("Could not retrieve stats for bucket '%s': %v", bucketName, err)
-			continue
-		}
-		bucketStats[bucketName] = bucketStatResponse
-	}
-	return bucketStats
-}
-
 // Request attempts to make a request to the Couchbase API, storing the result in the given model if successful.
 // Returns an error if the request cannot be completed or a non-200 status code is returned.
 func (c *HTTPClient) Request(endpoint string, model interface{}) error {
@@ -95,7 +78,7 @@ func (c *HTTPClient) Request(endpoint string, model interface{}) error {
 		return fmt.Errorf("could not complete request for endpoint '%s': %v", endpoint, err)
 	}
 
-	err = c.checkStatusCode(response)
+	err = checkStatusCode(response)
 	if err != nil {
 		return fmt.Errorf("could not complete request for endpoint '%s': %v", endpoint, err)
 	}
@@ -114,7 +97,7 @@ func (c *HTTPClient) Request(endpoint string, model interface{}) error {
 	return nil
 }
 
-func (c *HTTPClient) checkStatusCode(response *http.Response) error {
+func checkStatusCode(response *http.Response) error {
 	if response.StatusCode != 200 {
 		return fmt.Errorf("received non-200 status code '%v'", response.StatusCode)
 	}
