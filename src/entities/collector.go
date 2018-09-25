@@ -96,7 +96,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 					log.Error("Could not create client for query engine on node '%s': %v", *node.Hostname, err)
 					continue
 				}
-				log.Info("Created new client for node %s", *node.Hostname)
+
 				queryEngineCollector := &queryEngineCollector{
 					defaultCollector{
 						name:        nodeHost+":"+strconv.Itoa(args.QueryPort),
@@ -132,6 +132,7 @@ func GetBucketCollectors(args *arguments.ArgumentList, i *integration.Integratio
 				integration: i,
 			},
 			&bucketResponse,
+			args.EnableBucketStats,
 		}
 		collectors = append(collectors, bucketCollector)
 	}

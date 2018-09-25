@@ -78,11 +78,9 @@ func (c *HTTPClient) RequestAllBuckets(bucketList []string) map[string]*definiti
 // Request attempts to make a request to the Couchbase API, storing the result in the given model if successful.
 // Returns an error if the request cannot be completed or a non-200 status code is returned.
 func (c *HTTPClient) Request(endpoint string, model interface{}) error {
-	log.Info("[Client %s] Making request to %s", c.baseURL, endpoint)
 	// make sure we point to the query engine port for query engine metrics
 	url := c.baseURL + endpoint
 	if strings.HasPrefix(endpoint, "/admin/") {
-		log.Info("Using query port.")
 		url = c.baseQueryURL + endpoint
 	}
 

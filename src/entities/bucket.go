@@ -1,15 +1,20 @@
 package entities
 
 import (
+	"errors"
+	"fmt"
+	"reflect"
 	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/nri-couchbase/src/client"
 )
 
 type bucketCollector struct {
 	defaultCollector
 	bucketResponse *definition.PoolsDefaultBucket
+	collectExtendedMetrics bool
 }
 
 func (b *bucketCollector) GetEntity() (*integration.Entity, error) {
@@ -21,25 +26,23 @@ func (b *bucketCollector) GetEntity() (*integration.Entity, error) {
 }
 
 func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
-	log.Info("I AM A BUCKET NAMED %s", b.GetName())
-
 	bucketEntity, err := b.GetEntity()
 	if err != nil {
 		return err
 	}
 	
 	if collectMetrics {
-		collectBucketMetrics(bucketEntity, b.bucketResponse)
+		collectBucketMetrics(bucketEntity, b.bucketResponse, b.client)
 	}
 
 	if collectInventory {
 		collectBucketInventory(bucketEntity, b.bucketResponse)
 	}
-	
+
 	return nil
 }
 
-func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket) {
+func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket, client *client.HTTPClient) {
 	bucketMetricSet := bucketEntity.NewMetricSet("CouchbaseBucketSample",
 		metric.Attribute{Key: "displayName", Value: bucketEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
@@ -48,6 +51,54 @@ func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *
 	err := bucketMetricSet.MarshalMetrics(baseBucketResponse)
 	if err != nil {
 		log.Error("Could not marshal metrics from bucket struct: %v", err)
+	}
+
+	collectExtendedBucketMetrics(bucketMetricSet, client, bucketEntity.Metadata.Name)
+}
+
+func collectExtendedBucketMetrics(metricSet *metric.Set, bucketClient *client.HTTPClient, bucketName string) error {
+	var bucketStats definition.BucketStats
+	endpoint := fmt.Sprintf("/pools/default/buckets/%s/stats", bucketName)
+	err := bucketClient.Request(endpoint, &bucketStats)
+	if err != nil {
+		return err
+	}
+
+	structType := reflect.TypeOf(*bucketStats.Op.Samples)
+	structValue := reflect.ValueOf(*bucketStats.Op.Samples)
+	for i := 0; i < structType.NumField(); i++ {
+		field := structType.Field(i)
+		fieldValue := structValue.FieldByName(field.Name)
+		metricValue, err := getValueFromArray(fieldValue)
+		if err != nil {
+			log.Error("Could not get metric value for %s: %v", field.Name, err)
+		}
+		
+		metricName := field.Tag.Get("metric_name")
+		metricType := field.Tag.Get("source_type")
+		sourceType := getSourceTypeFromTag(metricType)
+		err = metricSet.SetMetric(metricName, metricValue, sourceType)
+		if err != nil {
+			log.Error("Could not set metric '%s': %v", metricName, err)
+		}
+	}
+	return nil
+}
+
+func getValueFromArray(values reflect.Value) (float64, error) {
+	array := reflect.Indirect(values)
+	if array.Kind() != reflect.Slice {
+		return 0, errors.New("value is not an array")
+	}
+
+	return array.Index(0).Float(), nil
+}
+
+func getSourceTypeFromTag(metricType string) metric.SourceType {
+	switch metricType {
+	case "gauge": return metric.GAUGE
+	case "rate": return metric.RATE
+	default: return metric.ATTRIBUTE
 	}
 }
 

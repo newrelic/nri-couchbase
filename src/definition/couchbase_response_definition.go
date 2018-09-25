@@ -128,39 +128,39 @@ type OpStats struct {
 
 // SampleStats struct for op/samples object
 type SampleStats struct {
-	HitRatio                    *[]float64 `json:"hit_ratio"`
-	EpCacheMissRate             *[]float64 `json:"ep_cache_miss_rate"`
-	EpResidentItemsRate         *[]float64 `json:"ep_resident_items_rate"`
-	VbActiveResidentItemsRatio  *[]float64 `json:"vb_active_resident_items_ratio"`
-	VbReplicaResidentItemsRatio *[]float64 `json:"vb_replica_resident_items_ratio"`
-	VbPendingResidentItemsRatio *[]float64 `json:"vb_pending_resident_items_ratio"`
-	AvgDiskUpdateTime           *[]float64 `json:"avg_disk_update_time"`
-	AvgDiskCommitTime           *[]float64 `json:"avg_disk_commit_time"`
-	BytesRead                   *[]float64 `json:"bytes_read"`
-	BytesWritten                *[]float64 `json:"bytes_written"`
-	CmdGet                      *[]float64 `json:"cmd_get"`
-	CmdSet                      *[]float64 `json:"cmd_set"`
-	CurrConnections             *[]float64 `json:"curr_connections"`
-	DecrHits                    *[]float64 `json:"decr_hits"`
-	DecrMisses                  *[]float64 `json:"decr_misses"`
-	DeleteHits                  *[]float64 `json:"delete_hits"`
-	DeleteMisses                *[]float64 `json:"delete_misses"`
-	DiskWriteQueue              *[]float64 `json:"disk_write_queue"`
-	EpMemHighWat                *[]float64 `json:"ep_mem_high_wat"`
-	EpMemLowWat                 *[]float64 `json:"ep_mem_low_wat"`
-	EpMetaDataMemory            *[]float64 `json:"ep_meta_data_memory"`
-	EpNumValueEjects            *[]float64 `json:"ep_num_value_ejects"`
-	EpOomErrors                 *[]float64 `json:"ep_oom_errors"`
-	EpOpsCreate                 *[]float64 `json:"ep_ops_create"`
-	EpOpsUpdate                 *[]float64 `json:"ep_ops_update"`
-	EpOverhead                  *[]float64 `json:"ep_overhead"`
-	EpTmpOomErrors              *[]float64 `json:"ep_tmp_oom_errors"`
-	Evictions                   *[]float64 `json:"evictions"`
-	GetHits                     *[]float64 `json:"get_hits"`
-	GetMisses                   *[]float64 `json:"get_misses"`
-	IncrHits                    *[]float64 `json:"incr_hits"`
-	IncrMisses                  *[]float64 `json:"incr_misses"`
-	Misses                      *[]float64 `json:"misses"`
+	HitRatio                    *[]float64 `json:"hit_ratio" metric_name:"bucket.hitRatio" source_type:"gauge"`
+	EpCacheMissRate             *[]float64 `json:"ep_cache_miss_rate" metric_name:"bucket.cacheMissRatio" source_type:"gauge"`
+	EpResidentItemsRate         *[]float64 `json:"ep_resident_items_rate" metric_name:"bucket.residentItemsRatio" source_type:"gauge"`
+	VbActiveResidentItemsRatio  *[]float64 `json:"vb_active_resident_items_ratio" metric_name:"bucket.activeResidentItemsRatio" source_type:"gauge"`
+	VbReplicaResidentItemsRatio *[]float64 `json:"vb_replica_resident_items_ratio" metric_name:"bucket.replicaResidentItemsRatio" source_type:"gauge"`
+	VbPendingResidentItemsRatio *[]float64 `json:"vb_pending_resident_items_ratio" metric_name:"bucket.pendingResidentItemsRatio" source_type:"gauge"`
+	AvgDiskUpdateTime           *[]float64 `json:"avg_disk_update_time" metric_name:"bucket.averageDiskUpdateTimeInMilliseconds" source_type:"gauge"`
+	AvgDiskCommitTime           *[]float64 `json:"avg_disk_commit_time" metric_name:"bucket.averageDiskCommitTimeInMilliseconds" source_type:"gauge"`
+	BytesRead                   *[]float64 `json:"bytes_read" metric_name:"bucket.readRatePerSecond" source_type:"rate"`
+	BytesWritten                *[]float64 `json:"bytes_written" metric_name:"bucket.writeRatePerSecond" source_type:"rate"`
+	CmdGet                      *[]float64 `json:"cmd_get" metric_name:"bucket.readOperationsPerSecond" source_type:"rate"`
+	CmdSet                      *[]float64 `json:"cmd_set" metric_name:"bucket.writeOperationsPerSecond" source_type:"rate"`
+	CurrConnections             *[]float64 `json:"curr_connections" metric_name:"bucket.currentConnections" source_type:"gauge"`
+	DecrHits                    *[]float64 `json:"decr_hits" metric_name:"bucket.decrementHitsPerSecond" source_type:"rate"`
+	DecrMisses                  *[]float64 `json:"decr_misses" metric_name:"bucket.decrementMissesPerSecond" source_type:"rate"`
+	DeleteHits                  *[]float64 `json:"delete_hits" metric_name:"bucket.deleteHitsPerSecond" source_type:"rate"`
+	DeleteMisses                *[]float64 `json:"delete_misses" metric_name:"bucket.deleteMissesPerSecond" source_type:"rate"`
+	DiskWriteQueue              *[]float64 `json:"disk_write_queue" metric_name:"bucket.diskWriteQueue" source_type:"gauge"`
+	EpMemHighWat                *[]float64 `json:"ep_mem_high_wat" metric_name:"bucket.memoryHighWaterMarkInBytes" source_type:"gauge"`
+	EpMemLowWat                 *[]float64 `json:"ep_mem_low_wat" metric_name:"bucket.memoryLowWaterMarkInBytes" source_type:"gauge"`
+	EpMetaDataMemory            *[]float64 `json:"ep_meta_data_memory" metric_name:"bucket.metadataInRAMInBytes" source_type:"gauge"`
+	EpNumValueEjects            *[]float64 `json:"ep_num_value_ejects" metric_name:"bucket.ejectionsPerSecond" source_type:"rate"`
+	EpOomErrors                 *[]float64 `json:"ep_oom_errors" metric_name:"bucket.outOfMemoryErrorsPerSecond" source_type:"rate"`
+	EpOpsCreate                 *[]float64 `json:"ep_ops_create" metric_name:"bucket.diskCreateOperationsPerSecond" source_type:"rate"`
+	EpOpsUpdate                 *[]float64 `json:"ep_ops_update" metric_name:"bucket.diskUpdateOperationsPerSecond" source_type:"rate"`
+	EpOverhead                  *[]float64 `json:"ep_overhead" metric_name:"bucket.overheadInBytes" source_type:"gauge"`
+	EpTmpOomErrors              *[]float64 `json:"ep_tmp_oom_errors" metric_name:"bucket.temporaryOutOfMemoryErrorsPerSecond" source_type:"rate"`
+	Evictions                   *[]float64 `json:"evictions" metric_name:"bucket.evictionsPerSecond" source_type:"rate"`
+	GetHits                     *[]float64 `json:"get_hits" metric_name:"bucket.getHitsPerSecond" source_type:"rate"`
+	GetMisses                   *[]float64 `json:"get_misses" metric_name:"bucket.getMissesPerSecond" source_type:"rate"`
+	IncrHits                    *[]float64 `json:"incr_hits" metric_name:"bucket.incrementHitsPerSecond" source_type:"rate"`
+	IncrMisses                  *[]float64 `json:"incr_misses" metric_name:"bucket.incrementMissesPerSecond" source_type:"rate"`
+	Misses                      *[]float64 `json:"misses" metric_name:"bucket.missesPerSecond" source_type:"rate"`
 }
 
 // =========
