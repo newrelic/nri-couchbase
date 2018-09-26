@@ -1,0 +1,677 @@
+[
+	{
+		"name": "beer-sample",
+		"bucketType": "membase",
+		"authType": "sasl",
+		"proxyPort": 0,
+		"uri": "/pools/default/buckets/beer-sample?bucket_uuid=7bc341fe6b3546a0f42080b21e7baafb",
+		"streamingUri": "/pools/default/bucketsStreaming/beer-sample?bucket_uuid=7bc341fe6b3546a0f42080b21e7baafb",
+		"localRandomKeyUri": "/pools/default/buckets/beer-sample/localRandomKey",
+		"controllers": {
+			"compactAll": "/pools/default/buckets/beer-sample/controller/compactBucket",
+			"compactDB": "/pools/default/buckets/beer-sample/controller/compactDatabases",
+			"purgeDeletes": "/pools/default/buckets/beer-sample/controller/unsafePurgeBucket",
+			"startRecovery": "/pools/default/buckets/beer-sample/controller/startRecovery"
+		},
+		"nodes": [
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-2.bluemedora.localnet:18092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"couchApiBase": "http://cb50-rh7-2.bluemedora.localnet:8092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"systemStats": {
+					"cpu_utilization_rate": 5.357142857142857,
+					"swap_total": 6442446848,
+					"swap_used": 70283264,
+					"mem_total": 3974971392,
+					"mem_free": 942735360
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 127171677,
+					"couch_docs_data_size": 83728539,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281510,
+					"couch_views_data_size": 281510,
+					"curr_items": 13138,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 97722608,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26342
+				},
+				"uptime": "20481229",
+				"memoryTotal": 3974971392,
+				"memoryFree": 942735360,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-2.bluemedora.localnet",
+				"hostname": "cb50-rh7-2.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-1.bluemedora.localnet:18092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"couchApiBase": "http://cb50-rh7-1.bluemedora.localnet:8092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"systemStats": {
+					"cpu_utilization_rate": 7.5,
+					"swap_total": 6442446848,
+					"swap_used": 4239360,
+					"mem_total": 3974971392,
+					"mem_free": 970866688
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 117260623,
+					"couch_docs_data_size": 38681647,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281331,
+					"couch_views_data_size": 281331,
+					"curr_items": 13140,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 86555848,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26340
+				},
+				"uptime": "9218982",
+				"memoryTotal": 3974971392,
+				"memoryFree": 970866688,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-1.bluemedora.localnet",
+				"thisNode": true,
+				"hostname": "cb50-rh7-1.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://10.33.106.59:18092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"couchApiBase": "http://10.33.106.59:8092/beer-sample%2B7bc341fe6b3546a0f42080b21e7baafb",
+				"systemStats": {
+					"cpu_utilization_rate": 11.08247422680412,
+					"swap_total": 6442446848,
+					"swap_used": 58511360,
+					"mem_total": 3974971392,
+					"mem_free": 968687616
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 121426713,
+					"couch_docs_data_size": 79362203,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281638,
+					"couch_views_data_size": 281638,
+					"curr_items": 13202,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 99592664,
+					"ops": 0,
+					"vb_active_num_non_resident": 1062,
+					"vb_replica_curr_items": 26278
+				},
+				"uptime": "20481105",
+				"memoryTotal": 3974971392,
+				"memoryFree": 968687616,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@10.33.106.59",
+				"hostname": "10.33.106.59:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			}
+		],
+		"stats": {
+			"uri": "/pools/default/buckets/beer-sample/stats",
+			"directoryURI": "/pools/default/buckets/beer-sample/statsDirectory",
+			"nodeStatsListURI": "/pools/default/buckets/beer-sample/nodes"
+		},
+		"nodeLocator": "vbucket",
+		"saslPassword": "ca033084a4108f9f122af1db3fedbb15",
+		"ddocs": {
+			"uri": "/pools/default/buckets/beer-sample/ddocs"
+		},
+		"replicaIndex": false,
+		"autoCompactionSettings": false,
+		"uuid": "7bc341fe6b3546a0f42080b21e7baafb",
+		"replicaNumber": 2,
+		"threadsNumber": 3,
+		"quota": {
+			"ram": 314572800,
+			"rawRAM": 104857600
+		},
+		"basicStats": {
+			"quotaPercentUsed": 24.04833221435547,
+			"opsPerSec": 0,
+			"diskFetches": 0,
+			"itemCount": 7303,
+			"diskUsed": 93674986,
+			"dataUsed": 48779424,
+			"memUsed": 75649512,
+			"vbActiveNumNonResident": 0
+		},
+		"evictionPolicy": "valueOnly",
+		"conflictResolutionType": "seqno",
+		"bucketCapabilitiesVer": "",
+		"bucketCapabilities": [
+			"xattr",
+			"dcp",
+			"cbhello",
+			"touch",
+			"couchapi",
+			"cccp",
+			"xdcrCheckpointing",
+			"nodesExt"
+		]
+	},
+	{
+		"name": "gamesim-sample",
+		"bucketType": "membase",
+		"authType": "sasl",
+		"proxyPort": 0,
+		"uri": "/pools/default/buckets/gamesim-sample?bucket_uuid=e2c0af4af3b813f95cdaf6fad03f63b8",
+		"streamingUri": "/pools/default/bucketsStreaming/gamesim-sample?bucket_uuid=e2c0af4af3b813f95cdaf6fad03f63b8",
+		"localRandomKeyUri": "/pools/default/buckets/gamesim-sample/localRandomKey",
+		"controllers": {
+			"compactAll": "/pools/default/buckets/gamesim-sample/controller/compactBucket",
+			"compactDB": "/pools/default/buckets/gamesim-sample/controller/compactDatabases",
+			"purgeDeletes": "/pools/default/buckets/gamesim-sample/controller/unsafePurgeBucket",
+			"startRecovery": "/pools/default/buckets/gamesim-sample/controller/startRecovery"
+		},
+		"nodes": [
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-2.bluemedora.localnet:18092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"couchApiBase": "http://cb50-rh7-2.bluemedora.localnet:8092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"systemStats": {
+					"cpu_utilization_rate": 5.357142857142857,
+					"swap_total": 6442446848,
+					"swap_used": 70283264,
+					"mem_total": 3974971392,
+					"mem_free": 942735360
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 127171677,
+					"couch_docs_data_size": 83728539,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281510,
+					"couch_views_data_size": 281510,
+					"curr_items": 13138,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 97722608,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26342
+				},
+				"uptime": "20481229",
+				"memoryTotal": 3974971392,
+				"memoryFree": 942735360,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-2.bluemedora.localnet",
+				"hostname": "cb50-rh7-2.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-1.bluemedora.localnet:18092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"couchApiBase": "http://cb50-rh7-1.bluemedora.localnet:8092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"systemStats": {
+					"cpu_utilization_rate": 7.5,
+					"swap_total": 6442446848,
+					"swap_used": 4239360,
+					"mem_total": 3974971392,
+					"mem_free": 970866688
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 117260623,
+					"couch_docs_data_size": 38681647,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281331,
+					"couch_views_data_size": 281331,
+					"curr_items": 13140,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 86555848,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26340
+				},
+				"uptime": "9218982",
+				"memoryTotal": 3974971392,
+				"memoryFree": 970866688,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-1.bluemedora.localnet",
+				"thisNode": true,
+				"hostname": "cb50-rh7-1.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://10.33.106.59:18092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"couchApiBase": "http://10.33.106.59:8092/gamesim-sample%2Be2c0af4af3b813f95cdaf6fad03f63b8",
+				"systemStats": {
+					"cpu_utilization_rate": 11.08247422680412,
+					"swap_total": 6442446848,
+					"swap_used": 58511360,
+					"mem_total": 3974971392,
+					"mem_free": 968687616
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 121426713,
+					"couch_docs_data_size": 79362203,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281638,
+					"couch_views_data_size": 281638,
+					"curr_items": 13202,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 99592664,
+					"ops": 0,
+					"vb_active_num_non_resident": 1062,
+					"vb_replica_curr_items": 26278
+				},
+				"uptime": "20481105",
+				"memoryTotal": 3974971392,
+				"memoryFree": 968687616,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@10.33.106.59",
+				"hostname": "10.33.106.59:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			}
+		],
+		"stats": {
+			"uri": "/pools/default/buckets/gamesim-sample/stats",
+			"directoryURI": "/pools/default/buckets/gamesim-sample/statsDirectory",
+			"nodeStatsListURI": "/pools/default/buckets/gamesim-sample/nodes"
+		},
+		"nodeLocator": "vbucket",
+		"saslPassword": "4ae607cb18b2ac65df824a1640502d08",
+		"ddocs": {
+			"uri": "/pools/default/buckets/gamesim-sample/ddocs"
+		},
+		"replicaIndex": false,
+		"autoCompactionSettings": false,
+		"uuid": "e2c0af4af3b813f95cdaf6fad03f63b8",
+		"replicaNumber": 2,
+		"threadsNumber": 3,
+		"quota": {
+			"ram": 314572800,
+			"rawRAM": 104857600
+		},
+		"basicStats": {
+			"quotaPercentUsed": 20.40459696451823,
+			"opsPerSec": 0,
+			"diskFetches": 0,
+			"itemCount": 586,
+			"diskUsed": 70750714,
+			"dataUsed": 32939597,
+			"memUsed": 64187312,
+			"vbActiveNumNonResident": 0
+		},
+		"evictionPolicy": "valueOnly",
+		"conflictResolutionType": "seqno",
+		"bucketCapabilitiesVer": "",
+		"bucketCapabilities": [
+			"xattr",
+			"dcp",
+			"cbhello",
+			"touch",
+			"couchapi",
+			"cccp",
+			"xdcrCheckpointing",
+			"nodesExt"
+		]
+	},
+	{
+		"name": "travel-sample",
+		"bucketType": "membase",
+		"authType": "sasl",
+		"proxyPort": 0,
+		"uri": "/pools/default/buckets/travel-sample?bucket_uuid=d3ece49265ec6b7e75f003191ab52d21",
+		"streamingUri": "/pools/default/bucketsStreaming/travel-sample?bucket_uuid=d3ece49265ec6b7e75f003191ab52d21",
+		"localRandomKeyUri": "/pools/default/buckets/travel-sample/localRandomKey",
+		"controllers": {
+			"compactAll": "/pools/default/buckets/travel-sample/controller/compactBucket",
+			"compactDB": "/pools/default/buckets/travel-sample/controller/compactDatabases",
+			"purgeDeletes": "/pools/default/buckets/travel-sample/controller/unsafePurgeBucket",
+			"startRecovery": "/pools/default/buckets/travel-sample/controller/startRecovery"
+		},
+		"nodes": [
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-2.bluemedora.localnet:18092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"couchApiBase": "http://cb50-rh7-2.bluemedora.localnet:8092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"systemStats": {
+					"cpu_utilization_rate": 5.357142857142857,
+					"swap_total": 6442446848,
+					"swap_used": 70283264,
+					"mem_total": 3974971392,
+					"mem_free": 942735360
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 127171677,
+					"couch_docs_data_size": 83728539,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281510,
+					"couch_views_data_size": 281510,
+					"curr_items": 13138,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 97722608,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26342
+				},
+				"uptime": "20481229",
+				"memoryTotal": 3974971392,
+				"memoryFree": 942735360,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-2.bluemedora.localnet",
+				"hostname": "cb50-rh7-2.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://cb50-rh7-1.bluemedora.localnet:18092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"couchApiBase": "http://cb50-rh7-1.bluemedora.localnet:8092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"systemStats": {
+					"cpu_utilization_rate": 7.5,
+					"swap_total": 6442446848,
+					"swap_used": 4239360,
+					"mem_total": 3974971392,
+					"mem_free": 970866688
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 117260623,
+					"couch_docs_data_size": 38681647,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281331,
+					"couch_views_data_size": 281331,
+					"curr_items": 13140,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 86555848,
+					"ops": 0,
+					"vb_active_num_non_resident": 0,
+					"vb_replica_curr_items": 26340
+				},
+				"uptime": "9218982",
+				"memoryTotal": 3974971392,
+				"memoryFree": 970866688,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@cb50-rh7-1.bluemedora.localnet",
+				"thisNode": true,
+				"hostname": "cb50-rh7-1.bluemedora.localnet:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			},
+			{
+				"couchApiBaseHTTPS": "https://10.33.106.59:18092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"couchApiBase": "http://10.33.106.59:8092/travel-sample%2Bd3ece49265ec6b7e75f003191ab52d21",
+				"systemStats": {
+					"cpu_utilization_rate": 11.08247422680412,
+					"swap_total": 6442446848,
+					"swap_used": 58511360,
+					"mem_total": 3974971392,
+					"mem_free": 968687616
+				},
+				"interestingStats": {
+					"cmd_get": 0,
+					"couch_docs_actual_disk_size": 121426713,
+					"couch_docs_data_size": 79362203,
+					"couch_spatial_data_size": 0,
+					"couch_spatial_disk_size": 0,
+					"couch_views_actual_disk_size": 281638,
+					"couch_views_data_size": 281638,
+					"curr_items": 13202,
+					"curr_items_tot": 39480,
+					"ep_bg_fetched": 0,
+					"get_hits": 0,
+					"mem_used": 99592664,
+					"ops": 0,
+					"vb_active_num_non_resident": 1062,
+					"vb_replica_curr_items": 26278
+				},
+				"uptime": "20481105",
+				"memoryTotal": 3974971392,
+				"memoryFree": 968687616,
+				"mcdMemoryReserved": 3032,
+				"mcdMemoryAllocated": 3032,
+				"replication": 1,
+				"clusterMembership": "active",
+				"recoveryType": "none",
+				"status": "healthy",
+				"otpNode": "ns_1@10.33.106.59",
+				"hostname": "10.33.106.59:8091",
+				"clusterCompatibility": 327680,
+				"version": "5.0.1-5003-enterprise",
+				"os": "x86_64-unknown-linux-gnu",
+				"ports": {
+					"sslProxy": 11214,
+					"httpsMgmt": 18091,
+					"httpsCAPI": 18092,
+					"proxy": 11211,
+					"direct": 11210
+				},
+				"services": [
+					"fts",
+					"index",
+					"kv",
+					"n1ql"
+				]
+			}
+		],
+		"stats": {
+			"uri": "/pools/default/buckets/travel-sample/stats",
+			"directoryURI": "/pools/default/buckets/travel-sample/statsDirectory",
+			"nodeStatsListURI": "/pools/default/buckets/travel-sample/nodes"
+		},
+		"nodeLocator": "vbucket",
+		"saslPassword": "94d3bf603aad0e068bccac652f65d523",
+		"ddocs": {
+			"uri": "/pools/default/buckets/travel-sample/ddocs"
+		},
+		"replicaIndex": false,
+		"autoCompactionSettings": false,
+		"uuid": "d3ece49265ec6b7e75f003191ab52d21",
+		"replicaNumber": 2,
+		"threadsNumber": 3,
+		"quota": {
+			"ram": 314572800,
+			"rawRAM": 104857600
+		},
+		"basicStats": {
+			"quotaPercentUsed": 45.78726959228516,
+			"opsPerSec": 0,
+			"diskFetches": 0,
+			"itemCount": 31591,
+			"diskUsed": 202277792,
+			"dataUsed": 120897847,
+			"memUsed": 144034296,
+			"vbActiveNumNonResident": 1062
+		},
+		"evictionPolicy": "valueOnly",
+		"conflictResolutionType": "seqno",
+		"bucketCapabilitiesVer": "",
+		"bucketCapabilities": [
+			"xattr",
+			"dcp",
+			"cbhello",
+			"touch",
+			"couchapi",
+			"cccp",
+			"xdcrCheckpointing",
+			"nodesExt"
+		]
+	}
+]
