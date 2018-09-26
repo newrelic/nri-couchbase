@@ -15,11 +15,7 @@ type nodeCollector struct {
 }
 
 func (n *nodeCollector) GetEntity() (*integration.Entity, error) {
-	e, err := n.GetIntegration().Entity(n.GetName(), "node")
-	if err != nil {
-		return nil, err
-	}
-	return e, nil
+	return n.GetIntegration().Entity(n.GetName(), "node")
 }
 
 func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {

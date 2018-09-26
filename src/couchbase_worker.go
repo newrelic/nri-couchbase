@@ -15,7 +15,7 @@ import (
 func StartCollectorWorkerPool(numWorkers int, wg *sync.WaitGroup) chan entities.Collector {
 	wg.Add(numWorkers)
 
-	collectorChan := make(chan entities.Collector, 100)
+	collectorChan := make(chan entities.Collector, 10)
 	for j := 0; j < numWorkers; j++ {
 		go collectorWorker(collectorChan, wg)
 	}
@@ -61,6 +61,7 @@ func createClusterAndNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClien
 	clusterAndNodeCollectors, err := entities.GetClusterCollectors(&args, integration, client)
 	if err != nil {
 		log.Error("Could not create cluster and node collectors: %v", err)
+		return
 	}
 	for _, collector := range clusterAndNodeCollectors {
 		channel <- collector
@@ -72,6 +73,7 @@ func createBucketCollectors(wg *sync.WaitGroup, client *client.HTTPClient, chann
 	bucketCollectors, err := entities.GetBucketCollectors(&args, integration, client)
 	if err != nil {
 		log.Error("Could not create bucket collectors: %v", err)
+		return
 	}
 	for _, collector := range bucketCollectors {
 		channel <- collector

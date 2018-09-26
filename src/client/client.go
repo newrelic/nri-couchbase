@@ -28,10 +28,12 @@ type HTTPClient struct {
 // The hostnameOverride parameter specifies a hostname that the client should connect to.
 // Passing in an empty string causes the client to use the hostname specified in the command-line args. (default behavior)
 func CreateClient(args *arguments.ArgumentList, hostnameOverride string) (*HTTPClient, error) {
-	hostname := args.Hostname
-	if hostnameOverride != "" {
-		hostname = hostnameOverride
-	}
+	hostname := func() string {
+		if hostnameOverride != "" {
+			return hostnameOverride
+		}
+		return args.Hostname
+	}()
 
 	httpClient, err := nrHttp.New(args.CABundleFile, args.CABundleDir, time.Duration(args.Timeout)*time.Second)
 	if err != nil {
