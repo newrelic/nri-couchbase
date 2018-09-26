@@ -14,6 +14,10 @@ type clusterCollector struct {
 	clusterDetails     *definition.PoolsDefaultResponse
 }
 
+func (c *clusterCollector) GetEntity() (*integration.Entity, error) {
+	return c.GetIntegration().Entity(*c.clusterDetails.ClusterName, "cluster")
+}
+
 // CollectCluster creates entities for the cluster and its nodes,
 // adding inventory and metrics according to flags
 func (c *clusterCollector) Collect(collectInventory bool, collectMetrics bool) error {
@@ -80,13 +84,4 @@ func collectClusterMetrics(clusterEntity *integration.Entity, clusterDetailsResp
 	if err != nil {
 		log.Error("Could not marshal cluster metrics from endpoint '/settings/autoFailover': %v", err)
 	}
-}
-
-func (c *clusterCollector) GetEntity() (*integration.Entity, error) {
-	e, err := c.GetIntegration().Entity(*c.clusterDetails.ClusterName, "cluster")
-	if err != nil {
-		return nil, err
-	}
-
-	return e, nil
 }

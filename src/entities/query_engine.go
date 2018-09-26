@@ -17,11 +17,7 @@ type queryEngineCollector struct {
 }
 
 func (qe *queryEngineCollector) GetEntity() (*integration.Entity, error) {
-	e, err := qe.GetIntegration().Entity(qe.GetName(), "queryEngine")
-	if err != nil {
-		return nil, err
-	}
-	return e, nil
+	return qe.GetIntegration().Entity(qe.GetName(), "queryEngine")
 }
 
 func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) error {

@@ -28,7 +28,7 @@ func main() {
 	// create worker pool
 	// Start workers
 	var wg sync.WaitGroup
-	collectorChan := StartCollectorWorkerPool(100, &wg)
+	collectorChan := StartCollectorWorkerPool(10, &wg)
 
 	// Feed the worker pool with entities to be collected
 	go FeedWorkerPool(&args, client, collectorChan, i)
