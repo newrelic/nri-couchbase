@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/http/httptest"
 	"path/filepath"
 	"testing"
 
@@ -15,20 +14,10 @@ import (
 )
 
 func Test_FunctionalCollection(t *testing.T) {
-	// create collector, mock responses, run collect
-	// generate a test server so we can capture and inspect the request
-	testServer := httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		res.WriteHeader(200)
-		username, password, ok := req.BasicAuth()
-		endpoint := req.RequestURI
-		assert.True(t, ok)
-		assert.Equal(t, username, "testUser")
-		assert.Equal(t, password, "testPass")
-		assert.Equal(t, "/pools/default/buckets/beer-sample/stats", endpoint)
-
-		data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket-stats.json"))
-		res.Write(data)
-	}))
+	endpointMap := map[string]string{
+		"/pools/default/buckets/beer-sample/stats": filepath.Join("..", "testdata", "input", "bucket-stats.json"),
+	}
+	testServer := getTestServer(t, endpointMap)
 	defer testServer.Close()
 
 	i := getTestingIntegration(t)
