@@ -15,28 +15,41 @@ import (
 
 // HTTPClient represents a single connection to an Elasticsearch host
 type HTTPClient struct {
-	baseURL  string
+	baseURL      string
 	baseQueryURL string
-	username string
-	password string
-	client   *http.Client
+	username     string
+	password     string
+	client       *http.Client
+	Hostname     string
+	Port         int
+	QueryPort    int
 }
 
 // CreateClient creates a new http client for Couchbase.
 // The hostnameOverride parameter specifies a hostname that the client should connect to.
 // Passing in an empty string causes the client to use the hostname specified in the command-line args. (default behavior)
-func CreateClient(args *arguments.ArgumentList) (*HTTPClient, error) {
+func CreateClient(args *arguments.ArgumentList, hostnameOverride string) (*HTTPClient, error) {
+	hostname := func() string {
+		if hostnameOverride != "" {
+			return hostnameOverride
+		}
+		return args.Hostname
+	}()
+
 	httpClient, err := nrHttp.New(args.CABundleFile, args.CABundleDir, time.Duration(args.Timeout)*time.Second)
 	if err != nil {
 		return nil, err
 	}
 
 	return &HTTPClient{
-		client:   httpClient,
-		username: args.Username,
-		password: args.Password,
-		baseURL: getBaseURL(args.UseSSL, args.Hostname, args.Port),
-		baseQueryURL: getBaseURL(args.UseSSL, args.Hostname, args.QueryPort),
+		client:       httpClient,
+		username:     args.Username,
+		password:     args.Password,
+		baseURL:      getBaseURL(args.UseSSL, hostname, args.Port),
+		baseQueryURL: getBaseURL(args.UseSSL, hostname, args.QueryPort),
+		Hostname:     hostname,
+		Port:         args.Port,
+		QueryPort:    args.QueryPort,
 	}, nil
 }
 

@@ -2,10 +2,12 @@ package main
 
 import (
 	"sync"
-	"github.com/newrelic/nri-couchbase/src/entities"
-	"github.com/newrelic/nri-couchbase/src/client"
+
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/nri-couchbase/src/arguments"
+	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/entities"
 )
 
 // StartCollectorWorkerPool starts a pool of workers to handle collecting each entity
@@ -13,7 +15,7 @@ import (
 func StartCollectorWorkerPool(numWorkers int, wg *sync.WaitGroup) chan entities.Collector {
 	wg.Add(numWorkers)
 
-	collectorChan := make(chan entities.Collector, 100)
+	collectorChan := make(chan entities.Collector, 10)
 	for j := 0; j < numWorkers; j++ {
 		go collectorWorker(collectorChan, wg)
 	}
@@ -38,32 +40,42 @@ func collectorWorker(collectorChan chan entities.Collector, wg *sync.WaitGroup) 
 }
 
 // FeedWorkerPool feeds the workers with the collectors that contain the info needed to collect each entity
-func FeedWorkerPool(client *client.HTTPClient, collectorChan chan entities.Collector, integration *integration.Integration) {
+func FeedWorkerPool(args *arguments.ArgumentList, client *client.HTTPClient, collectorChan chan entities.Collector, integration *integration.Integration) {
 	defer close(collectorChan)
 
 	// Create a wait group for each of the get*Collectors calls
 	getWg := new(sync.WaitGroup)
 
+	// these two can run concurrent as they use different API calls to get a listing of resources
 	getWg.Add(1)
 	go createClusterAndNodeCollectors(getWg, client, collectorChan, integration)
+
+	getWg.Add(1)
+	go createBucketCollectors(getWg, client, collectorChan, integration)
 
 	getWg.Wait()
 }
 
 func createClusterAndNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
 	defer wg.Done()
-	clusterAndNodeCollectors, err := entities.GetClusterCollectors(integration, client)
+	clusterAndNodeCollectors, err := entities.GetClusterCollectors(&args, integration, client)
 	if err != nil {
 		log.Error("Could not create cluster and node collectors: %v", err)
+		return
 	}
 	for _, collector := range clusterAndNodeCollectors {
 		channel <- collector
 	}
 }
 
-func createNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
+func createBucketCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {
 	defer wg.Done()
-
-	// get list of nodes
-	// spin up collectors for each.
+	bucketCollectors, err := entities.GetBucketCollectors(&args, integration, client)
+	if err != nil {
+		log.Error("Could not create bucket collectors: %v", err)
+		return
+	}
+	for _, collector := range bucketCollectors {
+		channel <- collector
+	}
 }

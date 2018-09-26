@@ -1,9 +1,10 @@
 package arguments
 
 import (
-	"github.com/newrelic/infra-integrations-sdk/args"
 	"errors"
 	"fmt"
+
+	"github.com/newrelic/infra-integrations-sdk/args"
 )
 
 // ArgumentList struct to hold all arguments needed to connect to a Couchbase environment
@@ -11,7 +12,7 @@ type ArgumentList struct {
 	args.DefaultArgumentList
 	Hostname              string `default:"localhost" help:"The hostname or IP of the Couchbase node being monitored"`
 	Port                  int    `default:"8091" help:"The port used to connect to the Couchbase API"`
-	QueryPort			  int    `default:"8093" help:"The port used to connect to the N1QL service"`
+	QueryPort             int    `default:"8093" help:"The port used to connect to the N1QL service"`
 	Username              string `default:"" help:"The username used to connect to the Couchbase API"`
 	Password              string `default:"" help:"The password used to connect to the Couchbase API"`
 	UseSSL                bool   `default:"false" help:"Signals whether to use SSL or not. Certificate bundle must be supplied"`
