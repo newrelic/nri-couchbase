@@ -15,10 +15,10 @@ func Test_CreateClient(t *testing.T) {
 
 	client, _ := CreateClient(args, "")
 
-	assert.Equal(t, "http://testhostname:8091", client.baseURL)
-	assert.Equal(t, "http://testhostname:8093", client.baseQueryURL)
-	assert.Equal(t, "testuser", client.username)
-	assert.Equal(t, "testpass", client.password)
+	assert.Equal(t, "http://testhostname:8091", client.BaseURL)
+	assert.Equal(t, "http://testhostname:8093", client.BaseQueryURL)
+	assert.Equal(t, "testuser", client.Username)
+	assert.Equal(t, "testpass", client.Password)
 }
 
 func Test_SSL(t *testing.T) {
@@ -27,14 +27,14 @@ func Test_SSL(t *testing.T) {
 
 	client, _ := CreateClient(args, "")
 
-	assert.Equal(t, "https://testhostname:8091", client.baseURL)
+	assert.Equal(t, "https://testhostname:8091", client.BaseURL)
 }
 
 func Test_HostnameOverride(t *testing.T) {
 	args := setupTestArgs()
 	client, _ := CreateClient(args, "inventory-host")
 
-	assert.Equal(t, "http://inventory-host:8091", client.baseURL)
+	assert.Equal(t, "http://inventory-host:8091", client.BaseURL)
 }
 
 func Test_Request(t *testing.T) {
@@ -61,11 +61,11 @@ func Test_Request(t *testing.T) {
 			// request to standard endpoint which uses the baseURL
 			// requests to "bad-url" will fail
 			&HTTPClient{
-				client:       testServer.Client(),
-				username:     "testUser",
-				password:     "testPass",
-				baseURL:      testServer.URL,
-				baseQueryURL: "bad-url",
+				Client:       testServer.Client(),
+				Username:     "testUser",
+				Password:     "testPass",
+				BaseURL:      testServer.URL,
+				BaseQueryURL: "bad-url",
 			},
 			"/some/endpoint",
 		},
@@ -73,11 +73,11 @@ func Test_Request(t *testing.T) {
 			// request to query endpoint which uses the baseQueryURL
 			// requests to "bad-url" will fail
 			&HTTPClient{
-				client:       testServer.Client(),
-				username:     "testUser",
-				password:     "testPass",
-				baseURL:      "bad-url",
-				baseQueryURL: testServer.URL,
+				Client:       testServer.Client(),
+				Username:     "testUser",
+				Password:     "testPass",
+				BaseURL:      "bad-url",
+				BaseQueryURL: testServer.URL,
 			},
 			"/admin/endpoint",
 		},

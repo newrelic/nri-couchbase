@@ -1,7 +1,10 @@
 package entities
 
 import (
+	"encoding/json"
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"path/filepath"
 	"testing"
 
@@ -11,22 +14,49 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_FunctionalCollection(t *testing.T) {
+	// create collector, mock responses, run collect
+	// generate a test server so we can capture and inspect the request
+	testServer := httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		res.WriteHeader(200)
+		username, password, ok := req.BasicAuth()
+		endpoint := req.RequestURI
+		assert.True(t, ok)
+		assert.Equal(t, username, "testUser")
+		assert.Equal(t, password, "testPass")
+		assert.Equal(t, "/pools/default/buckets/beer-sample/stats", endpoint)
+
+		data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket-stats.json"))
+		res.Write(data)
+	}))
+	defer testServer.Close()
+
+	i := getTestingIntegration(t)
+
+	testClient := testServer.Client()
+	collector := createBucketCollector(i, testClient, testServer.URL)
+
+	collector.Collect(true, true)
+
+	output, _ := i.MarshalJSON()
+	goldenPath := filepath.Join("..", "testdata", "bucket.json")
+	writeGoldenFile(t, goldenPath, output)
+
+	expected, _ := ioutil.ReadFile(goldenPath)
+	assert.Equal(t, expected, output)
+}
+
 func Test_BucketMetrics(t *testing.T) {
-	bucketStats := definition.PoolsDefaultBucket{
-		ReplicaNumber: new(int),
-	}
-	bucketExtended := definition.BucketStats{
-		Op: &definition.OpStats{
-			Samples: &definition.SampleStats{
-				BytesRead: &[]float64{5.5, 7.5, 1.0, 0.0},
-			},
-		},
-	}
+	bucketStats := createBucketResponse()
+
+	var bucketExtended definition.BucketStats
+	data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket-stats.json"))
+	_ = json.Unmarshal(data, &bucketExtended)
 
 	i := getTestingIntegration(t)
 	e, _ := i.Entity("test", "testEntity")
 
-	metricSet := collectBucketMetrics(e, &bucketStats)
+	metricSet := collectBucketMetrics(e, bucketStats)
 	collectExtendedBucketMetrics(metricSet, &bucketExtended, "test")
 
 	output, _ := i.MarshalJSON()
@@ -38,17 +68,38 @@ func Test_BucketMetrics(t *testing.T) {
 	assert.Equal(t, output, expected)
 }
 
-func createBucketCollector(i *integration.Integration) *bucketCollector {
-	bucketStats := definition.PoolsDefaultBucket{
-		ReplicaNumber: new(int),
-	}
+func Test_BucketInventory(t *testing.T) {
+	var bucketStats definition.PoolsDefaultBucket
+	data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket.json"))
+	_ = json.Unmarshal(data, &bucketStats)
+
+	i := getTestingIntegration(t)
+	e, _ := i.Entity("test", "testEntity")
+
+	collectBucketInventory(e, &bucketStats)
+
+	output, _ := i.MarshalJSON()
+
+	goldenFile := filepath.Join("..", "testdata", "bucket-inventory.json")
+	writeGoldenFile(t, goldenFile, output)
+
+	expected, _ := ioutil.ReadFile(goldenFile)
+	assert.Equal(t, output, expected)
+}
+
+func createBucketCollector(i *integration.Integration, httpClient *http.Client, url string) *bucketCollector {
 	return &bucketCollector{
 		defaultCollector{
-			name:        "test-collector",
+			name:        "beer-sample",
 			integration: i,
-			client:      &client.HTTPClient{},
+			client: &client.HTTPClient{
+				Client:   httpClient,
+				Username: "testUser",
+				Password: "testPass",
+				BaseURL:  url,
+			},
 		},
-		&bucketStats,
+		createBucketResponse(),
 		true,
 	}
 }
@@ -62,4 +113,12 @@ func createBucketExtendedResponse() *definition.BucketStats {
 		},
 	}
 	return &bucketExtended
+}
+
+func createBucketResponse() *definition.PoolsDefaultBucket {
+	var bucketStats definition.PoolsDefaultBucket
+	data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket.json"))
+	_ = json.Unmarshal(data, &bucketStats)
+
+	return &bucketStats
 }

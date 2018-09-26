@@ -14,11 +14,11 @@ import (
 
 // HTTPClient represents a single connection to an Elasticsearch host
 type HTTPClient struct {
-	baseURL      string
-	baseQueryURL string
-	username     string
-	password     string
-	client       *http.Client
+	BaseURL      string
+	BaseQueryURL string
+	Username     string
+	Password     string
+	Client       *http.Client
 	Hostname     string
 	Port         int
 	QueryPort    int
@@ -41,11 +41,11 @@ func CreateClient(args *arguments.ArgumentList, hostnameOverride string) (*HTTPC
 	}
 
 	return &HTTPClient{
-		client:       httpClient,
-		username:     args.Username,
-		password:     args.Password,
-		baseURL:      getBaseURL(args.UseSSL, hostname, args.Port),
-		baseQueryURL: getBaseURL(args.UseSSL, hostname, args.QueryPort),
+		Client:       httpClient,
+		Username:     args.Username,
+		Password:     args.Password,
+		BaseURL:      getBaseURL(args.UseSSL, hostname, args.Port),
+		BaseQueryURL: getBaseURL(args.UseSSL, hostname, args.QueryPort),
 		Hostname:     hostname,
 		Port:         args.Port,
 		QueryPort:    args.QueryPort,
@@ -64,18 +64,18 @@ func getBaseURL(useSSL bool, hostname string, port int) string {
 // Returns an error if the request cannot be completed or a non-200 status code is returned.
 func (c *HTTPClient) Request(endpoint string, model interface{}) error {
 	// make sure we point to the query engine port for query engine metrics
-	url := c.baseURL + endpoint
+	url := c.BaseURL + endpoint
 	if strings.HasPrefix(endpoint, "/admin/") {
-		url = c.baseQueryURL + endpoint
+		url = c.BaseQueryURL + endpoint
 	}
 
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return fmt.Errorf("could not create request for endpoint '%s': %v", endpoint, err)
 	}
-	request.SetBasicAuth(c.username, c.password)
+	request.SetBasicAuth(c.Username, c.Password)
 
-	response, err := c.client.Do(request)
+	response, err := c.Client.Do(request)
 	if err != nil {
 		return fmt.Errorf("could not complete request for endpoint '%s': %v", endpoint, err)
 	}

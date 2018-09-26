@@ -1,0 +1,1 @@
+{"name":"Test","protocol_version":"2","integration_version":"0.0.1","data":[{"entity":{"name":"test","type":"testEntity"},"metrics":[],"inventory":{"config/bucketType":{"value":"membase"},"config/nodeLocator":{"value":"vbucket"},"config/proxyPort":{"value":0},"config/uuid":{"value":"7bc341fe6b3546a0f42080b21e7baafb"}},"events":[]}]}
