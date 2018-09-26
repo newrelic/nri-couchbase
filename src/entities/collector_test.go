@@ -1,13 +1,14 @@
 package entities
 
 import (
+	"flag"
+	"io/ioutil"
 	"testing"
+
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/testutils"
-	"github.com/stretchr/testify/require"
-	"io/ioutil"
-	"flag"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var (

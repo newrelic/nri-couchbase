@@ -1,13 +1,13 @@
 package client
 
 import (
-	"testing"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/infra-integrations-sdk/args"
+	"github.com/newrelic/nri-couchbase/src/arguments"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_CreateClient(t *testing.T) {
@@ -53,18 +53,18 @@ func Test_Request(t *testing.T) {
 		OK *bool `json:"ok"`
 	}{}
 
-	testCases := []struct{
-		Client *HTTPClient
+	testCases := []struct {
+		Client   *HTTPClient
 		Endpoint string
 	}{
 		{
 			// request to standard endpoint which uses the baseURL
 			// requests to "bad-url" will fail
 			&HTTPClient{
-				client: testServer.Client(),
-				username: "testUser",
-				password: "testPass",
-				baseURL: testServer.URL,
+				client:       testServer.Client(),
+				username:     "testUser",
+				password:     "testPass",
+				baseURL:      testServer.URL,
 				baseQueryURL: "bad-url",
 			},
 			"/some/endpoint",
@@ -73,10 +73,10 @@ func Test_Request(t *testing.T) {
 			// request to query endpoint which uses the baseQueryURL
 			// requests to "bad-url" will fail
 			&HTTPClient{
-				client: testServer.Client(),
-				username: "testUser",
-				password: "testPass",
-				baseURL: "bad-url",
+				client:       testServer.Client(),
+				username:     "testUser",
+				password:     "testPass",
+				baseURL:      "bad-url",
 				baseQueryURL: testServer.URL,
 			},
 			"/admin/endpoint",
@@ -102,23 +102,23 @@ func Test_checkStatusCode(t *testing.T) {
 func setupTestArgs() *arguments.ArgumentList {
 	return &arguments.ArgumentList{
 		DefaultArgumentList: args.DefaultArgumentList{
-			Verbose: false,
-			Pretty: false,
-			Metrics: false,
+			Verbose:   false,
+			Pretty:    false,
+			Metrics:   false,
 			Inventory: false,
-			Events: false,
+			Events:    false,
 		},
-		Hostname: "testhostname",
-		Port: 8091,
-		QueryPort: 8093,
-		Username: "testuser",
-		Password: "testpass",
-		UseSSL: false,
-		CABundleDir: "",
-		CABundleFile: "",
+		Hostname:              "testhostname",
+		Port:                  8091,
+		QueryPort:             8093,
+		Username:              "testuser",
+		Password:              "testpass",
+		UseSSL:                false,
+		CABundleDir:           "",
+		CABundleFile:          "",
 		EnableClusterAndNodes: true,
-		EnableBuckets: true,
-		EnableBucketStats: true,
-		Timeout: 30,
+		EnableBuckets:         true,
+		EnableBucketStats:     true,
+		Timeout:               30,
 	}
 }

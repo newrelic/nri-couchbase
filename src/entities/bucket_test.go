@@ -1,12 +1,13 @@
 package entities
 
 import (
-	"github.com/newrelic/nri-couchbase/src/definition"
-	"testing"
-	"github.com/newrelic/nri-couchbase/src/client"
-	"github.com/newrelic/infra-integrations-sdk/integration"
-	"path/filepath"
 	"io/ioutil"
+	"path/filepath"
+	"testing"
+
+	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -29,7 +30,7 @@ func Test_BucketMetrics(t *testing.T) {
 	collectExtendedBucketMetrics(metricSet, &bucketExtended, "test")
 
 	output, _ := i.MarshalJSON()
-	
+
 	goldenFile := filepath.Join("..", "testdata", "bucket-metrics.json")
 	writeGoldenFile(t, goldenFile, output)
 
@@ -43,9 +44,9 @@ func createBucketCollector(i *integration.Integration) *bucketCollector {
 	}
 	return &bucketCollector{
 		defaultCollector{
-			name: "test-collector",
+			name:        "test-collector",
 			integration: i,
-			client: &client.HTTPClient{},
+			client:      &client.HTTPClient{},
 		},
 		&bucketStats,
 		true,
