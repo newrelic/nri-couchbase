@@ -8,7 +8,6 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/definition"
 )
 
@@ -33,7 +32,18 @@ func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
 	}
 
 	if collectMetrics {
-		collectBucketMetrics(bucketEntity, b.bucketResponse, b.client)
+		bucketMetricSet := collectBucketMetrics(bucketEntity, b.bucketResponse)
+
+		if b.collectExtendedMetrics {
+			var bucketStats definition.BucketStats
+			endpoint := fmt.Sprintf("/pools/default/buckets/%s/stats", b.GetName())
+			err := b.GetClient().Request(endpoint, &bucketStats)
+			if err != nil {
+				return err
+			}
+
+			collectExtendedBucketMetrics(bucketMetricSet, &bucketStats, b.GetName())
+		}
 	}
 
 	if collectInventory {
@@ -43,7 +53,7 @@ func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
 	return nil
 }
 
-func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket, client *client.HTTPClient) {
+func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket) *metric.Set {
 	bucketMetricSet := bucketEntity.NewMetricSet("CouchbaseBucketSample",
 		metric.Attribute{Key: "displayName", Value: bucketEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
@@ -54,17 +64,10 @@ func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *
 		log.Error("Could not marshal metrics from bucket struct: %v", err)
 	}
 
-	collectExtendedBucketMetrics(bucketMetricSet, client, bucketEntity.Metadata.Name)
+	return bucketMetricSet
 }
 
-func collectExtendedBucketMetrics(metricSet *metric.Set, bucketClient *client.HTTPClient, bucketName string) error {
-	var bucketStats definition.BucketStats
-	endpoint := fmt.Sprintf("/pools/default/buckets/%s/stats", bucketName)
-	err := bucketClient.Request(endpoint, &bucketStats)
-	if err != nil {
-		return err
-	}
-
+func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition.BucketStats, bucketName string) error {
 	structType := reflect.TypeOf(*bucketStats.Op.Samples)
 	structValue := reflect.ValueOf(*bucketStats.Op.Samples)
 	for i := 0; i < structType.NumField(); i++ {
