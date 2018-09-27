@@ -6,16 +6,12 @@
 # refer to the Integrations SDK documentation:
 # https://docs.newrelic.com/docs/integrations/integrations-sdk/file-specifications
 
-name: com.testco.nri-couchbase
-description: Reports status and metrics for nri-couchbase service
+name: com.newrelic.couchbase
+description: Reports status and metrics for Couchbase service
 protocol_version: 1
 os: linux
 
 commands:
-  all_data:
-    command:
-      - ./bin/tc-nri-couchbase
-    interval: 15
   metrics:
     command:
       - ./bin/tc-nri-couchbase
@@ -27,8 +23,4 @@ commands:
       - --inventory
     prefix: config/tc-nri-couchbase
     interval: 15
-  events:
-    command:
-    - ./bin/tc-nri-couchbase
-    - --events
-    interval: 15
+

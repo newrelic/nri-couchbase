@@ -35,7 +35,9 @@ func collectorWorker(collectorChan chan entities.Collector, wg *sync.WaitGroup) 
 			return
 		}
 
-		collector.Collect(args.HasInventory(), args.HasMetrics())
+		if err := collector.Collect(args.HasInventory(), args.HasMetrics()); err != nil {
+			log.Error("Error running collection for collector '%s': %s", collector.GetName(), err.Error())
+		}
 	}
 }
 

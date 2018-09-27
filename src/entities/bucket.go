@@ -45,12 +45,13 @@ func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *
 		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
 	)
 
-	err := bucketMetricSet.MarshalMetrics(baseBucketResponse)
-	if err != nil {
+	if err := bucketMetricSet.MarshalMetrics(baseBucketResponse); err != nil {
 		log.Error("Could not marshal metrics from bucket struct: %v", err)
 	}
 
-	collectExtendedBucketMetrics(bucketMetricSet, client, bucketEntity.Metadata.Name)
+	if err := collectExtendedBucketMetrics(bucketMetricSet, client, bucketEntity.Metadata.Name); err != nil {
+		log.Error("Could not collect extended metrics for bucket '%s': %s", bucketEntity.Metadata.Name, err.Error())
+	}
 }
 
 func collectExtendedBucketMetrics(metricSet *metric.Set, bucketClient *client.HTTPClient, bucketName string) error {

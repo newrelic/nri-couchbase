@@ -33,6 +33,12 @@
 			"revisionTime": "2018-08-28T16:16:20Z"
 		},
 		{
+			"checksumSHA1": "TOAGNG0RrWwayYA+ArmTetH8ha4=",
+			"path": "github.com/newrelic/infra-integrations-sdk/http",
+			"revision": "a9213176e7c44f5780696483f45c80a156433559",
+			"revisionTime": "2018-08-28T16:16:20Z"
+		},
+		{
 			"checksumSHA1": "iYqZm+K1690zh7ihc+yDbKftd9g=",
 			"path": "github.com/newrelic/infra-integrations-sdk/integration",
 			"revision": "a9213176e7c44f5780696483f45c80a156433559",
