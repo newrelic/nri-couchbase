@@ -1,0 +1,55 @@
+{
+    "systemStats": {
+        "cpu_utilization_rate": 15.12820512820513,
+        "swap_total": 6442446848,
+        "swap_used": 58511360,
+        "mem_total": 3974971392,
+        "mem_free": 956067840
+    },
+    "interestingStats": {
+        "cmd_get": 0,
+        "couch_docs_actual_disk_size": 121426713,
+        "couch_docs_data_size": 79362203,
+        "couch_spatial_data_size": 0,
+        "couch_spatial_disk_size": 0,
+        "couch_views_actual_disk_size": 281638,
+        "couch_views_data_size": 281638,
+        "curr_items": 13202,
+        "curr_items_tot": 39480,
+        "ep_bg_fetched": 0,
+        "get_hits": 0,
+        "mem_used": 99598744,
+        "ops": 0,
+        "vb_active_num_non_resident": 1062,
+        "vb_replica_curr_items": 26278
+    },
+    "uptime": "20486100",
+    "memoryTotal": 3974971392,
+    "memoryFree": 956067840,
+    "mcdMemoryReserved": 3032,
+    "mcdMemoryAllocated": 3032,
+    "couchApiBase": "http://10.33.106.59:8092/",
+    "couchApiBaseHTTPS": "https://10.33.106.59:18092/",
+    "otpCookie": "8ec971b8bc11bf0d57404e89545d305549ce95fd416efdd8c7ffe32e5738c322",
+    "clusterMembership": "active",
+    "recoveryType": "none",
+    "status": "healthy",
+    "otpNode": "ns_1@10.33.106.59",
+    "hostname": "10.33.106.59:8091",
+    "clusterCompatibility": 327680,
+    "version": "5.0.1-5003-enterprise",
+    "os": "x86_64-unknown-linux-gnu",
+    "ports": {
+        "sslProxy": 11214,
+        "httpsMgmt": 18091,
+        "httpsCAPI": 18092,
+        "proxy": 11211,
+        "direct": 11210
+    },
+    "services": [
+        "fts",
+        "index",
+        "kv",
+        "n1ql"
+    ]
+}

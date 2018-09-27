@@ -142,6 +142,7 @@ func convertTimeUnit(time string) (float64, error) {
 	timeUnit := timeUnitRegex.FindString(time)
 
 	var milliseconds float64
+	err = nil
 	switch timeUnit {
 	case "d":
 		milliseconds = timeValue * 1000 * 60 * 60 * 24
@@ -163,5 +164,5 @@ func convertTimeUnit(time string) (float64, error) {
 		err = fmt.Errorf("unknown time unit '%s'", timeUnit)
 	}
 
-	return milliseconds, nil
+	return milliseconds, err
 }

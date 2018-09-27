@@ -1,12 +1,13 @@
 package entities
 
 import (
-	"github.com/newrelic/nri-couchbase/src/definition"
-	"testing"
-	"net/http"
-	"io/ioutil"
-	"path/filepath"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"path/filepath"
+	"testing"
+
+	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
@@ -15,7 +16,7 @@ import (
 
 func Test_ClusterCollection(t *testing.T) {
 	endpointMap := map[string]string{
-		"/pools": filepath.Join("..", "testdata", "input", "pools.json"),
+		"/pools":                 filepath.Join("..", "testdata", "input", "pools.json"),
 		"/settings/autoFailover": filepath.Join("..", "testdata", "input", "auto-failover.json"),
 	}
 	testServer := getTestServer(t, endpointMap)
@@ -50,7 +51,7 @@ func createClusterCollector(i *integration.Integration, httpClient *http.Client,
 				BaseURL:  url,
 			},
 		},
-		url,
+		"some-hostname",
 		&poolsDefault,
 	}
 }

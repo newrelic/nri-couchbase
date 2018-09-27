@@ -3,17 +3,17 @@ package entities
 import (
 	"flag"
 	"io/ioutil"
-	"testing"
-	"net/http/httptest"
 	"net/http"
+	"net/http/httptest"
 	"path/filepath"
+	"testing"
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/nri-couchbase/src/arguments"
+	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/newrelic/nri-couchbase/src/arguments"
-	"github.com/newrelic/nri-couchbase/src/client"
 )
 
 var (
@@ -55,7 +55,7 @@ func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
 
 func Test_GetCollectors(t *testing.T) {
 	endpointMap := map[string]string{
-		"/pools/default": filepath.Join("..", "testdata", "input", "cluster.json"),
+		"/pools/default":         filepath.Join("..", "testdata", "input", "cluster.json"),
 		"/pools/default/buckets": filepath.Join("..", "testdata", "input", "buckets.json"),
 	}
 	testServer := getTestServer(t, endpointMap)
@@ -64,10 +64,10 @@ func Test_GetCollectors(t *testing.T) {
 	i := getTestingIntegration(t)
 	args := arguments.ArgumentList{}
 	client := &client.HTTPClient{
-		Client: testServer.Client(),
+		Client:   testServer.Client(),
 		Username: "testUser",
 		Password: "testPass",
-		BaseURL: testServer.URL,
+		BaseURL:  testServer.URL,
 	}
 
 	clusterCollectors, err := GetClusterCollectors(&args, i, client)
