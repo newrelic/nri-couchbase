@@ -14,13 +14,13 @@ os: linux
 commands:
   metrics:
     command:
-      - ./bin/tc-nri-couchbase
+      - ./bin/nr-couchbase
       - --metrics
     interval: 15
   inventory:
     command:
-      - ./bin/tc-nri-couchbase
+      - ./bin/nr-couchbase
       - --inventory
-    prefix: config/tc-nri-couchbase
+    prefix: config/nr-couchbase
     interval: 15
 
