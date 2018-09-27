@@ -55,15 +55,14 @@ func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *
 		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
 	)
 
-	err := bucketMetricSet.MarshalMetrics(baseBucketResponse)
-	if err != nil {
+	if err := bucketMetricSet.MarshalMetrics(baseBucketResponse); err != nil {
 		log.Error("Could not marshal metrics from bucket struct: %v", err)
 	}
 
 	return bucketMetricSet
 }
 
-func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition.BucketStats, bucketName string) error {
+func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition.BucketStats, bucketName string) {
 	structType := reflect.TypeOf(*bucketStats.Op.Samples)
 	structValue := reflect.ValueOf(*bucketStats.Op.Samples)
 	for i := 0; i < structType.NumField(); i++ {
@@ -72,6 +71,7 @@ func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition
 		metricValue, err := getValueFromArray(fieldValue)
 		if err != nil {
 			log.Error("Could not get metric value for %s: %v", field.Name, err)
+			continue
 		}
 
 		metricName := field.Tag.Get("metric_name")
@@ -82,7 +82,7 @@ func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition
 			log.Error("Could not set metric '%s': %v", metricName, err)
 		}
 	}
-	return nil
+	return
 }
 
 func getValueFromArray(values reflect.Value) (float64, error) {
