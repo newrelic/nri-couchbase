@@ -12,6 +12,8 @@ import (
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/client"
+
+	"github.com/newrelic/nri-couchbase/src/testutils"
 )
 
 func Test_ClusterCollection(t *testing.T) {
@@ -19,7 +21,7 @@ func Test_ClusterCollection(t *testing.T) {
 		"/pools":                 filepath.Join("..", "testdata", "input", "pools.json"),
 		"/settings/autoFailover": filepath.Join("..", "testdata", "input", "auto-failover.json"),
 	}
-	testServer := getTestServer(t, endpointMap)
+	testServer := testutils.GetTestServer(t, endpointMap)
 	defer testServer.Close()
 
 	i := getTestingIntegration(t)

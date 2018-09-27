@@ -5,7 +5,6 @@ import (
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/entities"
 )
@@ -42,7 +41,7 @@ func collectorWorker(collectorChan chan entities.Collector, wg *sync.WaitGroup) 
 }
 
 // FeedWorkerPool feeds the workers with the collectors that contain the info needed to collect each entity
-func FeedWorkerPool(args *arguments.ArgumentList, client *client.HTTPClient, collectorChan chan entities.Collector, integration *integration.Integration) {
+func FeedWorkerPool(client *client.HTTPClient, collectorChan chan entities.Collector, integration *integration.Integration) {
 	defer close(collectorChan)
 
 	// Create a wait group for each of the get*Collectors calls

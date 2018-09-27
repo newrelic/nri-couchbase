@@ -31,7 +31,7 @@ func main() {
 	collectorChan := StartCollectorWorkerPool(10, &wg)
 
 	// Feed the worker pool with entities to be collected
-	go FeedWorkerPool(&args, client, collectorChan, i)
+	go FeedWorkerPool(client, collectorChan, i)
 
 	// Wait for workers to finish
 	wg.Wait()

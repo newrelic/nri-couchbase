@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,7 +15,7 @@ func Test_QueryEngineCollection(t *testing.T) {
 		"/admin/settings": filepath.Join("..", "testdata", "input", "admin-settings.json"),
 		"/admin/vitals":   filepath.Join("..", "testdata", "input", "admin-vitals.json"),
 	}
-	testServer := getTestServer(t, dataMap)
+	testServer := testutils.GetTestServer(t, dataMap)
 	defer testServer.Close()
 
 	i := getTestingIntegration(t)

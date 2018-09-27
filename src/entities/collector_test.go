@@ -3,8 +3,6 @@ package entities
 import (
 	"flag"
 	"io/ioutil"
-	"net/http"
-	"net/http/httptest"
 	"path/filepath"
 	"testing"
 
@@ -19,24 +17,6 @@ import (
 var (
 	update = flag.Bool("update", false, "update .golden files")
 )
-
-func getTestServer(t *testing.T, dataMap map[string]string) *httptest.Server {
-	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		res.WriteHeader(200)
-		username, password, ok := req.BasicAuth()
-		assert.True(t, ok)
-		assert.Equal(t, username, "testUser")
-		assert.Equal(t, password, "testPass")
-
-		endpoint := req.RequestURI
-		filepath, ok := dataMap[endpoint]
-		if !ok {
-			t.Errorf("bad request, was not expecting request for endpoint %s", endpoint)
-		}
-		data, _ := ioutil.ReadFile(filepath)
-		res.Write(data)
-	}))
-}
 
 func getTestingIntegration(t *testing.T) *integration.Integration {
 	payload, err := integration.New("Test", "0.0.1", integration.Logger(&testutils.TestLogger{F: t.Logf}))
@@ -58,7 +38,7 @@ func Test_GetCollectors(t *testing.T) {
 		"/pools/default":         filepath.Join("..", "testdata", "input", "cluster.json"),
 		"/pools/default/buckets": filepath.Join("..", "testdata", "input", "buckets.json"),
 	}
-	testServer := getTestServer(t, endpointMap)
+	testServer := testutils.GetTestServer(t, endpointMap)
 	defer testServer.Close()
 
 	i := getTestingIntegration(t)

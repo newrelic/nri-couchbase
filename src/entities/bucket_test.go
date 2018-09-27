@@ -10,6 +10,7 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/definition"
+	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,7 +18,7 @@ func Test_FunctionalCollection(t *testing.T) {
 	endpointMap := map[string]string{
 		"/pools/default/buckets/beer-sample/stats": filepath.Join("..", "testdata", "input", "bucket-stats.json"),
 	}
-	testServer := getTestServer(t, endpointMap)
+	testServer := testutils.GetTestServer(t, endpointMap)
 	defer testServer.Close()
 
 	i := getTestingIntegration(t)
