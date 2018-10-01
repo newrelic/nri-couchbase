@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http/httptest"
 	"path/filepath"
-	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -37,19 +36,20 @@ func Test_EndToEnd(t *testing.T) {
 
 	collect(testIntegration, testClient)
 
-	output, _ := testIntegration.MarshalJSON()
-	// scrub test server hostname and port since it changes from run to run
-	regex := regexp.MustCompile(`localhost:\d+`)
-	output = regex.ReplaceAll(output, []byte("test-server"))
-
-	regex = regexp.MustCompile(`config/port\":\{\"value\":\d+`)
-	output = regex.ReplaceAll(output, []byte("config/port\":{\"value\":13131"))
-
-	goldenFile := filepath.Join("testdata", "full-collection.json")
-	writeGoldenFile(t, goldenFile, output)
-
-	expected, _ := ioutil.ReadFile(goldenFile)
-	assert.Equal(t, expected, output)
+	// should have 4 total entities, one of each type
+	assert.Equal(t, 4, len(testIntegration.Entities))
+	counts := map[string]int{
+		"queryEngine": 0,
+		"node": 0,
+		"cluster": 0,
+		"bucket": 0,
+	}
+	for _, entity := range testIntegration.Entities {
+		counts[entity.Metadata.Namespace]++
+	}
+	for _, count := range counts {
+		assert.Equal(t, 1, count)
+	}
 }
 
 func getMappedMockServerAndClient(t *testing.T) (*httptest.Server, *client.HTTPClient) {
