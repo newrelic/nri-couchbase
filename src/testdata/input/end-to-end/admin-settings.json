@@ -1,0 +1,21 @@
+{
+	"completed-limit": 4000,
+	"completed-threshold": 1000,
+	"controls": false,
+	"cpuprofile": "",
+	"debug": false,
+	"keep-alive-length": 16384,
+	"loglevel": "INFO",
+	"max-index-api": 2,
+	"max-parallelism": 1,
+	"memprofile": "",
+	"pipeline-batch": 16,
+	"pipeline-cap": 512,
+	"prepared-limit": 16384,
+	"pretty": false,
+	"profile": "off",
+	"request-size-cap": 67108864,
+	"scan-cap": 512,
+	"servicers": 16,
+	"timeout": 0
+}

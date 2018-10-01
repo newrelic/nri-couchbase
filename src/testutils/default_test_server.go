@@ -24,6 +24,9 @@ func GetTestServer(t *testing.T, dataMap map[string]string) *httptest.Server {
 			t.Errorf("bad request, was not expecting request for endpoint %s", endpoint)
 		}
 		data, _ := ioutil.ReadFile(filepath)
-		res.Write(data)
+		_, err := res.Write(data)
+		if err != nil {
+			t.Errorf("could not write response body for endpoint %s: %v", endpoint, err)
+		}
 	}))
 }

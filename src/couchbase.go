@@ -25,6 +25,12 @@ func main() {
 	client, err := client.CreateClient(&args, "")
 	panicOnErr(err)
 
+	collect(i, client)
+
+	panicOnErr(i.Publish())
+}
+
+func collect(i *integration.Integration, client *client.HTTPClient) {
 	// create worker pool
 	// Start workers
 	var wg sync.WaitGroup
@@ -35,12 +41,6 @@ func main() {
 
 	// Wait for workers to finish
 	wg.Wait()
-
-	// collect cluster/nodes?
-	//CollectCluster(i, client)
-	// collect buckets?
-
-	panicOnErr(i.Publish())
 }
 
 func panicOnErr(err error) {

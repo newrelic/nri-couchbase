@@ -1,175 +1,95 @@
 package main
 
 import (
-	"path/filepath"
-	"sync"
+	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"flag"
+	"io/ioutil"
+	"path/filepath"
+	"regexp"
+	"strconv"
+	"strings"
+
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
-	"github.com/newrelic/nri-couchbase/src/entities"
 	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestStartCollectorWorkerPool(t *testing.T) {
-	numWorkers := 10
-	var wg sync.WaitGroup
-	entitiesChan := StartCollectorWorkerPool(numWorkers, &wg)
-	close(entitiesChan)
+var (
+	update = flag.Bool("update", false, "update .golden files")
+)
 
-	c := make(chan struct{})
-	go func() {
-		defer close(c)
-		wg.Wait()
-	}()
-
-	select {
-	case <-c:
-		return
-	case <-time.After(time.Second):
-		assert.FailNow(t, "Wait group close timed out")
+func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
+	if *update {
+		t.Log("Writing .golden file")
+		err := ioutil.WriteFile(goldenPath, data, 0644)
+		assert.NoError(t, err)
 	}
 }
 
-type testCollector struct {
-	name        string
-	integration *integration.Integration
-	client      *client.HTTPClient
+func Test_EndToEnd(t *testing.T) {
+	testServ, testClient := getMappedMockServerAndClient(t)
+	defer testServ.Close()
+
+	testIntegration, _ := integration.New("test", "0.1.0")
+
+	collect(testIntegration, testClient)
+
+	output, _ := testIntegration.MarshalJSON()
+	// scrub test server hostname and port since it changes from run to run
+	regex := regexp.MustCompile(`localhost:\d+`)
+	output = regex.ReplaceAll(output, []byte("test-server"))
+
+	regex = regexp.MustCompile(`config/port\":\{\"value\":\d+`)
+	output = regex.ReplaceAll(output, []byte("config/port\":{\"value\":13131"))
+
+	goldenFile := filepath.Join("testdata", "full-collection.json")
+	writeGoldenFile(t, goldenFile, output)
+
+	expected, _ := ioutil.ReadFile(goldenFile)
+	assert.Equal(t, expected, output)
 }
 
-func (t *testCollector) GetEntity() (*integration.Entity, error) {
-	if t.integration != nil {
-		return t.integration.Entity(t.name, "test")
-	}
-
-	return nil, assert.AnError
-}
-
-func (t *testCollector) GetName() string {
-	return t.name
-}
-
-func (t *testCollector) GetIntegration() *integration.Integration {
-	return t.integration
-}
-
-func (t *testCollector) GetClient() *client.HTTPClient {
-	return t.client
-}
-
-func (t *testCollector) Collect(collectInventory, collectMetrics bool) error {
-	e, err := t.GetEntity()
-	if err != nil {
-		return err
-	}
-	e.SetInventoryItem("testitem", "value", "some-attribute")
-
-	ms := e.NewMetricSet("testSample")
-	return ms.SetMetric("test-metric", 17, metric.GAUGE)
-}
-
-func Test_collectorWorker(t *testing.T) {
-	collectorChan := make(chan entities.Collector)
-	var wg sync.WaitGroup
-	i, _ := integration.New("testIntegration", "testVersion")
-
-	wg.Add(1)
-	go collectorWorker(collectorChan, &wg)
-
-	collectorChan <- &testCollector{
-		"testName",
-		i,
-		&client.HTTPClient{},
-	}
-	close(collectorChan)
-
-	c := make(chan struct{})
-	go func() {
-		defer close(c)
-		wg.Wait()
-	}()
-
-	select {
-	case <-c:
-		assert.Len(t, i.Entities, 1, "Expected one entity")
-		assert.Len(t, i.Entities[0].Metrics[0].Metrics, 2, "Expected one metric in the set")
-		assert.Len(t, i.Entities[0].Inventory.Items(), 1, "Expected one inventory item")
-	case <-time.After(time.Second):
-		assert.FailNow(t, "Collector worker took too long to close.")
-	}
-}
-
-func Test_FeedWorkerPool(t *testing.T) {
+func getMappedMockServerAndClient(t *testing.T) (*httptest.Server, *client.HTTPClient) {
 	endpointMap := map[string]string{
-		"/pools/default":         filepath.Join("testdata", "input", "cluster.json"),
-		"/pools/default/buckets": filepath.Join("testdata", "input", "buckets.json"),
+		"/pools":                                     filepath.Join("testdata", "input", "end-to-end", "pools.json"),
+		"/pools/default":                             filepath.Join("testdata", "input", "end-to-end", "pools-default.json"),
+		"/pools/default/buckets":                     filepath.Join("testdata", "input", "end-to-end", "pools-default-buckets.json"),
+		"/pools/default/buckets/sample-bucket/stats": filepath.Join("testdata", "input", "end-to-end", "bucket-stats.json"),
+		"/admin/settings":                            filepath.Join("testdata", "input", "end-to-end", "admin-settings.json"),
+		"/admin/vitals":                              filepath.Join("testdata", "input", "end-to-end", "admin-vitals.json"),
+		"/settings/autoFailover":                     filepath.Join("testdata", "input", "end-to-end", "auto-failover.json"),
 	}
-	testServer := testutils.GetTestServer(t, endpointMap)
 
-	mockedClient := client.HTTPClient{
+	testServer := testutils.GetTestServer(t, endpointMap)
+	hostnamePort := strings.Split(strings.Split(testServer.URL, "://")[1], ":")
+	hostname := hostnamePort[0]
+	port, _ := strconv.Atoi(hostnamePort[1])
+
+	args = arguments.ArgumentList{
+		Hostname:              hostname,
+		Port:                  port,
+		QueryPort:             port,
+		Username:              "testUser",
+		Password:              "testPass",
+		EnableBuckets:         true,
+		EnableBucketStats:     true,
+		EnableClusterAndNodes: true,
+	}
+
+	client := client.HTTPClient{
 		Client:       testServer.Client(),
 		Username:     "testUser",
 		Password:     "testPass",
+		Hostname:     hostname,
+		Port:         port,
+		QueryPort:    port,
 		BaseURL:      testServer.URL,
 		BaseQueryURL: testServer.URL,
 	}
 
-	args = arguments.ArgumentList{
-		QueryPort: 8093,
-	}
-
-	collChan := make(chan entities.Collector)
-	i, _ := integration.New("test", "0.0.0")
-
-	go FeedWorkerPool(&mockedClient, collChan, i)
-
-	wgDone := make(chan struct{})
-	var collectors []entities.Collector
-	go func() {
-		for {
-			coll, ok := <-collChan
-			if !ok {
-				break
-			} else {
-				collectors = append(collectors, coll)
-			}
-		}
-		close(wgDone)
-	}()
-
-	expectedCollectorNames := map[string]bool{
-		// cluster
-		"couch5": true,
-		// nodes
-		"10.33.106.59:8091":                   true,
-		"cb50-rh7-1.bluemedora.localnet:8091": true,
-		"cb50-rh7-2.bluemedora.localnet:8091": true,
-		// query engines
-		"10.33.106.59:8093":                   true,
-		"cb50-rh7-1.bluemedora.localnet:8093": true,
-		"cb50-rh7-2.bluemedora.localnet:8093": true,
-		// buckets
-		"beer-sample":    true,
-		"gamesim-sample": true,
-		"travel-sample":  true,
-	}
-
-	select {
-	case <-wgDone:
-		assert.Len(t, collectors, len(expectedCollectorNames))
-		for _, coll := range collectors {
-			_, ok := expectedCollectorNames[coll.GetName()]
-			assert.True(t, ok, "Expected collector name is missing: %s", coll.GetName())
-			assert.Equal(t, i, coll.GetIntegration())
-			e, err := coll.GetEntity()
-			assert.NoError(t, err)
-			assert.NotNil(t, e)
-		}
-	case <-time.After(time.Second):
-		assert.FailNow(t, "Timed out waiting for Mongoses")
-	}
+	return testServer, &client
 }
