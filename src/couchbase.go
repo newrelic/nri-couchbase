@@ -49,7 +49,7 @@ func collect(i *integration.Integration, client *client.HTTPClient) {
 
 func exitOnError(err error) {
 	if err != nil {
-		log.Error("COuld not complete collection: %v", err)
+		log.Error("Could not complete collection: %v", err)
 		os.Exit(1)
 	}
 }
