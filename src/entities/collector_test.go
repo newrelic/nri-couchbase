@@ -19,7 +19,7 @@ var (
 )
 
 func getTestingIntegration(t *testing.T) *integration.Integration {
-	payload, err := integration.New("Test", "0.0.1", integration.Logger(&testutils.TestLogger{F: t.Logf}))
+	payload, err := integration.New("Test", "0.0.1")
 	require.NoError(t, err)
 	require.NotNil(t, payload)
 	return payload

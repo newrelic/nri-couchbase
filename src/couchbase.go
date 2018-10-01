@@ -1,9 +1,11 @@
 package main
 
 import (
+	"os"
 	"sync"
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
 )
@@ -20,14 +22,16 @@ var (
 func main() {
 	// Create Integration
 	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
-	panicOnErr(err)
+	exitOnError(err)
+
+	log.SetupLogging(args.Verbose)
 
 	client, err := client.CreateClient(&args, "")
-	panicOnErr(err)
+	exitOnError(err)
 
 	collect(i, client)
 
-	panicOnErr(i.Publish())
+	exitOnError(i.Publish())
 }
 
 func collect(i *integration.Integration, client *client.HTTPClient) {
@@ -43,8 +47,9 @@ func collect(i *integration.Integration, client *client.HTTPClient) {
 	wg.Wait()
 }
 
-func panicOnErr(err error) {
+func exitOnError(err error) {
 	if err != nil {
-		panic(err)
+		log.Error("COuld not complete collection: %v", err)
+		os.Exit(1)
 	}
 }

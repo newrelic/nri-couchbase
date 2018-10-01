@@ -1,15 +1,14 @@
 package main
 
 import (
-	"net/http/httptest"
-	"testing"
-
 	"flag"
 	"io/ioutil"
+	"net/http/httptest"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
+	"testing"
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/arguments"

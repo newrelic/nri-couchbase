@@ -8,10 +8,12 @@ import (
 
 func Test_ValidateArguments(t *testing.T) {
 	testCases := []struct {
+		name          string
 		args          ArgumentList
 		expectedError bool
 	}{
 		{
+			"Valid arguments",
 			ArgumentList{
 				Username:     "testuser",
 				Password:     "testpass",
@@ -25,6 +27,7 @@ func Test_ValidateArguments(t *testing.T) {
 			false,
 		},
 		{
+			"Missing/invalid username",
 			ArgumentList{
 				Username:  "",
 				Password:  "testpass",
@@ -35,6 +38,7 @@ func Test_ValidateArguments(t *testing.T) {
 			true,
 		},
 		{
+			"Missing/invalid password",
 			ArgumentList{
 				Username:  "testuser",
 				Password:  "",
@@ -45,6 +49,7 @@ func Test_ValidateArguments(t *testing.T) {
 			true,
 		},
 		{
+			"Missing/invalid hostname",
 			ArgumentList{
 				Username:  "testuser",
 				Password:  "testpass",
@@ -55,6 +60,7 @@ func Test_ValidateArguments(t *testing.T) {
 			true,
 		},
 		{
+			"Invalid port",
 			ArgumentList{
 				Username:  "testuser",
 				Password:  "testpass",
@@ -65,6 +71,7 @@ func Test_ValidateArguments(t *testing.T) {
 			true,
 		},
 		{
+			"Invalid query port",
 			ArgumentList{
 				Username:  "testuser",
 				Password:  "testpass",
@@ -75,6 +82,7 @@ func Test_ValidateArguments(t *testing.T) {
 			true,
 		},
 		{
+			"Invalid SSL settings",
 			ArgumentList{
 				Username:     "testuser",
 				Password:     "testpass",
