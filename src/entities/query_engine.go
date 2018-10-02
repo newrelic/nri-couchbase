@@ -87,7 +87,7 @@ func collectQueryEngineInventory(queryEngineEntity *integration.Entity, vitalsRe
 	}
 
 	for _, inventoryItem := range inventoryItems {
-		if err := queryEngineEntity.SetInventoryItem("config/"+inventoryItem.key, "value", inventoryItem.value); err != nil {
+		if err := queryEngineEntity.SetInventoryItem(inventoryItem.key, "value", inventoryItem.value); err != nil {
 			log.Error("Could not set inventory item '%s' on query engine entity: %v", inventoryItem.key, err)
 		}
 	}

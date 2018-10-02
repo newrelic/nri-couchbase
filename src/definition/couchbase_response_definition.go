@@ -68,7 +68,7 @@ type StorageTotalsHDD struct {
 // Node struct for pools/default endpoint, nodes objects
 type Node struct {
 	SystemStats       *SystemStats `json:"systemStats"`
-	RecoveryType      *string      `json:"recoveryType" metric_name:"node.recoveryType" source_type:"attribute"`
+	RecoveryType      *string      `json:"recoveryType"`
 	Status            *string      `json:"status" metric_name:"node.status" source_type:"attribute"`
 	Uptime            *string      `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
 	Services          *[]string    `json:"services"`
@@ -94,7 +94,7 @@ type PoolsDefaultBucket struct {
 	BucketName     *string     `json:"name"`
 	BasicStats     *BasicStats `json:"basicStats"`
 	EvictionPolicy *string     `json:"evictionPolicy" metric_name:"bucket.evictionPolicy" source_type:"attribute"`
-	NodeLocator    *string     `json:"nodeLocator" metric_name:"bucket.nodeLocator" source_type:"attribute"`
+	NodeLocator    *string     `json:"nodeLocator"`
 	ReplicaIndex   *bool       `json:"replicaIndex" metric_name:"bucket.replicaIndex" source_type:"gauge"`
 	ReplicaNumber  *int        `json:"replicaNumber" metric_name:"bucket.replicaNumber" source_type:"gauge"`
 	ThreadsNumber  *int        `json:"threadsNumber" metric_name:"bucket.threadsNumber" source_type:"gauge"`

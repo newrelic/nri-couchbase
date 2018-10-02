@@ -63,7 +63,7 @@ func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse 
 	}
 
 	for _, inventoryItem := range inventoryItems {
-		if err := clusterEntity.SetInventoryItem("config/"+inventoryItem.key, "value", inventoryItem.value); err != nil {
+		if err := clusterEntity.SetInventoryItem(inventoryItem.key, "value", inventoryItem.value); err != nil {
 			log.Error("Could not set inventory item '%s' on cluster entity: %v", inventoryItem.key, err)
 		}
 	}

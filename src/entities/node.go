@@ -67,7 +67,7 @@ func collectNodeInventory(nodeEntity *integration.Entity, nodeResponse *definiti
 	}
 
 	for _, inventoryItem := range inventoryItems {
-		if err := nodeEntity.SetInventoryItem("config/"+inventoryItem.key, "value", inventoryItem.value); err != nil {
+		if err := nodeEntity.SetInventoryItem(inventoryItem.key, "value", inventoryItem.value); err != nil {
 			log.Error("Could not set inventory item '%s' on node entity: %v", inventoryItem.key, err)
 		}
 	}
