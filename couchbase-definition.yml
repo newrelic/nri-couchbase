@@ -16,4 +16,4 @@ commands:
     command:
       - ./bin/nr-couchbase
     interval: 15
-    prefix: config/nr-couchbase
+    prefix: config/couchbase
