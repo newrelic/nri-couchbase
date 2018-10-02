@@ -12,15 +12,8 @@ protocol_version: 1
 os: linux
 
 commands:
-  metrics:
+  all_data:
     command:
       - ./bin/nr-couchbase
-      - --metrics
     interval: 15
-  inventory:
-    command:
-      - ./bin/nr-couchbase
-      - --inventory
     prefix: config/nr-couchbase
-    interval: 15
-

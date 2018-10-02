@@ -1,24 +1,21 @@
-# Configuration file template, provided in case you want to provide extra
-# configuration over the tc-nri-couchbase-config.yml
-# file.
-#
-# For a complete description of the Configuration File Specification, please
-# refer to the Integrations SDK documentation:
-# https://docs.newrelic.com/docs/integrations/integrations-sdk/file-specifications
-
 integration_name: com.newrelic.couchbase
 
 instances:
-  - name: <INSTANCE IDENTIFIER>
-    command: metrics
+  - name: couchbase
+    command: all_data
     arguments:
-      arg1: <ARG_VALUE>
+      hostname: <The hostname or IP of the Couchbase node being monitored (default "localhost")>
+      port: <The port used to connect to the Couchbase API (default 8091)>
+      query_port: <The port used to connect to the N1QL service (default 8093)>
+      username: <The username used to connect to the Couchbase API>
+      password: <The password used to connect to the Couchbase API>
+      use_ssl: <true or false. Signals whether to use SSL or not. Certificate bundle must be supplied. (default false)>
+      ca_bundle_dir: <Alternative Certificate Authority bundle directory, required if use_ssl is true>
+      ca_bundle_file: <Alternative Certificate Authority bundle file, required if use_ssl is true>
+      enable_buckets: <(Optional) true or false. If true, collects bucket resources (default true)>
+      enable_bucket_stats: <(Optional) true or false. If true, collects additional bucket statistics (default true)>
+      enable_cluster_and_nodes: <(Optional) true or false. If true, collects cluster and node resources (default true)>
+      timeout: <(Optional) Timeout, in seconds, for an API call (default 30)>
     labels:
-      key1: <LABEL_VALUE>
-
-  - name: <OTHER INSTANCE IDENTIFIER>
-    command: inventory
-    arguments:
-      arg1: <ARG_VALUE>
-    labels:
-      key1: <LABEL_VALUE>
+      env: production
+      role: couchbase
