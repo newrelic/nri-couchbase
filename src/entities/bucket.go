@@ -114,7 +114,7 @@ func collectBucketInventory(bucketEntity *integration.Entity, baseBucketResponse
 	}
 
 	for _, item := range items {
-		if err := bucketEntity.SetInventoryItem("config/"+item.key, "value", item.value); err != nil {
+		if err := bucketEntity.SetInventoryItem(item.key, "value", item.value); err != nil {
 			log.Error("Could not set inventory item '%s' on bucket entity: %v", item.key, err)
 		}
 	}
