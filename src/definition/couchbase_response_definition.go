@@ -70,7 +70,7 @@ type Node struct {
 	SystemStats       *SystemStats `json:"systemStats"`
 	RecoveryType      *string      `json:"recoveryType" metric_name:"node.recoveryType" source_type:"attribute"`
 	Status            *string      `json:"status" metric_name:"node.status" source_type:"attribute"`
-	Uptime            *string      `json:"uptime" metric_name:"node.uptime" source_type:"gauge"`
+	Uptime            *string      `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
 	Services          *[]string    `json:"services"`
 	ClusterMembership *string      `json:"clusterMembership"`
 	Hostname          *string      `json:"hostname"`
@@ -136,38 +136,38 @@ type SampleStats struct {
 	VbPendingResidentItemsRatio *[]float64 `json:"vb_pending_resident_items_ratio" metric_name:"bucket.pendingResidentItemsRatio" source_type:"gauge"`
 	AvgDiskUpdateTime           *[]float64 `json:"avg_disk_update_time" metric_name:"bucket.averageDiskUpdateTimeInMilliseconds" source_type:"gauge"`
 	AvgDiskCommitTime           *[]float64 `json:"avg_disk_commit_time" metric_name:"bucket.averageDiskCommitTimeInMilliseconds" source_type:"gauge"`
-	BytesRead                   *[]float64 `json:"bytes_read" metric_name:"bucket.readRatePerSecond" source_type:"rate"`
-	BytesWritten                *[]float64 `json:"bytes_written" metric_name:"bucket.writeRatePerSecond" source_type:"rate"`
-	CmdGet                      *[]float64 `json:"cmd_get" metric_name:"bucket.readOperationsPerSecond" source_type:"rate"`
-	CmdSet                      *[]float64 `json:"cmd_set" metric_name:"bucket.writeOperationsPerSecond" source_type:"rate"`
+	BytesRead                   *[]float64 `json:"bytes_read" metric_name:"bucket.readRatePerSecond" source_type:"gauge"`
+	BytesWritten                *[]float64 `json:"bytes_written" metric_name:"bucket.writeRatePerSecond" source_type:"gauge"`
+	CmdGet                      *[]float64 `json:"cmd_get" metric_name:"bucket.readOperationsPerSecond" source_type:"gauge"`
+	CmdSet                      *[]float64 `json:"cmd_set" metric_name:"bucket.writeOperationsPerSecond" source_type:"gauge"`
 	CurrConnections             *[]float64 `json:"curr_connections" metric_name:"bucket.currentConnections" source_type:"gauge"`
-	DecrHits                    *[]float64 `json:"decr_hits" metric_name:"bucket.decrementHitsPerSecond" source_type:"rate"`
-	DecrMisses                  *[]float64 `json:"decr_misses" metric_name:"bucket.decrementMissesPerSecond" source_type:"rate"`
-	DeleteHits                  *[]float64 `json:"delete_hits" metric_name:"bucket.deleteHitsPerSecond" source_type:"rate"`
-	DeleteMisses                *[]float64 `json:"delete_misses" metric_name:"bucket.deleteMissesPerSecond" source_type:"rate"`
+	DecrHits                    *[]float64 `json:"decr_hits" metric_name:"bucket.decrementHitsPerSecond" source_type:"gauge"`
+	DecrMisses                  *[]float64 `json:"decr_misses" metric_name:"bucket.decrementMissesPerSecond" source_type:"gauge"`
+	DeleteHits                  *[]float64 `json:"delete_hits" metric_name:"bucket.deleteHitsPerSecond" source_type:"gauge"`
+	DeleteMisses                *[]float64 `json:"delete_misses" metric_name:"bucket.deleteMissesPerSecond" source_type:"gauge"`
 	DiskWriteQueue              *[]float64 `json:"disk_write_queue" metric_name:"bucket.diskWriteQueue" source_type:"gauge"`
 	EpMemHighWat                *[]float64 `json:"ep_mem_high_wat" metric_name:"bucket.memoryHighWaterMarkInBytes" source_type:"gauge"`
 	EpMemLowWat                 *[]float64 `json:"ep_mem_low_wat" metric_name:"bucket.memoryLowWaterMarkInBytes" source_type:"gauge"`
 	EpMetaDataMemory            *[]float64 `json:"ep_meta_data_memory" metric_name:"bucket.metadataInRAMInBytes" source_type:"gauge"`
-	EpNumValueEjects            *[]float64 `json:"ep_num_value_ejects" metric_name:"bucket.ejectionsPerSecond" source_type:"rate"`
-	EpOomErrors                 *[]float64 `json:"ep_oom_errors" metric_name:"bucket.outOfMemoryErrorsPerSecond" source_type:"rate"`
-	EpOpsCreate                 *[]float64 `json:"ep_ops_create" metric_name:"bucket.diskCreateOperationsPerSecond" source_type:"rate"`
-	EpOpsUpdate                 *[]float64 `json:"ep_ops_update" metric_name:"bucket.diskUpdateOperationsPerSecond" source_type:"rate"`
+	EpNumValueEjects            *[]float64 `json:"ep_num_value_ejects" metric_name:"bucket.ejectionsPerSecond" source_type:"gauge"`
+	EpOomErrors                 *[]float64 `json:"ep_oom_errors" metric_name:"bucket.outOfMemoryErrorsPerSecond" source_type:"gauge"`
+	EpOpsCreate                 *[]float64 `json:"ep_ops_create" metric_name:"bucket.diskCreateOperationsPerSecond" source_type:"gauge"`
+	EpOpsUpdate                 *[]float64 `json:"ep_ops_update" metric_name:"bucket.diskUpdateOperationsPerSecond" source_type:"gauge"`
 	EpOverhead                  *[]float64 `json:"ep_overhead" metric_name:"bucket.overheadInBytes" source_type:"gauge"`
-	EpTmpOomErrors              *[]float64 `json:"ep_tmp_oom_errors" metric_name:"bucket.temporaryOutOfMemoryErrorsPerSecond" source_type:"rate"`
-	Evictions                   *[]float64 `json:"evictions" metric_name:"bucket.evictionsPerSecond" source_type:"rate"`
-	GetHits                     *[]float64 `json:"get_hits" metric_name:"bucket.getHitsPerSecond" source_type:"rate"`
-	GetMisses                   *[]float64 `json:"get_misses" metric_name:"bucket.getMissesPerSecond" source_type:"rate"`
-	IncrHits                    *[]float64 `json:"incr_hits" metric_name:"bucket.incrementHitsPerSecond" source_type:"rate"`
-	IncrMisses                  *[]float64 `json:"incr_misses" metric_name:"bucket.incrementMissesPerSecond" source_type:"rate"`
-	Misses                      *[]float64 `json:"misses" metric_name:"bucket.missesPerSecond" source_type:"rate"`
+	EpTmpOomErrors              *[]float64 `json:"ep_tmp_oom_errors" metric_name:"bucket.temporaryOutOfMemoryErrorsPerSecond" source_type:"gauge"`
+	Evictions                   *[]float64 `json:"evictions" metric_name:"bucket.evictionsPerSecond" source_type:"gauge"`
+	GetHits                     *[]float64 `json:"get_hits" metric_name:"bucket.getHitsPerSecond" source_type:"gauge"`
+	GetMisses                   *[]float64 `json:"get_misses" metric_name:"bucket.getMissesPerSecond" source_type:"gauge"`
+	IncrHits                    *[]float64 `json:"incr_hits" metric_name:"bucket.incrementHitsPerSecond" source_type:"gauge"`
+	IncrMisses                  *[]float64 `json:"incr_misses" metric_name:"bucket.incrementMissesPerSecond" source_type:"gauge"`
+	Misses                      *[]float64 `json:"misses" metric_name:"bucket.missesPerSecond" source_type:"gauge"`
 }
 
 // =========
 
 // AutoFailover struct for settings/autoFailover endpoint
 type AutoFailover struct {
-	Count   *int  `json:"count" metric_name:"cluster.autoFailoverCount" source_type:"gauge"`
+	Count   *int  `json:"count" metric_name:"cluster.autoFailoverCount" source_type:"rate"`
 	Enabled *bool `json:"enabled" metric_name:"cluster.autoFailoverEnabled" source_type:"gauge"`
 }
 
@@ -187,11 +187,11 @@ type AdminVitals struct {
 	MemorySystem            *int64   `json:"memory.system" metric_name:"queryengine.systemMemoryInBytes" source_type:"gauge"`
 	CPUUserPercent          *float64 `json:"cpu.user.percent" metric_name:"queryengine.userCPUUtilization" source_type:"gauge"`
 	CPUSystemPercent        *float64 `json:"cpu.sys.percent" metric_name:"queryengine.systemCPUUtilization" source_type:"gauge"`
-	RequestCompletedCount   *int     `json:"request.completed.count" metric_name:"queryengine.completedRequests" source_type:"gauge"`
+	RequestCompletedCount   *int     `json:"request.completed.count" metric_name:"queryengine.completedRequests" source_type:"rate"`
 	RequestActiveCount      *int     `json:"request.active.count" metric_name:"queryengine.activeRequests" source_type:"gauge"`
-	RequestPerSec1Min       *float64 `json:"request.per.sec.1min" metric_name:"queryengine.requestsLast1MinutesPerSecond" source_type:"rate"`
-	RequestPerSec5Min       *float64 `json:"request.per.sec.5min" metric_name:"queryengine.requestsLast5MinutesPerSecond" source_type:"rate"`
-	RequestPerSec15Min      *float64 `json:"request.per.sec.15min" metric_name:"queryengine.requestsLast15MinutesPerSecond" source_type:"rate"`
+	RequestPerSec1Min       *float64 `json:"request.per.sec.1min" metric_name:"queryengine.requestsLast1MinutesPerSecond" source_type:"gauge"`
+	RequestPerSec5Min       *float64 `json:"request.per.sec.5min" metric_name:"queryengine.requestsLast5MinutesPerSecond" source_type:"gauge"`
+	RequestPerSec15Min      *float64 `json:"request.per.sec.15min" metric_name:"queryengine.requestsLast15MinutesPerSecond" source_type:"gauge"`
 	RequestTimeMean         *string  `json:"request_time.mean"`         // requires postprocessing
 	RequestTimeMedian       *string  `json:"request_time.median"`       // requires postprocessing
 	RequestTime80Percentile *string  `json:"request_time.80percentile"` // requires postprocessing
