@@ -167,7 +167,7 @@ type SampleStats struct {
 
 // AutoFailover struct for settings/autoFailover endpoint
 type AutoFailover struct {
-	Count   *int  `json:"count" metric_name:"cluster.autoFailoverCount" source_type:"gauge"`
+	Count   *int  `json:"count" metric_name:"cluster.autoFailoverCount" source_type:"rate"`
 	Enabled *bool `json:"enabled" metric_name:"cluster.autoFailoverEnabled" source_type:"gauge"`
 }
 
