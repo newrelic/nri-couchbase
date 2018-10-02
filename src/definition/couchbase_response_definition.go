@@ -70,7 +70,7 @@ type Node struct {
 	SystemStats       *SystemStats `json:"systemStats"`
 	RecoveryType      *string      `json:"recoveryType" metric_name:"node.recoveryType" source_type:"attribute"`
 	Status            *string      `json:"status" metric_name:"node.status" source_type:"attribute"`
-	Uptime            *string      `json:"uptime" metric_name:"node.uptime" source_type:"gauge"`
+	Uptime            *string      `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
 	Services          *[]string    `json:"services"`
 	ClusterMembership *string      `json:"clusterMembership"`
 	Hostname          *string      `json:"hostname"`
