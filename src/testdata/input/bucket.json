@@ -1,0 +1,57 @@
+{
+    "name": "beer-sample",
+    "bucketType": "membase",
+    "authType": "sasl",
+    "proxyPort": 0,
+    "uri": "/pools/default/buckets/beer-sample?bucket_uuid=7bc341fe6b3546a0f42080b21e7baafb",
+    "streamingUri": "/pools/default/bucketsStreaming/beer-sample?bucket_uuid=7bc341fe6b3546a0f42080b21e7baafb",
+    "localRandomKeyUri": "/pools/default/buckets/beer-sample/localRandomKey",
+    "controllers": {
+        "compactAll": "/pools/default/buckets/beer-sample/controller/compactBucket",
+        "compactDB": "/pools/default/buckets/beer-sample/controller/compactDatabases",
+        "purgeDeletes": "/pools/default/buckets/beer-sample/controller/unsafePurgeBucket",
+        "startRecovery": "/pools/default/buckets/beer-sample/controller/startRecovery"
+    },
+    "stats": {
+        "uri": "/pools/default/buckets/beer-sample/stats",
+        "directoryURI": "/pools/default/buckets/beer-sample/statsDirectory",
+        "nodeStatsListURI": "/pools/default/buckets/beer-sample/nodes"
+    },
+    "nodeLocator": "vbucket",
+    "saslPassword": "ca033084a4108f9f122af1db3fedbb15",
+    "ddocs": {
+        "uri": "/pools/default/buckets/beer-sample/ddocs"
+    },
+    "replicaIndex": false,
+    "autoCompactionSettings": false,
+    "uuid": "7bc341fe6b3546a0f42080b21e7baafb",
+    "replicaNumber": 2,
+    "threadsNumber": 3,
+    "quota": {
+        "ram": 314572800,
+        "rawRAM": 104857600
+    },
+    "basicStats": {
+        "quotaPercentUsed": 24.04759979248047,
+        "opsPerSec": 0,
+        "diskFetches": 0,
+        "itemCount": 7303,
+        "diskUsed": 93674986,
+        "dataUsed": 48779424,
+        "memUsed": 75647208,
+        "vbActiveNumNonResident": 0
+    },
+    "evictionPolicy": "valueOnly",
+    "conflictResolutionType": "seqno",
+    "bucketCapabilitiesVer": "",
+    "bucketCapabilities": [
+        "xattr",
+        "dcp",
+        "cbhello",
+        "touch",
+        "couchapi",
+        "cccp",
+        "xdcrCheckpointing",
+        "nodesExt"
+    ]
+}

@@ -38,9 +38,21 @@ func (args *ArgumentList) Validate() error {
 		return errors.New("must provide a host argument")
 	}
 
-	if args.Port < 0 || args.Port > 65535 {
+	if !checkPort(args.Port) {
 		return fmt.Errorf("invalid port %v", args.Port)
 	}
 
+	if !checkPort(args.QueryPort) {
+		return fmt.Errorf("invalid query port %v", args.QueryPort)
+	}
+
+	if args.UseSSL && (args.CABundleFile == "" || args.CABundleDir == "") {
+		return fmt.Errorf("must provide certificate bundle if using SSL")
+	}
+
 	return nil
+}
+
+func checkPort(port int) bool {
+	return port >= 0 && port <= 65535
 }

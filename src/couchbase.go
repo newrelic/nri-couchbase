@@ -1,9 +1,11 @@
 package main
 
 import (
+	"os"
 	"sync"
 
 	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
 )
@@ -20,31 +22,34 @@ var (
 func main() {
 	// Create Integration
 	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
-	panicOnErr(err)
+	exitOnError(err)
+
+	log.SetupLogging(args.Verbose)
 
 	client, err := client.CreateClient(&args, "")
-	panicOnErr(err)
+	exitOnError(err)
 
+	collect(i, client)
+
+	exitOnError(i.Publish())
+}
+
+func collect(i *integration.Integration, client *client.HTTPClient) {
 	// create worker pool
 	// Start workers
 	var wg sync.WaitGroup
 	collectorChan := StartCollectorWorkerPool(10, &wg)
 
 	// Feed the worker pool with entities to be collected
-	go FeedWorkerPool(&args, client, collectorChan, i)
+	go FeedWorkerPool(client, collectorChan, i)
 
 	// Wait for workers to finish
 	wg.Wait()
-
-	// collect cluster/nodes?
-	//CollectCluster(i, client)
-	// collect buckets?
-
-	panicOnErr(i.Publish())
 }
 
-func panicOnErr(err error) {
+func exitOnError(err error) {
 	if err != nil {
-		panic(err)
+		log.Error("Could not complete collection: %v", err)
+		os.Exit(1)
 	}
 }

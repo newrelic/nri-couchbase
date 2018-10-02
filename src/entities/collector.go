@@ -64,7 +64,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 	collectors := make([]Collector, 0, 10)
 	clusterCollector := &clusterCollector{
 		defaultCollector{
-			name:        "cluster-test",
+			name:        *clusterDetails.ClusterName,
 			client:      nodeClient,
 			integration: i,
 		},
