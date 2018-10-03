@@ -61,6 +61,11 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 		return nil, err
 	}
 
+	// if we couldn't get the cluster name (version 4.x) use the pool name instead
+	if clusterDetails.ClusterName == nil {
+		clusterDetails.ClusterName = clusterDetails.PoolName
+	}
+
 	collectors := make([]Collector, 0, 10)
 	clusterCollector := &clusterCollector{
 		defaultCollector{
