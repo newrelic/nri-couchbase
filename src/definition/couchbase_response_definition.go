@@ -15,6 +15,7 @@ type PoolsDefaultResponse struct {
 	Nodes                  *[]Node                 `json:"nodes"`
 	MaxBucketCount         *int                    `json:"maxBucketCount" metric_name:"cluster.maximumBucketCount" source_type:"gauge"`
 	ClusterName            *string                 `json:"clusterName"`
+	PoolName               *string                 `json:"name"`
 }
 
 // AutoCompactionSettings struct for pools/default endpoint, autoCompactionSettings object

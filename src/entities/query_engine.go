@@ -27,13 +27,13 @@ func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) e
 	}
 
 	qeClient := qe.GetClient()
-	settings, vitals, err := getQueryEngineResponses(qeClient)
+	settings, vitals := getQueryEngineResponses(qeClient)
 
 	if collectMetrics {
 		collectQueryEngineMetrics(queryEngineEntity, settings, vitals)
 	}
 
-	if collectInventory {
+	if collectInventory && vitals != nil {
 		collectQueryEngineInventory(queryEngineEntity, vitals, qeClient.Hostname, qeClient.QueryPort)
 	}
 
@@ -46,28 +46,34 @@ func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsRe
 		metric.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
 	)
 
-	for _, response := range []interface{}{settingsResponse, vitalsResponse} {
-		err := queryEngineMetricSet.MarshalMetrics(response)
-		if err != nil {
-			log.Error("Could not marshal query engine metrics from : %v", err)
-		}
+	// marshal metrics from /admin/settings
+	if settingsResponse != nil {
+		tryMarshal(queryEngineMetricSet, settingsResponse)
 	}
 
-	// metrics that need time conversion
+	// marshal metrics from /admin/vitals
+	if vitalsResponse == nil {
+		return
+	}
+	tryMarshal(queryEngineMetricSet, vitalsResponse)
 	for _, metric := range []struct {
 		metricName  string
 		sourceType  metric.SourceType
-		metricValue string
+		metricValue *string
 	}{
-		{"queryengine.averageRequestTimeInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTimeMean},
-		{"queryengine.garbageCollectionTimePausedInMilliseconds", metric.GAUGE, *vitalsResponse.GCPauseTime},
-		{"queryengine.medianRequestTimeInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTimeMedian},
-		{"queryengine.requestTime80thPercentileInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTime80Percentile},
-		{"queryengine.requestTime95thPercentileInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTime95Percentile},
-		{"queryengine.requestTime99thPercentileInMilliseconds", metric.GAUGE, *vitalsResponse.RequestTime99Percentile},
-		{"queryengine.uptimeInMilliseconds", metric.GAUGE, *vitalsResponse.Uptime},
+		{"queryengine.averageRequestTimeInMilliseconds", metric.GAUGE, vitalsResponse.RequestTimeMean},
+		{"queryengine.garbageCollectionTimePausedInMilliseconds", metric.GAUGE, vitalsResponse.GCPauseTime},
+		{"queryengine.medianRequestTimeInMilliseconds", metric.GAUGE, vitalsResponse.RequestTimeMedian},
+		{"queryengine.requestTime80thPercentileInMilliseconds", metric.GAUGE, vitalsResponse.RequestTime80Percentile},
+		{"queryengine.requestTime95thPercentileInMilliseconds", metric.GAUGE, vitalsResponse.RequestTime95Percentile},
+		{"queryengine.requestTime99thPercentileInMilliseconds", metric.GAUGE, vitalsResponse.RequestTime99Percentile},
+		{"queryengine.uptimeInMilliseconds", metric.GAUGE, vitalsResponse.Uptime},
 	} {
-		convertedValue, err := convertTimeUnits(metric.metricValue)
+		if metric.metricValue == nil {
+			log.Info("Metric '%s' was not returned in the JSON, skipping", metric.metricName)
+			continue
+		}
+		convertedValue, err := convertTimeUnits(*metric.metricValue)
 		if err != nil {
 			log.Error("Could not convert time string '%s' to milliseconds: %v", metric.metricValue, err)
 			continue
@@ -76,6 +82,13 @@ func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsRe
 		if err != nil {
 			log.Error("Could not set time-converted metric '%s' on query engine: %v", metric.metricName, err)
 		}
+	}
+}
+
+func tryMarshal(metricSet *metric.Set, response interface{}) {
+	err := metricSet.MarshalMetrics(response)
+	if err != nil {
+		log.Error("Could not marshal query engine metrics: %v", err)
 	}
 }
 
@@ -93,17 +106,20 @@ func collectQueryEngineInventory(queryEngineEntity *integration.Entity, vitalsRe
 	}
 }
 
-func getQueryEngineResponses(client *client.HTTPClient) (settings *definition.AdminSettings, vitals *definition.AdminVitals, err error) {
-	settings = new(definition.AdminSettings)
-	vitals = new(definition.AdminVitals)
+func getQueryEngineResponses(client *client.HTTPClient) (*definition.AdminSettings, *definition.AdminVitals) {
+	var settings *definition.AdminSettings
+	var vitals *definition.AdminVitals
 
-	err = client.Request("/admin/settings", &settings)
+	err := client.Request("/admin/settings", &settings)
 	if err != nil {
-		return
+		log.Error("Couldn't retrieve query engine data from /admin/settings: %v", err)
 	}
 
 	err = client.Request("/admin/vitals", &vitals)
-	return
+	if err != nil {
+		log.Error("Couldn't retrieve query engine data from /admin/vitals: %v", err)
+	}
+	return settings, vitals
 }
 
 func convertTimeUnits(time string) (float64, error) {
