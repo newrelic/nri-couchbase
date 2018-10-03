@@ -1,0 +1,282 @@
+{
+	"storageTotals": {
+		"ram": {
+			"total": 11924914176,
+			"quotaTotal": 6442450944,
+			"quotaUsed": 943718400,
+			"used": 11162890240,
+			"usedByData": 283855776,
+			"quotaUsedPerNode": 314572800,
+			"quotaTotalPerNode": 2147483648
+		},
+		"hdd": {
+			"total": 64393052160,
+			"quotaTotal": 64393052160,
+			"used": 8371096779,
+			"usedByData": 366703492,
+			"free": 56021955381
+		}
+	},
+	"ftsMemoryQuota": 303,
+	"indexMemoryQuota": 512,
+	"memoryQuota": 2048,
+	"name": "default",
+	"alerts": [],
+	"alertsSilenceURL": "/controller/resetAlerts?token=0&uuid=eec92b752dad4ae28107a752631c287c",
+	"nodes": [
+		{
+			"systemStats": {
+				"cpu_utilization_rate": 30.07712082262211,
+				"swap_total": 6442446848,
+				"swap_used": 58511360,
+				"mem_total": 3974971392,
+				"mem_free": 963305472
+			},
+			"interestingStats": {
+				"cmd_get": 0,
+				"couch_docs_actual_disk_size": 121426713,
+				"couch_docs_data_size": 79362203,
+				"couch_spatial_data_size": 0,
+				"couch_spatial_disk_size": 0,
+				"couch_views_actual_disk_size": 281638,
+				"couch_views_data_size": 281638,
+				"curr_items": 13202,
+				"curr_items_tot": 39480,
+				"ep_bg_fetched": 0,
+				"get_hits": 0,
+				"mem_used": 99598776,
+				"ops": 0,
+				"vb_active_num_non_resident": 1062,
+				"vb_replica_curr_items": 26278
+			},
+			"uptime": "20483875",
+			"memoryTotal": 3974971392,
+			"memoryFree": 963305472,
+			"mcdMemoryReserved": 3032,
+			"mcdMemoryAllocated": 3032,
+			"couchApiBase": "http://10.33.106.59:8092/",
+			"couchApiBaseHTTPS": "https://10.33.106.59:18092/",
+			"otpCookie": "8ec971b8bc11bf0d57404e89545d305549ce95fd416efdd8c7ffe32e5738c322",
+			"clusterMembership": "active",
+			"recoveryType": "none",
+			"status": "healthy",
+			"otpNode": "ns_1@10.33.106.59",
+			"hostname": "10.33.106.59:8091",
+			"clusterCompatibility": 327680,
+			"version": "5.0.1-5003-enterprise",
+			"os": "x86_64-unknown-linux-gnu",
+			"ports": {
+				"sslProxy": 11214,
+				"httpsMgmt": 18091,
+				"httpsCAPI": 18092,
+				"proxy": 11211,
+				"direct": 11210
+			},
+			"services": [
+				"fts",
+				"index",
+				"kv",
+				"n1ql"
+			]
+		},
+		{
+			"systemStats": {
+				"cpu_utilization_rate": 16.95760598503741,
+				"swap_total": 6442446848,
+				"swap_used": 4239360,
+				"mem_total": 3974971392,
+				"mem_free": 962072576
+			},
+			"interestingStats": {
+				"cmd_get": 0,
+				"couch_docs_actual_disk_size": 117260623,
+				"couch_docs_data_size": 38681647,
+				"couch_spatial_data_size": 0,
+				"couch_spatial_disk_size": 0,
+				"couch_views_actual_disk_size": 281331,
+				"couch_views_data_size": 281331,
+				"curr_items": 13140,
+				"curr_items_tot": 39480,
+				"ep_bg_fetched": 0,
+				"get_hits": 0,
+				"mem_used": 86544464,
+				"ops": 0,
+				"vb_active_num_non_resident": 0,
+				"vb_replica_curr_items": 26340
+			},
+			"uptime": "9221752",
+			"memoryTotal": 3974971392,
+			"memoryFree": 962072576,
+			"mcdMemoryReserved": 3032,
+			"mcdMemoryAllocated": 3032,
+			"couchApiBase": "http://cb50-rh7-1.bluemedora.localnet:8092/",
+			"couchApiBaseHTTPS": "https://cb50-rh7-1.bluemedora.localnet:18092/",
+			"otpCookie": "8ec971b8bc11bf0d57404e89545d305549ce95fd416efdd8c7ffe32e5738c322",
+			"clusterMembership": "active",
+			"recoveryType": "none",
+			"status": "healthy",
+			"otpNode": "ns_1@cb50-rh7-1.bluemedora.localnet",
+			"thisNode": true,
+			"hostname": "cb50-rh7-1.bluemedora.localnet:8091",
+			"clusterCompatibility": 327680,
+			"version": "5.0.1-5003-enterprise",
+			"os": "x86_64-unknown-linux-gnu",
+			"ports": {
+				"sslProxy": 11214,
+				"httpsMgmt": 18091,
+				"httpsCAPI": 18092,
+				"proxy": 11211,
+				"direct": 11210
+			},
+			"services": [
+				"fts",
+				"index",
+				"kv",
+				"n1ql"
+			]
+		},
+		{
+			"systemStats": {
+				"cpu_utilization_rate": 14.03061224489796,
+				"swap_total": 6442446848,
+				"swap_used": 70283264,
+				"mem_total": 3974971392,
+				"mem_free": 921067520
+			},
+			"interestingStats": {
+				"cmd_get": 0,
+				"couch_docs_actual_disk_size": 127171677,
+				"couch_docs_data_size": 83728539,
+				"couch_spatial_data_size": 0,
+				"couch_spatial_disk_size": 0,
+				"couch_views_actual_disk_size": 281510,
+				"couch_views_data_size": 281510,
+				"curr_items": 13138,
+				"curr_items_tot": 39480,
+				"ep_bg_fetched": 0,
+				"get_hits": 0,
+				"mem_used": 97712536,
+				"ops": 0,
+				"vb_active_num_non_resident": 0,
+				"vb_replica_curr_items": 26342
+			},
+			"uptime": "20483999",
+			"memoryTotal": 3974971392,
+			"memoryFree": 921067520,
+			"mcdMemoryReserved": 3032,
+			"mcdMemoryAllocated": 3032,
+			"couchApiBase": "http://cb50-rh7-2.bluemedora.localnet:8092/",
+			"couchApiBaseHTTPS": "https://cb50-rh7-2.bluemedora.localnet:18092/",
+			"otpCookie": "8ec971b8bc11bf0d57404e89545d305549ce95fd416efdd8c7ffe32e5738c322",
+			"clusterMembership": "active",
+			"recoveryType": "none",
+			"status": "healthy",
+			"otpNode": "ns_1@cb50-rh7-2.bluemedora.localnet",
+			"hostname": "cb50-rh7-2.bluemedora.localnet:8091",
+			"clusterCompatibility": 327680,
+			"version": "5.0.1-5003-enterprise",
+			"os": "x86_64-unknown-linux-gnu",
+			"ports": {
+				"sslProxy": 11214,
+				"httpsMgmt": 18091,
+				"httpsCAPI": 18092,
+				"proxy": 11211,
+				"direct": 11210
+			},
+			"services": [
+				"fts",
+				"index",
+				"kv",
+				"n1ql"
+			]
+		}
+	],
+	"buckets": {
+		"uri": "/pools/default/buckets?v=70790532&uuid=eec92b752dad4ae28107a752631c287c",
+		"terseBucketsBase": "/pools/default/b/",
+		"terseStreamingBucketsBase": "/pools/default/bs/"
+	},
+	"remoteClusters": {
+		"uri": "/pools/default/remoteClusters?uuid=eec92b752dad4ae28107a752631c287c",
+		"validateURI": "/pools/default/remoteClusters?just_validate=1"
+	},
+	"controllers": {
+		"addNode": {
+			"uri": "/controller/addNodeV2?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"rebalance": {
+			"uri": "/controller/rebalance?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"failOver": {
+			"uri": "/controller/failOver?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"startGracefulFailover": {
+			"uri": "/controller/startGracefulFailover?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"reAddNode": {
+			"uri": "/controller/reAddNode?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"reFailOver": {
+			"uri": "/controller/reFailOver?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"ejectNode": {
+			"uri": "/controller/ejectNode?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"setRecoveryType": {
+			"uri": "/controller/setRecoveryType?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"setAutoCompaction": {
+			"uri": "/controller/setAutoCompaction?uuid=eec92b752dad4ae28107a752631c287c",
+			"validateURI": "/controller/setAutoCompaction?just_validate=1"
+		},
+		"clusterLogsCollection": {
+			"startURI": "/controller/startLogsCollection?uuid=eec92b752dad4ae28107a752631c287c",
+			"cancelURI": "/controller/cancelLogsCollection?uuid=eec92b752dad4ae28107a752631c287c"
+		},
+		"replication": {
+			"createURI": "/controller/createReplication?uuid=eec92b752dad4ae28107a752631c287c",
+			"validateURI": "/controller/createReplication?just_validate=1"
+		}
+	},
+	"rebalanceStatus": "none",
+	"rebalanceProgressUri": "/pools/default/rebalanceProgress",
+	"stopRebalanceUri": "/controller/stopRebalance?uuid=eec92b752dad4ae28107a752631c287c",
+	"nodeStatusesUri": "/nodeStatuses",
+	"maxBucketCount": 10,
+	"autoCompactionSettings": {
+		"parallelDBAndViewCompaction": false,
+		"databaseFragmentationThreshold": {
+			"percentage": 30,
+			"size": "undefined"
+		},
+		"viewFragmentationThreshold": {
+			"percentage": 30,
+			"size": "undefined"
+		},
+		"indexCompactionMode": "circular",
+		"indexCircularCompaction": {
+			"daysOfWeek": "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday",
+			"interval": {
+				"fromHour": 0,
+				"toHour": 0,
+				"fromMinute": 0,
+				"toMinute": 0,
+				"abortOutside": false
+			}
+		},
+		"indexFragmentationThreshold": {
+			"percentage": 30
+		}
+	},
+	"tasks": {
+		"uri": "/pools/default/tasks?v=68088728"
+	},
+	"counters": {
+		"rebalance_success": 2,
+		"rebalance_start": 2
+	},
+	"indexStatusURI": "/indexStatus?v=65326373",
+	"checkPermissionsURI": "/pools/default/checkPermissions?v=PxSXg%2BUhfRMRDzGsxv0IYZhNmps%3D",
+	"serverGroupsUri": "/pools/default/serverGroups?v=46079104",
+	"balanced": true
+}
