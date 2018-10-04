@@ -1,94 +1,94 @@
-integration,metric_name,metric_type,description,metric_enabled
-Couchbase,bucket.activeResidentItemsRatio,gauge,Percentage of active items cached in RAM in this bucket.,true
-Couchbase,bucket.averageDiskCommitTimeInMilliseconds,gauge,The average disk commit time in seconds of the Bucket.,true
-Couchbase,bucket.averageDiskUpdateTimeInMilliseconds,gauge,The average disk update time in microseconds of the Bucket.,true
-Couchbase,bucket.cacheMissRatio,gauge,Percentage of reads per second to this Bucket from disk as opposed to RAM.,true
-Couchbase,bucket.currentConnections,gauge,"Number of connections to this server including connections from external client SDKs, proxies, TAP requests and internal statistic gathering.",true
-Couchbase,bucket.dataUsedInBytes,gauge,Amount of data used by this bucket.,true
-Couchbase,bucket.decrementHitsPerSecond,gauge,The number of decrement hits per second of the Bucket.,true
-Couchbase,bucket.decrementMissesPerSecond,gauge,The number of decrement misses per second of the Bucket.,true
-Couchbase,bucket.deleteHitsPerSecond,gauge,The number of delete hits per second for this Bucket.,true
-Couchbase,bucket.deleteMissesPerSecond,gauge,The number of delete misses per second for this Bucket.,true
-Couchbase,bucket.diskCreateOperationsPerSecond,gauge,Number of new items created on disk per second for this Bucket.,true
-Couchbase,bucket.diskFetchesPerSecond,gauge,The number of operations required to fetch items from disk on the Bucket.,true
-Couchbase,bucket.diskUpdateOperationsPerSecond,gauge,Number of items updated on disk per second for this Bucket.,true
-Couchbase,bucket.diskUsedInBytes,gauge,The amount of disk space in use for the Bucket.,true
-Couchbase,bucket.diskWriteQueue,gauge,Number of items waiting to be written to disk in the Bucket.,true
-Couchbase,bucket.ejectionsPerSecond,gauge,Total number of items per second being ejected to disk in this bucket,true
-Couchbase,bucket.evictionPolicy,attribute,The Eviction policy of the bucket.,true
-Couchbase,bucket.evictionsPerSecond,gauge,The number of items per second evicted from the Bucket.,true
-Couchbase,bucket.getHitsPerSecond,gauge,Number of get operations per second for data that this bucket contains.,true
-Couchbase,bucket.getMissesPerSecond,gauge,Number of get operations per second for data that this bucket does not contain.,true
-Couchbase,bucket.hitRatio,gauge,Percentage of get requests served with data from this bucket.,true
-Couchbase,bucket.incrementHitsPerSecond,gauge,The number of increment hits per second of the Bucket.,true
-Couchbase,bucket.incrementMissesPerSecond,gauge,The number of increment misses per second of the Bucket.,true
-Couchbase,bucket.itemCount,gauge,The number of objects stored in the Bucket.,true
-Couchbase,bucket.memoryHighWaterMarkInBytes,gauge,High water mark for auto-evictions on the Bucket.,true
-Couchbase,bucket.memoryLowWaterMarkInBytes,gauge,Low water mark for auto-evictions on the Bucket.,true
-Couchbase,bucket.memoryUsedInBytes,gauge,The amount of RAM used for the Bucket.,true
-Couchbase,bucket.metadataInRAMInBytes,gauge,Amount of RAM used for metadata on this bucket.,true
-Couchbase,bucket.missesPerSecond,gauge,The number of misses per second of the Bucket.,true
-Couchbase,bucket.outOfMemoryErrorsPerSecond,gauge,Number of Hard Out of Memory Errors for this bucket.,true
-Couchbase,bucket.OverheadInBytes,gauge,"The extra memory used by transient data (persistence queues, replication queues, checkpoints, etc.) on the Bucket.",true
-Couchbase,bucket.pendingResidentItemsRatio,gauge,Percentage of pending items cached in RAM in this bucket.,true
-Couchbase,bucket.quotaUtilization,gauge,The percent of RAM Quota currently in use on the Bucket.,true
-Couchbase,bucket.readOperationsPerSecond,gauge,The number of reads (get operations) per second from this Bucket.,true
-Couchbase,bucket.readRatePerSecond,gauge,The bytes read of the Bucket.,true
-Couchbase,bucket.replicaIndex,gauge,Defines if the bucket has replica indexes enabled.,true
-Couchbase,bucket.replicaNumber,gauge,Number of replicas of this bucket.,true
-Couchbase,bucket.replicaResidentItemsRatio,gauge,Percentage of replica items cached in RAM in this bucket.,true
-Couchbase,bucket.residentItemsRatio,gauge,Percentage of all items cached in RAM in this Bucket.,true
-Couchbase,bucket.temporaryOutOfMemoryErrorsPerSecond,gauge,"Number of back-offs sent per second to client SDKs due to ""out of memory"" situations from this Bucket.",true
-Couchbase,bucket.threadsNumber,gauge,The number of concurrent readers and writers for the data bucket.,true
-Couchbase,bucket.totalOperationsPerSecond,gauge,The total operations per second of the Bucket.,true
-Couchbase,bucket.writeOperationsPerSecond,gauge,The number of writes (set operations) per second to this Bucket.,true
-Couchbase,bucket.writeRatePerSecond,gauge,The bytes written of the Bucket.,true
-Couchbase,cluster.autoFailoverCount,rate,The number of auto failovers on the Cluster.,true
-Couchbase,cluster.autoFailoverEnabled,gauge,Indicates if failover is enabled on the Cluster.,true
-Couchbase,cluster.databaseFragmentationThreshold,gauge,The percentage level within the database at which compaction occurs.,true
-Couchbase,cluster.diskFreeInBytes,gauge,The free disk space on this Cluster.,true
-Couchbase,cluster.diskQuotaTotalInBytes,gauge,Total Disk Space Available to Couchbase.,true
-Couchbase,cluster.diskTotalInBytes,gauge,Total Disk Space.,true
-Couchbase,cluster.diskUsedbyDataInBytes,gauge,Disk used by Bucket Data on this Cluster.,true
-Couchbase,cluster.diskUsedInBytes,gauge,The used disk space on this Cluster.,true
-Couchbase,cluster.indexFragmentationThreshold,gauge,The percentage level within indexes at which compaction occurs.,true
-Couchbase,cluster.maximumBucketCount,gauge,Maximum number of buckets this cluster supports.,true
-Couchbase,cluster.memoryQuotaTotalInBytes,gauge,Total RAM Available to Couchbase.,true
-Couchbase,cluster.memoryQuotaTotalPerNodeInBytes,gauge,"Total RAM Available to Couchbase, per node.",true
-Couchbase,cluster.memoryQuotaUsedInBytes,gauge,Total RAM Used by Couchbase.,true
-Couchbase,cluster.memoryQuotaUsedPerNodeInBytes,gauge,"Total RAM Used by Couchbase, per node.",true
-Couchbase,cluster.memoryTotalInBytes,gauge,The total RAM on this Cluster.,true
-Couchbase,cluster.memoryUsedByDataInBytes,gauge,Total RAM Used by Bucket Data on this Cluster.,true
-Couchbase,cluster.memoryUsedInBytes,gauge,The total RAM used on this Cluster.,true
-Couchbase,cluster.viewFragmentationThreshold,gauge,The percentage of fragmentation within all the view index files at which compaction is triggered.,true
-Couchbase,node.cpuUtilization,gauge,The CPU utilization of the Node.,true
-Couchbase,node.memoryFreeInBytes,gauge,The free memory of the Node.,true
-Couchbase,node.memoryTotalInBytes,gauge,The total memory allocated to the Node.,true
-Couchbase,node.status,attribute,"The status of the Node. (0 = unhealthly, 1 = healthy)",true
-Couchbase,node.swapTotalInBytes,gauge,The total swap space of the Node.,true
-Couchbase,node.swapUsedInBytes,gauge,The used swap space of the Node.,true
-Couchbase,node.uptimeInMilliseconds,gauge,The uptime of the Node.,true
-Couchbase,queryengine.activeRequests,gauge,Current number of active requests.,true
-Couchbase,queryengine.averageRequestTimeInMilliseconds,gauge,Average Request Time of this query engine.,true
-Couchbase,queryengine.completedLimit,rate,Number of Queries that couchbase will keep in it's query log.,true
-Couchbase,queryengine.completedRequests,gauge,Current number of completed Requests.,true
-Couchbase,queryengine.completedThresholdInMilliseconds,gauge,Minimum time query must take to be logged in couchbase's query log.,true
-Couchbase,queryengine.cores,gauge,Number of cores available for this query engine.,true
-Couchbase,queryengine.garbageCollectionNumber,gauge,Number of the last Garbage Collection,true
-Couchbase,queryengine.garbageCollectionPaused,gauge,Percent of time that garbage collection is paused.,true
-Couchbase,queryengine.garbageCollectionTimePausedInMilliseconds,gauge,Number of milliseconds that Garbage Collection is paused.,true
-Couchbase,queryengine.medianRequestTimeInMilliseconds,gauge,Median Request Time of this query engine.,true
-Couchbase,queryengine.preparedStatementUtilization,gauge,Percentage of requests that are prepared statements.,true
-Couchbase,queryengine.requestsLast15MinutesPerSecond,gauge,Requests per second average over the past 15 minutes.,true
-Couchbase,queryengine.requestsLast1MinutesPerSecond,gauge,Requests per second average over the past minute.,true
-Couchbase,queryengine.requestsLast5MinutesPerSecond,gauge,Requests per second average over the past 5 minutes.,true
-Couchbase,queryengine.requestTime80thPercentileInMilliseconds,gauge,80th Percentile of Request Time of this query engine.,true
-Couchbase,queryengine.requestTime95thPercentileInMilliseconds,gauge,95th Percentile of Request Time of this query engine.,true
-Couchbase,queryengine.requestTime99thPercentileInMilliseconds,gauge,99th Percentile of Request Time of this query engine.,true
-Couchbase,queryengine.systemCPUUtilization,gauge,CPU Utilization of this Query Engine,true
-Couchbase,queryengine.systemMemoryInBytes,gauge,The virtual address space reserved by this query engine.,true
-Couchbase,queryengine.totalMemoryInBytes,gauge,Cumulative amount of memory allocated for heap objects by this query engine.,true
-Couchbase,queryengine.totalThreads,gauge,Total threads used by this query engine.,true
-Couchbase,queryengine.uptimeInMilliseconds,gauge,Uptime of this Query Engine,true
-Couchbase,queryengine.usedMemoryInBytes,gauge,Amount of memory allocated for heap objects for this query engine.,true
-Couchbase,queryengine.userCPUUtilization,gauge,User CPU Utilization of this Query Engine.,true
+integration,metric_name,metric_type,metric_enabled,description
+Couchbase,bucket.activeResidentItemsRatio,gauge,true,Percentage of active items cached in RAM in this bucket.
+Couchbase,bucket.averageDiskCommitTimeInMilliseconds,gauge,true,The average disk commit time in seconds of the Bucket.
+Couchbase,bucket.averageDiskUpdateTimeInMilliseconds,gauge,true,The average disk update time in microseconds of the Bucket.
+Couchbase,bucket.cacheMissRatio,gauge,true,Percentage of reads per second to this Bucket from disk as opposed to RAM.
+Couchbase,bucket.currentConnections,gauge,true,"Number of connections to this server including connections from external client SDKs, proxies, TAP requests and internal statistic gathering."
+Couchbase,bucket.dataUsedInBytes,gauge,true,Amount of data used by this bucket.
+Couchbase,bucket.decrementHitsPerSecond,gauge,true,The number of decrement hits per second of the Bucket.
+Couchbase,bucket.decrementMissesPerSecond,gauge,true,The number of decrement misses per second of the Bucket.
+Couchbase,bucket.deleteHitsPerSecond,gauge,true,The number of delete hits per second for this Bucket.
+Couchbase,bucket.deleteMissesPerSecond,gauge,true,The number of delete misses per second for this Bucket.
+Couchbase,bucket.diskCreateOperationsPerSecond,gauge,true,Number of new items created on disk per second for this Bucket.
+Couchbase,bucket.diskFetchesPerSecond,gauge,true,The number of operations required to fetch items from disk on the Bucket.
+Couchbase,bucket.diskUpdateOperationsPerSecond,gauge,true,Number of items updated on disk per second for this Bucket.
+Couchbase,bucket.diskUsedInBytes,gauge,true,The amount of disk space in use for the Bucket.
+Couchbase,bucket.diskWriteQueue,gauge,true,Number of items waiting to be written to disk in the Bucket.
+Couchbase,bucket.ejectionsPerSecond,gauge,true,Total number of items per second being ejected to disk in this bucket
+Couchbase,bucket.evictionPolicy,attribute,true,The Eviction policy of the bucket.
+Couchbase,bucket.evictionsPerSecond,gauge,true,The number of items per second evicted from the Bucket.
+Couchbase,bucket.getHitsPerSecond,gauge,true,Number of get operations per second for data that this bucket contains.
+Couchbase,bucket.getMissesPerSecond,gauge,true,Number of get operations per second for data that this bucket does not contain.
+Couchbase,bucket.hitRatio,gauge,true,Percentage of get requests served with data from this bucket.
+Couchbase,bucket.incrementHitsPerSecond,gauge,true,The number of increment hits per second of the Bucket.
+Couchbase,bucket.incrementMissesPerSecond,gauge,true,The number of increment misses per second of the Bucket.
+Couchbase,bucket.itemCount,gauge,true,The number of objects stored in the Bucket.
+Couchbase,bucket.memoryHighWaterMarkInBytes,gauge,true,High water mark for auto-evictions on the Bucket.
+Couchbase,bucket.memoryLowWaterMarkInBytes,gauge,true,Low water mark for auto-evictions on the Bucket.
+Couchbase,bucket.memoryUsedInBytes,gauge,true,The amount of RAM used for the Bucket.
+Couchbase,bucket.metadataInRAMInBytes,gauge,true,Amount of RAM used for metadata on this bucket.
+Couchbase,bucket.missesPerSecond,gauge,true,The number of misses per second of the Bucket.
+Couchbase,bucket.outOfMemoryErrorsPerSecond,gauge,true,Number of Hard Out of Memory Errors for this bucket.
+Couchbase,bucket.OverheadInBytes,gauge,true,"The extra memory used by transient data (persistence queues, replication queues, checkpoints, etc.) on the Bucket."
+Couchbase,bucket.pendingResidentItemsRatio,gauge,true,Percentage of pending items cached in RAM in this bucket.
+Couchbase,bucket.quotaUtilization,gauge,true,The percent of RAM Quota currently in use on the Bucket.
+Couchbase,bucket.readOperationsPerSecond,gauge,true,The number of reads (get operations) per second from this Bucket.
+Couchbase,bucket.readRatePerSecond,gauge,true,The bytes read of the Bucket.
+Couchbase,bucket.replicaIndex,gauge,true,Defines if the bucket has replica indexes enabled.
+Couchbase,bucket.replicaNumber,gauge,true,Number of replicas of this bucket.
+Couchbase,bucket.replicaResidentItemsRatio,gauge,true,Percentage of replica items cached in RAM in this bucket.
+Couchbase,bucket.residentItemsRatio,gauge,true,Percentage of all items cached in RAM in this Bucket.
+Couchbase,bucket.temporaryOutOfMemoryErrorsPerSecond,gauge,true,"Number of back-offs sent per second to client SDKs due to ""out of memory"" situations from this Bucket."
+Couchbase,bucket.threadsNumber,gauge,true,The number of concurrent readers and writers for the data bucket.
+Couchbase,bucket.totalOperationsPerSecond,gauge,true,The total operations per second of the Bucket.
+Couchbase,bucket.writeOperationsPerSecond,gauge,true,The number of writes (set operations) per second to this Bucket.
+Couchbase,bucket.writeRatePerSecond,gauge,true,The bytes written of the Bucket.
+Couchbase,cluster.autoFailoverCount,rate,true,The number of auto failovers on the Cluster.
+Couchbase,cluster.autoFailoverEnabled,gauge,true,Indicates if failover is enabled on the Cluster.
+Couchbase,cluster.databaseFragmentationThreshold,gauge,true,The percentage level within the database at which compaction occurs.
+Couchbase,cluster.diskFreeInBytes,gauge,true,The free disk space on this Cluster.
+Couchbase,cluster.diskQuotaTotalInBytes,gauge,true,Total Disk Space Available to Couchbase.
+Couchbase,cluster.diskTotalInBytes,gauge,true,Total Disk Space.
+Couchbase,cluster.diskUsedbyDataInBytes,gauge,true,Disk used by Bucket Data on this Cluster.
+Couchbase,cluster.diskUsedInBytes,gauge,true,The used disk space on this Cluster.
+Couchbase,cluster.indexFragmentationThreshold,gauge,true,The percentage level within indexes at which compaction occurs.
+Couchbase,cluster.maximumBucketCount,gauge,true,Maximum number of buckets this cluster supports.
+Couchbase,cluster.memoryQuotaTotalInBytes,gauge,true,Total RAM Available to Couchbase.
+Couchbase,cluster.memoryQuotaTotalPerNodeInBytes,gauge,true,"Total RAM Available to Couchbase, per node."
+Couchbase,cluster.memoryQuotaUsedInBytes,gauge,true,Total RAM Used by Couchbase.
+Couchbase,cluster.memoryQuotaUsedPerNodeInBytes,gauge,true,"Total RAM Used by Couchbase, per node."
+Couchbase,cluster.memoryTotalInBytes,gauge,true,The total RAM on this Cluster.
+Couchbase,cluster.memoryUsedByDataInBytes,gauge,true,Total RAM Used by Bucket Data on this Cluster.
+Couchbase,cluster.memoryUsedInBytes,gauge,true,The total RAM used on this Cluster.
+Couchbase,cluster.viewFragmentationThreshold,gauge,true,The percentage of fragmentation within all the view index files at which compaction is triggered.
+Couchbase,node.cpuUtilization,gauge,true,The CPU utilization of the Node.
+Couchbase,node.memoryFreeInBytes,gauge,true,The free memory of the Node.
+Couchbase,node.memoryTotalInBytes,gauge,true,The total memory allocated to the Node.
+Couchbase,node.status,attribute,true,"The status of the Node. (0 = unhealthly, 1 = healthy)"
+Couchbase,node.swapTotalInBytes,gauge,true,The total swap space of the Node.
+Couchbase,node.swapUsedInBytes,gauge,true,The used swap space of the Node.
+Couchbase,node.uptimeInMilliseconds,gauge,true,The uptime of the Node.
+Couchbase,queryengine.activeRequests,gauge,true,Current number of active requests.
+Couchbase,queryengine.averageRequestTimeInMilliseconds,gauge,true,Average Request Time of this query engine.
+Couchbase,queryengine.completedLimit,rate,true,Number of Queries that couchbase will keep in it's query log.
+Couchbase,queryengine.completedRequests,gauge,true,Current number of completed Requests.
+Couchbase,queryengine.completedThresholdInMilliseconds,gauge,true,Minimum time query must take to be logged in couchbase's query log.
+Couchbase,queryengine.cores,gauge,true,Number of cores available for this query engine.
+Couchbase,queryengine.garbageCollectionNumber,gauge,true,Number of the last Garbage Collection
+Couchbase,queryengine.garbageCollectionPaused,gauge,true,Percent of time that garbage collection is paused.
+Couchbase,queryengine.garbageCollectionTimePausedInMilliseconds,gauge,true,Number of milliseconds that Garbage Collection is paused.
+Couchbase,queryengine.medianRequestTimeInMilliseconds,gauge,true,Median Request Time of this query engine.
+Couchbase,queryengine.preparedStatementUtilization,gauge,true,Percentage of requests that are prepared statements.
+Couchbase,queryengine.requestsLast15MinutesPerSecond,gauge,true,Requests per second average over the past 15 minutes.
+Couchbase,queryengine.requestsLast1MinutesPerSecond,gauge,true,Requests per second average over the past minute.
+Couchbase,queryengine.requestsLast5MinutesPerSecond,gauge,true,Requests per second average over the past 5 minutes.
+Couchbase,queryengine.requestTime80thPercentileInMilliseconds,gauge,true,80th Percentile of Request Time of this query engine.
+Couchbase,queryengine.requestTime95thPercentileInMilliseconds,gauge,true,95th Percentile of Request Time of this query engine.
+Couchbase,queryengine.requestTime99thPercentileInMilliseconds,gauge,true,99th Percentile of Request Time of this query engine.
+Couchbase,queryengine.systemCPUUtilization,gauge,true,CPU Utilization of this Query Engine
+Couchbase,queryengine.systemMemoryInBytes,gauge,true,The virtual address space reserved by this query engine.
+Couchbase,queryengine.totalMemoryInBytes,gauge,true,Cumulative amount of memory allocated for heap objects by this query engine.
+Couchbase,queryengine.totalThreads,gauge,true,Total threads used by this query engine.
+Couchbase,queryengine.uptimeInMilliseconds,gauge,true,Uptime of this Query Engine
+Couchbase,queryengine.usedMemoryInBytes,gauge,true,Amount of memory allocated for heap objects for this query engine.
+Couchbase,queryengine.userCPUUtilization,gauge,true,User CPU Utilization of this Query Engine.
