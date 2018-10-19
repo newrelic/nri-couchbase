@@ -1,0 +1,11 @@
+name: com.newrelic.couchbase
+description: Reports status and metrics for Couchbase service
+protocol_version: 1
+os: linux
+
+commands:
+  all_data:
+    command:
+      - ./bin/nr-couchbase
+    interval: 15
+    prefix: config/couchbase
