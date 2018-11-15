@@ -31,6 +31,7 @@ func Test_QueryEngineCollection(t *testing.T) {
 				BaseQueryURL: testServer.URL,
 			},
 		},
+		"CouchCluser",
 	}
 
 	qeCollector.Collect(true, true)

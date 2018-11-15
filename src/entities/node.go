@@ -12,6 +12,7 @@ import (
 type nodeCollector struct {
 	defaultCollector
 	nodeDetails *definition.Node
+	clusterName string
 }
 
 func (n *nodeCollector) GetEntity() (*integration.Entity, error) {
@@ -25,7 +26,7 @@ func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
 	}
 
 	if collectMetrics {
-		collectNodeMetrics(nodeEntity, n.nodeDetails)
+		collectNodeMetrics(nodeEntity, n.nodeDetails, n.clusterName)
 	}
 
 	if collectInventory {
@@ -35,10 +36,11 @@ func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
 	return nil
 }
 
-func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse *definition.Node) {
+func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse *definition.Node, clusterName string) {
 	nodeMetricSet := nodeEntity.NewMetricSet("CouchbaseNodeSample",
 		metric.Attribute{Key: "displayName", Value: nodeEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: nodeEntity.Metadata.Namespace + ":" + nodeEntity.Metadata.Name},
+		metric.Attribute{Key: "cluster", Value: clusterName},
 	)
 
 	err := nodeMetricSet.MarshalMetrics(nodeResponse)

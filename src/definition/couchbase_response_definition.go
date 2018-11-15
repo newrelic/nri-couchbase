@@ -74,7 +74,7 @@ type Node struct {
 	Uptime            *string      `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
 	Services          *[]string    `json:"services"`
 	ClusterMembership *string      `json:"clusterMembership"`
-	Hostname          *string      `json:"hostname"`
+	Hostname          *string      `json:"hostname" metric_name:"hostname" source_type:"attribute"`
 	OS                *string      `json:"os"`
 	Version           *string      `json:"version"`
 }

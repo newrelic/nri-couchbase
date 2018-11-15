@@ -14,6 +14,7 @@ import (
 
 type queryEngineCollector struct {
 	defaultCollector
+	clusterName string
 }
 
 func (qe *queryEngineCollector) GetEntity() (*integration.Entity, error) {
@@ -30,7 +31,7 @@ func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) e
 	settings, vitals := getQueryEngineResponses(qeClient)
 
 	if collectMetrics {
-		collectQueryEngineMetrics(queryEngineEntity, settings, vitals)
+		collectQueryEngineMetrics(queryEngineEntity, settings, vitals, qe.clusterName, qeClient.Hostname)
 	}
 
 	if collectInventory && vitals != nil {
@@ -40,10 +41,12 @@ func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) e
 	return nil
 }
 
-func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsResponse *definition.AdminSettings, vitalsResponse *definition.AdminVitals) {
+func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsResponse *definition.AdminSettings, vitalsResponse *definition.AdminVitals, clusterName, hostname string) {
 	queryEngineMetricSet := queryEngineEntity.NewMetricSet("CouchbaseQueryEngineSample",
 		metric.Attribute{Key: "displayName", Value: queryEngineEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
+		metric.Attribute{Key: "cluster", Value: clusterName},
+		metric.Attribute{Key: "hostname", Value: hostname},
 	)
 
 	// marshal metrics from /admin/settings

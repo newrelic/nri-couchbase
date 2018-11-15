@@ -6,9 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/newrelic/nri-couchbase/src/definition"
-
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,6 +25,7 @@ func Test_NodeCollection(t *testing.T) {
 			client:      &client.HTTPClient{},
 		},
 		&node,
+		"CouchCluster",
 	}
 
 	nodeCollector.Collect(true, true)

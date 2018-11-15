@@ -87,6 +87,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 				integration: i,
 			},
 			&node,
+			*clusterDetails.ClusterName,
 		}
 
 		collectors = append(collectors, nodeCollector)
@@ -108,6 +109,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 						client:      queryEngineClient,
 						integration: i,
 					},
+					*clusterDetails.ClusterName,
 				}
 				collectors = append(collectors, queryEngineCollector)
 			}
