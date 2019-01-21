@@ -1,0 +1,18 @@
+entity type,inventory source,inventory path
+bucket,config/couchbase,nodeLocator
+bucket,config/couchbase,proxyPort
+bucket,config/couchbase,bucketType
+bucket,config/couchbase,uuid
+node,config/couchbase,clusterMembership
+node,config/couchbase,os
+node,config/couchbase,recoveryType
+node,config/couchbase,services
+node,config/couchbase,version
+node,config/couchbase,hostname
+node,config/couchbase,port
+cluster,config/couchbase,couchbaseVersion
+cluster,config/couchbase,clusterUUID
+cluster,config/couchbase,collectionNode
+queryEngine,config/couchbase,version
+queryEngine,config/couchbase,hostname
+queryEngine,config/couchbase,port
