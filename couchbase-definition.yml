@@ -1,6 +1,6 @@
 name: com.newrelic.couchbase
 description: Reports status and metrics for Couchbase service
-protocol_version: 1
+protocol_version: 2
 os: linux
 
 commands:

@@ -119,13 +119,15 @@ func Test_FeedWorkerPool(t *testing.T) {
 	}
 
 	args = arguments.ArgumentList{
-		QueryPort: 8093,
+		QueryPort:             8093,
+		EnableBuckets:         true,
+		EnableClusterAndNodes: true,
 	}
 
 	collChan := make(chan entities.Collector)
 	i, _ := integration.New("test", "0.0.0")
 
-	go FeedWorkerPool(&mockedClient, collChan, i)
+	go FeedWorkerPool(&args, &mockedClient, collChan, i)
 
 	wgDone := make(chan struct{})
 	var collectors []entities.Collector
