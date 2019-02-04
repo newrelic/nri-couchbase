@@ -98,7 +98,7 @@ func createBucketExtendedResponse() *definition.BucketStats {
 	bucketExtended := definition.BucketStats{
 		Op: &definition.OpStats{
 			Samples: &definition.SampleStats{
-				BytesRead: &[]float64{5.5, 7.5, 1.0, 0.0},
+				BytesRead: []float64{5.5, 7.5, 1.0, 0.0},
 			},
 		},
 	}

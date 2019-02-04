@@ -79,7 +79,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 
 	collectors = append(collectors, clusterCollector)
 
-	for _, node := range *clusterDetails.Nodes {
+	for _, node := range clusterDetails.Nodes {
 		nodeCollector := &nodeCollector{
 			defaultCollector{
 				name:        *node.Hostname,
@@ -93,7 +93,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 		collectors = append(collectors, nodeCollector)
 
 		// check for query engine
-		for _, service := range *node.Services {
+		for _, service := range node.Services {
 			if service == "n1ql" {
 				// create client for new host
 				nodeHost := strings.Split(*node.Hostname, ":")[0]

@@ -54,7 +54,7 @@ func collectNodeInventory(nodeEntity *integration.Entity, nodeResponse *definiti
 		{"clusterMembership", nodeResponse.ClusterMembership},
 		{"os", nodeResponse.OS},
 		{"recoveryType", nodeResponse.RecoveryType},
-		{"services", strings.Join(*nodeResponse.Services, ", ")},
+		{"services", strings.Join(nodeResponse.Services, ", ")},
 		{"version", nodeResponse.Version},
 	}
 
