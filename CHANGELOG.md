@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.0.2 - 2019-03-19
 ### Fixes
-- Remove unused dependency for nri-jmx]
+- Remove unused dependency for nri-jmx
 
 ## 1.0.1 - 2019-02-04
 ### Fixes
