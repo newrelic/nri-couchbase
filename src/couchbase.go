@@ -8,6 +8,7 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/entities"
 )
 
 const (
@@ -27,6 +28,9 @@ func main() {
 	log.SetupLogging(args.Verbose)
 
 	client, err := client.CreateClient(&args, "")
+	exitOnError(err)
+
+	err = entities.SetClusterName(client)
 	exitOnError(err)
 
 	collect(i, client)

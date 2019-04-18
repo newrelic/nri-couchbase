@@ -11,6 +11,28 @@ import (
 	"github.com/newrelic/nri-couchbase/src/definition"
 )
 
+var (
+	// ClusterName is a global cluster name for the collection
+	ClusterName string
+)
+
+// SetClusterName sets the global cluster name for identity attributes
+func SetClusterName(client *client.HTTPClient) error {
+	var clusterDetails definition.PoolsDefaultResponse
+	err := client.Request("/pools/default", &clusterDetails)
+	if err != nil {
+		return err
+	}
+
+	// if we couldn't get the cluster name (version 4.x) use the pool name instead
+	if clusterDetails.ClusterName == nil {
+		ClusterName = *clusterDetails.PoolName
+	} else {
+		ClusterName = *clusterDetails.ClusterName
+	}
+	return nil
+}
+
 // inventoryItem is really equivalent to a map element but allows for easier appending and reflection-less iteration
 type inventoryItem struct {
 	key   string
@@ -86,7 +108,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 				client:      nodeClient,
 				integration: i,
 			},
-			&node,
+			node,
 			*clusterDetails.ClusterName,
 		}
 

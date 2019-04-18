@@ -11,12 +11,13 @@ import (
 
 type nodeCollector struct {
 	defaultCollector
-	nodeDetails *definition.Node
+	nodeDetails definition.Node
 	clusterName string
 }
 
 func (n *nodeCollector) GetEntity() (*integration.Entity, error) {
-	return n.GetIntegration().Entity(n.GetName(), "cb-node")
+	clusterNameID := integration.IDAttribute{Key: "clusterName", Value: ClusterName}
+	return n.GetIntegration().Entity(n.GetName(), "cb-node", clusterNameID)
 }
 
 func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
@@ -36,7 +37,7 @@ func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
 	return nil
 }
 
-func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse *definition.Node, clusterName string) {
+func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse definition.Node, clusterName string) {
 	nodeMetricSet := nodeEntity.NewMetricSet("CouchbaseNodeSample",
 		metric.Attribute{Key: "displayName", Value: nodeEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: nodeEntity.Metadata.Namespace + ":" + nodeEntity.Metadata.Name},
@@ -49,7 +50,7 @@ func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse *definition
 	}
 }
 
-func collectNodeInventory(nodeEntity *integration.Entity, nodeResponse *definition.Node) {
+func collectNodeInventory(nodeEntity *integration.Entity, nodeResponse definition.Node) {
 	inventoryItems := []inventoryItem{
 		{"clusterMembership", nodeResponse.ClusterMembership},
 		{"os", nodeResponse.OS},

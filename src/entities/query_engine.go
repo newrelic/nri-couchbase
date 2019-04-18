@@ -18,7 +18,8 @@ type queryEngineCollector struct {
 }
 
 func (qe *queryEngineCollector) GetEntity() (*integration.Entity, error) {
-	return qe.GetIntegration().Entity(qe.GetName(), "cb-queryEngine")
+	clusterNameID := integration.IDAttribute{Key: "clusterName", Value: ClusterName}
+	return qe.GetIntegration().Entity(qe.GetName(), "cb-queryEngine", clusterNameID)
 }
 
 func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) error {
