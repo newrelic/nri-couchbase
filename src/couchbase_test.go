@@ -39,10 +39,10 @@ func Test_EndToEnd(t *testing.T) {
 	// should have 4 total entities, one of each type
 	assert.Equal(t, 4, len(testIntegration.Entities))
 	counts := map[string]int{
-		"queryEngine": 0,
-		"node":        0,
-		"cluster":     0,
-		"bucket":      0,
+		"cb-queryEngine": 0,
+		"cb-node":        0,
+		"cb-cluster":     0,
+		"cb-bucket":      0,
 	}
 	for _, entity := range testIntegration.Entities {
 		counts[entity.Metadata.Namespace]++

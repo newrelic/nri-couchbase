@@ -18,7 +18,7 @@ type queryEngineCollector struct {
 }
 
 func (qe *queryEngineCollector) GetEntity() (*integration.Entity, error) {
-	return qe.GetIntegration().Entity(qe.GetName(), "queryEngine")
+	return qe.GetIntegration().Entity(qe.GetName(), "cb-queryEngine")
 }
 
 func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) error {

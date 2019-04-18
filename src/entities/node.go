@@ -16,7 +16,7 @@ type nodeCollector struct {
 }
 
 func (n *nodeCollector) GetEntity() (*integration.Entity, error) {
-	return n.GetIntegration().Entity(n.GetName(), "node")
+	return n.GetIntegration().Entity(n.GetName(), "cb-node")
 }
 
 func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
