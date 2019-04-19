@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	update = flag.Bool("update", true, "update .golden files")
+	update = flag.Bool("update", false, "update .golden files")
 )
 
 func getTestingIntegration(t *testing.T) *integration.Integration {
