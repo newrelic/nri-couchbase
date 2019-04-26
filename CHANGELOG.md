@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 - 2019-04-18
+### Changes
+- Renamed entity namespaces to scope them to couchbase
+- Updated to v3 SDK
+- Added clusterName as an identity attribute
+### Fixes
+- Bug where integration would collect all nodes as the same node
+
 ## 1.0.2 - 2019-03-19
 ### Fixes
 - Remove unused dependency for nri-jmx

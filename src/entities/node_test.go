@@ -24,7 +24,7 @@ func Test_NodeCollection(t *testing.T) {
 			integration: i,
 			client:      &client.HTTPClient{},
 		},
-		&node,
+		node,
 		"CouchCluster",
 	}
 

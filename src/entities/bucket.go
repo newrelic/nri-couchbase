@@ -18,7 +18,8 @@ type bucketCollector struct {
 }
 
 func (b *bucketCollector) GetEntity() (*integration.Entity, error) {
-	return b.GetIntegration().Entity(b.GetName(), "bucket")
+	clusterNameID := integration.IDAttribute{Key: "clusterName", Value: ClusterName}
+	return b.GetIntegration().Entity(b.GetName(), "cb-bucket", clusterNameID)
 }
 
 func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
