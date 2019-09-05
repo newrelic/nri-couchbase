@@ -4,6 +4,8 @@ The New Relic Infrastructure Integration for Couchbase captures critical perform
 
 All data is retrieved using Couchbase's REST API.
 
+See our [documentation web site](https://docs.newrelic.com/docs/integrations/host-integrations/host-integrations-list/couchbase-monitoring-integration) for more details.
+
 ## Requirements
 
 No additional requirements
