@@ -1,3 +1,4 @@
+//go:generate goversioninfo
 package main
 
 import (
@@ -13,7 +14,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.couchbase"
-	integrationVersion = "2.0.0"
+	integrationVersion = "2.0.3"
 )
 
 var (
