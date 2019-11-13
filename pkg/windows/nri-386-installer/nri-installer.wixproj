@@ -4,7 +4,7 @@
         <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
         <ProductVersion>3.10</ProductVersion>
-        <ProjectGuid>2f405b75-3078-4102-84d3-a3437b8ff2dc</ProjectGuid>
+        <ProjectGuid>3e51cc60-2b1a-4bc9-bd72-1f40d3d0f7a2</ProjectGuid>
         <SchemaVersion>2.0</SchemaVersion>
         <OutputName>$(integration)-386</OutputName>
         <OutputType>Package</OutputType>
