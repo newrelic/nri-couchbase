@@ -14,7 +14,7 @@ No additional requirements
 
 - download an archive file for the `Couchbase` Integration
 - extract `couchbase-definition.yml` and `/bin` directory into `/var/db/newrelic-infra/newrelic-integrations`
-- add execute permissions for the binary file `nr-couchbase` (if required)
+- add execute permissions for the binary file `nri-couchbase` (if required)
 - extract `couchbase-config.yml.sample` into `/etc/newrelic-infra/integrations.d`
 
 ## Usage
@@ -38,13 +38,13 @@ Assuming that you have source code you can build and run the Couchbase Integrati
 ```bash
 $ make
 ```
-* The command above will execute tests for the Couchbase Integration and build an executable file called `nr-couchbase` in `bin` directory.
+* The command above will execute tests for the Couchbase Integration and build an executable file called `nri-couchbase` in `bin` directory.
 ```bash
-$ ./bin/nr-couchbase
+$ ./bin/nri-couchbase
 ```
-* If you want to know more about usage of `./nr-couchbase` check
+* If you want to know more about usage of `./nri-couchbase` check
 ```bash
-$ ./bin/nr-couchbase -help
+$ ./bin/nri-couchbase -help
 ```
 
 For managing external dependencies [govendor tool](https://github.com/kardianos/govendor) is used. It is required to lock all external dependencies to specific version (if possible) into vendor directory.

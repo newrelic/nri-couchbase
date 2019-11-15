@@ -6,6 +6,6 @@ os: windows
 commands:
   all_data:
     command:
-      - .\bin\nr-couchbase.exe
+      - .\bin\nri-couchbase.exe
     interval: 15
     prefix: config/couchbase
