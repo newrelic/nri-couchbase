@@ -92,6 +92,9 @@ func getValueFromArray(values reflect.Value) (float64, error) {
 		return 0, errors.New("value is not an array")
 	}
 
+	if array.Len() == 0 {
+		return 0, errors.New("value is of length zero")
+	}
 	return array.Index(0).Float(), nil
 }
 
