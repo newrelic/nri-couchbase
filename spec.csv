@@ -2,7 +2,11 @@ integration,metric_name,metric_type,metric_enabled,description
 Couchbase,bucket.activeResidentItemsRatio,gauge,true,Percentage of active items cached in RAM in this bucket.
 Couchbase,bucket.averageDiskCommitTimeInMilliseconds,gauge,true,The average disk commit time in seconds of the Bucket.
 Couchbase,bucket.averageDiskUpdateTimeInMilliseconds,gauge,true,The average disk update time in microseconds of the Bucket.
-Couchbase,bucket.cacheMissRatio,gauge,true,Percentage of reads per second to this Bucket from disk as opposed to RAM.
+Couchbase,bucket.cacheMisses,gauge,true,Cache misses
+Couchbase,bucket.casHits,gauge,true,Compare and swap hits
+Couchbase,bucket.casMisses,gauge,true,Compare and swap misses
+Couchbase,bucket.couchDocsFragmentation,gauge,true,Couch docs fragmentation percent
+Couchbase,bucket.couchViewsFragmentation,gauge,true,Couch view fragmentation percent
 Couchbase,bucket.currentConnections,gauge,true,"Number of connections to this server including connections from external client SDKs, proxies, TAP requests and internal statistic gathering."
 Couchbase,bucket.dataUsedInBytes,gauge,true,Amount of data used by this bucket.
 Couchbase,bucket.decrementHitsPerSecond,gauge,true,The number of decrement hits per second of the Bucket.
@@ -11,9 +15,14 @@ Couchbase,bucket.deleteHitsPerSecond,gauge,true,The number of delete hits per se
 Couchbase,bucket.deleteMissesPerSecond,gauge,true,The number of delete misses per second for this Bucket.
 Couchbase,bucket.diskCreateOperationsPerSecond,gauge,true,Number of new items created on disk per second for this Bucket.
 Couchbase,bucket.diskFetchesPerSecond,gauge,true,The number of operations required to fetch items from disk on the Bucket.
+Couchbase,bucket.diskReadsPerSecond,gauge,true,Disk reads per second
 Couchbase,bucket.diskUpdateOperationsPerSecond,gauge,true,Number of items updated on disk per second for this Bucket.
 Couchbase,bucket.diskUsedInBytes,gauge,true,The amount of disk space in use for the Bucket.
 Couchbase,bucket.diskWriteQueue,gauge,true,Number of items waiting to be written to disk in the Bucket.
+Couchbase,bucket.drainedItemsInQueue,gauge,true,Total drained items in the queue
+Couchbase,bucket.activeItemsEnteringDiskQueuePerSecond,gauge,true,Number of active items per second being put on the active item disk queue
+Couchbase,bucket.pendingItemsInDiskQueue,gauge,true,Total enqueued pending items on disk queue
+Couchbase,bucket.drainedPendingItemsInQueue,gauge,true,Total drained pending items in the queue
 Couchbase,bucket.ejectionsPerSecond,gauge,true,Total number of items per second being ejected to disk in this bucket
 Couchbase,bucket.evictionPolicy,attribute,true,The Eviction policy of the bucket.
 Couchbase,bucket.evictionsPerSecond,gauge,true,The number of items per second evicted from the Bucket.
@@ -23,6 +32,12 @@ Couchbase,bucket.hitRatio,gauge,true,Percentage of get requests served with data
 Couchbase,bucket.incrementHitsPerSecond,gauge,true,The number of increment hits per second of the Bucket.
 Couchbase,bucket.incrementMissesPerSecond,gauge,true,The number of increment misses per second of the Bucket.
 Couchbase,bucket.itemCount,gauge,true,The number of objects stored in the Bucket.
+Couchbase,bucket.itemsOnDiskQueue,gauge,true,Total enqueued items on disk queue.
+Couchbase,bucket.itemsBeingWritten,gauge,true,Number of items currently being written.
+Couchbase,bucket.itemsEjectedFromMemoryToDisk,gauge,true,Number of times item values got ejected from memory to disk
+Couchbase,bucket.itemsQueuedForStorage,gauge,true,Number of items queued for storage
+Couchbase,bucket.drainedItemsOnDiskQueue,gauge,true,Total drained items on disk queue.
+Couchbase,bucket.maximumMemoryUsed,gauge,true,The maximum amount of memory this bucket can use.
 Couchbase,bucket.memoryHighWaterMarkInBytes,gauge,true,High water mark for auto-evictions on the Bucket.
 Couchbase,bucket.memoryLowWaterMarkInBytes,gauge,true,Low water mark for auto-evictions on the Bucket.
 Couchbase,bucket.memoryUsedInBytes,gauge,true,The amount of RAM used for the Bucket.
@@ -34,6 +49,7 @@ Couchbase,bucket.pendingResidentItemsRatio,gauge,true,Percentage of pending item
 Couchbase,bucket.quotaUtilization,gauge,true,The percent of RAM Quota currently in use on the Bucket.
 Couchbase,bucket.readOperationsPerSecond,gauge,true,The number of reads (get operations) per second from this Bucket.
 Couchbase,bucket.readRatePerSecond,gauge,true,The bytes read of the Bucket.
+Couchbase,bucket.recoverableOutOfMemoryCount,gauge,true,Number of times recoverable OOMs happened while processing operations
 Couchbase,bucket.replicaIndex,gauge,true,Defines if the bucket has replica indexes enabled.
 Couchbase,bucket.replicaNumber,gauge,true,Number of replicas of this bucket.
 Couchbase,bucket.replicaResidentItemsRatio,gauge,true,Percentage of replica items cached in RAM in this bucket.
@@ -41,6 +57,8 @@ Couchbase,bucket.residentItemsRatio,gauge,true,Percentage of all items cached in
 Couchbase,bucket.temporaryOutOfMemoryErrorsPerSecond,gauge,true,"Number of back-offs sent per second to client SDKs due to ""out of memory"" situations from this Bucket."
 Couchbase,bucket.threadsNumber,gauge,true,The number of concurrent readers and writers for the data bucket.
 Couchbase,bucket.totalOperationsPerSecond,gauge,true,The total operations per second of the Bucket.
+Couchbase,bucket.totalItems,gauge,true,Total number of items
+Couchbase,bucket.activeItemsInMemory,gauge,true,Number of active items in memory
 Couchbase,bucket.writeOperationsPerSecond,gauge,true,The number of writes (set operations) per second to this Bucket.
 Couchbase,bucket.writeRatePerSecond,gauge,true,The bytes written of the Bucket.
 Couchbase,cluster.autoFailoverCount,rate,true,The number of auto failovers on the Cluster.
