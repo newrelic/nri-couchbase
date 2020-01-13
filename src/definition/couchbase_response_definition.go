@@ -173,7 +173,7 @@ type SampleStats struct {
 	EpQueueSize                 []float64 `json:"ep_queue_size" metric_name:"bucket.itemsQueuedForStorage" source_type:"gauge"`
 	EpTmpOomErrors              []float64 `json:"ep_tmp_oom_errors" metric_name:"bucket.recoverableOutOfMemoryCount" source_type:"gauge"`
 	VbActiveQueueDrain          []float64 `json:"vb_active_queue_drain" metric_name:"bucket.drainedItemsInQueue" source_type:"gauge"`
-	VbActiveQueueFill           []float64 `json:"vb_active_queue_fill" metric_name:"bucket.activeItemDiskDiskQueuePerSecond" source_type:"gauge"`
+	VbActiveQueueFill           []float64 `json:"vb_active_queue_fill" metric_name:"bucket.activeItemsEnteringDiskQueuePerSecond" source_type:"gauge"`
 	VbPendingQueueFill          []float64 `json:"vb_pending_queue_fill" metric_name:"bucket.pendingItemsInDiskQueue" source_type:"gauge"`
 	VbPendingQueueDrain         []float64 `json:"vb_pending_queue_drain" metric_name:"bucket.drainedPendingItemsInQueue" source_type:"gauge"`
 	CurrItemsTot                []float64 `json:"curr_items_tot" metric_name:"bucket.totalItems" source_type:"gauge"`
