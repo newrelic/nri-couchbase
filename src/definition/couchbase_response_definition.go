@@ -176,6 +176,8 @@ type SampleStats struct {
 	VbActiveQueueFill           []float64 `json:"vb_active_queue_fill" metric_name:"bucket.activeItemDiskDiskQueuePerSecond" source_type:"gauge"`
 	VbPendingQueueFill          []float64 `json:"vb_pending_queue_fill" metric_name:"bucket.pendingItemsInDiskQueue" source_type:"gauge"`
 	VbPendingQueueDrain         []float64 `json:"vb_pending_queue_drain" metric_name:"bucket.drainedPendingItemsInQueue" source_type:"gauge"`
+	CurrItemsTot                []float64 `json:"curr_items_tot" metric_name:"bucket.totalItems" source_type:"gauge"`
+	CurrItems                   []float64 `json:"curr_items" metric_name:"bucket.activeItemsInMemory" source_type:"gauge"`
 }
 
 // =========
