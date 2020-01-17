@@ -14,7 +14,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.couchbase"
-	integrationVersion = "2.2.1"
+	integrationVersion = "2.2.2"
 )
 
 var (

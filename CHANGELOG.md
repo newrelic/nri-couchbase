@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.2 (2020-01-17)
+### Fixed
+-  Issue causing duplicate metrics to show up for buckets
+
 ## 2.2.1 (2020-01-14)
 ### Added
 -  A number of new metrics.
