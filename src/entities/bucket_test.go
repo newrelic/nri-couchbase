@@ -66,7 +66,7 @@ func Test_BucketInventory(t *testing.T) {
 	i := getTestingIntegration(t)
 	e, _ := i.Entity("test", "testEntity")
 
-	collectBucketInventory(e, &bucketStats)
+	collectBucketInventory(e, bucketStats)
 
 	output, _ := i.MarshalJSON()
 
@@ -105,10 +105,10 @@ func createBucketExtendedResponse() *definition.BucketStats {
 	return &bucketExtended
 }
 
-func createBucketResponse() *definition.PoolsDefaultBucket {
+func createBucketResponse() definition.PoolsDefaultBucket {
 	var bucketStats definition.PoolsDefaultBucket
 	data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "bucket.json"))
 	_ = json.Unmarshal(data, &bucketStats)
 
-	return &bucketStats
+	return bucketStats
 }
