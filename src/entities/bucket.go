@@ -13,7 +13,7 @@ import (
 
 type bucketCollector struct {
 	defaultCollector
-	bucketResponse         *definition.PoolsDefaultBucket
+	bucketResponse         definition.PoolsDefaultBucket
 	collectExtendedMetrics bool
 }
 
@@ -50,7 +50,7 @@ func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
 	return nil
 }
 
-func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket) *metric.Set {
+func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse definition.PoolsDefaultBucket) *metric.Set {
 	bucketMetricSet := bucketEntity.NewMetricSet("CouchbaseBucketSample",
 		metric.Attribute{Key: "displayName", Value: bucketEntity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
@@ -109,7 +109,7 @@ func getSourceTypeFromTag(metricType string) metric.SourceType {
 	}
 }
 
-func collectBucketInventory(bucketEntity *integration.Entity, baseBucketResponse *definition.PoolsDefaultBucket) {
+func collectBucketInventory(bucketEntity *integration.Entity, baseBucketResponse definition.PoolsDefaultBucket) {
 	items := []inventoryItem{
 		{"nodeLocator", baseBucketResponse.NodeLocator},
 		{"proxyPort", baseBucketResponse.ProxyPort},

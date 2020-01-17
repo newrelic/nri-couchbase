@@ -46,20 +46,20 @@ func FeedWorkerPool(args *arguments.ArgumentList, client *client.HTTPClient, col
 	defer close(collectorChan)
 
 	// Create a wait group for each of the get*Collectors calls
-	getWg := new(sync.WaitGroup)
+	var wg sync.WaitGroup
 
 	// these two can run concurrent as they use different API calls to get a listing of resources
 	if args.EnableClusterAndNodes {
-		getWg.Add(1)
-		go createClusterAndNodeCollectors(getWg, client, collectorChan, integration)
+		wg.Add(1)
+		go createClusterAndNodeCollectors(&wg, client, collectorChan, integration)
 	}
 
 	if args.EnableBuckets {
-		getWg.Add(1)
-		go createBucketCollectors(getWg, client, collectorChan, integration)
+		wg.Add(1)
+		go createBucketCollectors(&wg, client, collectorChan, integration)
 	}
 
-	getWg.Wait()
+	wg.Wait()
 }
 
 func createClusterAndNodeCollectors(wg *sync.WaitGroup, client *client.HTTPClient, channel chan entities.Collector, integration *integration.Integration) {

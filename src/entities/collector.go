@@ -160,7 +160,7 @@ func GetBucketCollectors(args *arguments.ArgumentList, i *integration.Integratio
 				client:      nodeClient,
 				integration: i,
 			},
-			&bucketResponse,
+			bucketResponse,
 			args.EnableBucketStats,
 		}
 		collectors = append(collectors, bucketCollector)
