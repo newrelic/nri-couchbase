@@ -34,6 +34,7 @@ func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
 }
 
 func Test_GetCollectors(t *testing.T) {
+	ClusterName = "couch5"
 	testCases := []struct {
 		clusterDataPath     string
 		expectedClusterName string
@@ -61,11 +62,12 @@ func Test_GetCollectors(t *testing.T) {
 
 		clusterCollectors, err := GetClusterCollectors(&args, i, client)
 		assert.NoError(t, err)
-		assert.Equal(t, 7, len(clusterCollectors))
+		assert.Len(t, clusterCollectors, 7)
 
 		// find cluster collector
 		for _, collector := range clusterCollectors {
-			e, _ := collector.GetEntity()
+			e, err := collector.GetEntity()
+			assert.NoError(t, err)
 			if e.Metadata.Namespace != "cluster" {
 				continue
 			}

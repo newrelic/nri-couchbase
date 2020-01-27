@@ -12,12 +12,13 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/entities"
 	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	update = flag.Bool("update", false, "update .golden files")
+	update = flag.Bool("update", true, "update .golden files")
 )
 
 func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
@@ -29,6 +30,7 @@ func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
 }
 
 func Test_EndToEnd(t *testing.T) {
+	entities.ClusterName = "testcluster"
 	testServ, testClient := getMappedMockServerAndClient(t)
 	defer testServ.Close()
 
@@ -47,20 +49,20 @@ func Test_EndToEnd(t *testing.T) {
 	for _, entity := range testIntegration.Entities {
 		counts[entity.Metadata.Namespace]++
 	}
-	for _, count := range counts {
-		assert.Equal(t, 1, count)
+	for e, count := range counts {
+		assert.Equal(t, 1, count, "Wrong number of entities for type %s", e)
 	}
 }
 
 func getMappedMockServerAndClient(t *testing.T) (*httptest.Server, *client.HTTPClient) {
 	endpointMap := map[string]string{
-		"/pools":                                     filepath.Join("testdata", "input", "end-to-end", "pools.json"),
-		"/pools/default":                             filepath.Join("testdata", "input", "end-to-end", "pools-default.json"),
-		"/pools/default/buckets":                     filepath.Join("testdata", "input", "end-to-end", "pools-default-buckets.json"),
+		"/pools":                 filepath.Join("testdata", "input", "end-to-end", "pools.json"),
+		"/pools/default":         filepath.Join("testdata", "input", "end-to-end", "pools-default.json"),
+		"/pools/default/buckets": filepath.Join("testdata", "input", "end-to-end", "pools-default-buckets.json"),
 		"/pools/default/buckets/sample-bucket/stats": filepath.Join("testdata", "input", "end-to-end", "bucket-stats.json"),
-		"/admin/settings":                            filepath.Join("testdata", "input", "end-to-end", "admin-settings.json"),
-		"/admin/vitals":                              filepath.Join("testdata", "input", "end-to-end", "admin-vitals.json"),
-		"/settings/autoFailover":                     filepath.Join("testdata", "input", "end-to-end", "auto-failover.json"),
+		"/admin/settings":        filepath.Join("testdata", "input", "end-to-end", "admin-settings.json"),
+		"/admin/vitals":          filepath.Join("testdata", "input", "end-to-end", "admin-vitals.json"),
+		"/settings/autoFailover": filepath.Join("testdata", "input", "end-to-end", "auto-failover.json"),
 	}
 
 	testServer := testutils.GetTestServer(t, endpointMap)

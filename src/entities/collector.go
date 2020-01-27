@@ -27,10 +27,8 @@ func SetClusterName(client *client.HTTPClient) error {
 	// if we couldn't get the cluster name (version 4.x) use the pool name instead
 	if clusterDetails.ClusterName != nil && *clusterDetails.ClusterName != "" {
 		ClusterName = *clusterDetails.ClusterName
-		return nil
 	} else if clusterDetails.PoolName != nil && *clusterDetails.PoolName != "" {
 		ClusterName = *clusterDetails.PoolName
-		return nil
 	} else {
 		ClusterName = "default"
 		log.Warn("The cluster name and pool name could not be found in the response. Using the value of 'default' for the cluster name.")

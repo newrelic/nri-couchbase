@@ -104,6 +104,7 @@ func Test_collectorWorker(t *testing.T) {
 }
 
 func Test_FeedWorkerPool(t *testing.T) {
+	entities.ClusterName = "couch5"
 	endpointMap := map[string]string{
 		"/pools/default":         filepath.Join("testdata", "input", "cluster.json"),
 		"/pools/default/buckets": filepath.Join("testdata", "input", "buckets.json"),
