@@ -12,12 +12,13 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
+	"github.com/newrelic/nri-couchbase/src/entities"
 	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	update = flag.Bool("update", false, "update .golden files")
+	update = flag.Bool("update", true, "update .golden files")
 )
 
 func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
@@ -29,6 +30,7 @@ func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
 }
 
 func Test_EndToEnd(t *testing.T) {
+	entities.ClusterName = "testcluster"
 	testServ, testClient := getMappedMockServerAndClient(t)
 	defer testServ.Close()
 
@@ -47,8 +49,8 @@ func Test_EndToEnd(t *testing.T) {
 	for _, entity := range testIntegration.Entities {
 		counts[entity.Metadata.Namespace]++
 	}
-	for _, count := range counts {
-		assert.Equal(t, 1, count)
+	for e, count := range counts {
+		assert.Equal(t, 1, count, "Wrong number of entities for type %s", e)
 	}
 }
 

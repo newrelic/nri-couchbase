@@ -16,7 +16,7 @@ type clusterCollector struct {
 
 func (c *clusterCollector) GetEntity() (*integration.Entity, error) {
 	clusterNameID := integration.IDAttribute{Key: "clusterName", Value: ClusterName}
-	return c.GetIntegration().Entity(*c.clusterDetails.ClusterName, "cb-cluster", clusterNameID)
+	return c.GetIntegration().Entity(ClusterName, "cb-cluster", clusterNameID)
 }
 
 // CollectCluster creates entities for the cluster and its nodes,

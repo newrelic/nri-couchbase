@@ -25,10 +25,13 @@ func SetClusterName(client *client.HTTPClient) error {
 	}
 
 	// if we couldn't get the cluster name (version 4.x) use the pool name instead
-	if clusterDetails.ClusterName == nil {
+	if clusterDetails.ClusterName != nil && *clusterDetails.ClusterName != "" {
+		ClusterName = *clusterDetails.ClusterName
+	} else if clusterDetails.PoolName != nil && *clusterDetails.PoolName != "" {
 		ClusterName = *clusterDetails.PoolName
 	} else {
-		ClusterName = *clusterDetails.ClusterName
+		ClusterName = "default"
+		log.Warn("The cluster name and pool name could not be found in the response. Using the value of 'default' for the cluster name.")
 	}
 	return nil
 }
@@ -83,15 +86,10 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 		return nil, err
 	}
 
-	// if we couldn't get the cluster name (version 4.x) use the pool name instead
-	if clusterDetails.ClusterName == nil {
-		clusterDetails.ClusterName = clusterDetails.PoolName
-	}
-
 	collectors := make([]Collector, 0, 10)
 	clusterCollector := &clusterCollector{
 		defaultCollector{
-			name:        *clusterDetails.ClusterName,
+			name:        ClusterName,
 			client:      nodeClient,
 			integration: i,
 		},
@@ -109,7 +107,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 				integration: i,
 			},
 			node,
-			*clusterDetails.ClusterName,
+			ClusterName,
 		}
 
 		collectors = append(collectors, nodeCollector)
@@ -131,7 +129,7 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 						client:      queryEngineClient,
 						integration: i,
 					},
-					*clusterDetails.ClusterName,
+					ClusterName,
 				}
 				collectors = append(collectors, queryEngineCollector)
 			}
