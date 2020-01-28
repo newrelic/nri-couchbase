@@ -68,15 +68,16 @@ type StorageTotalsHDD struct {
 
 // Node struct for pools/default endpoint, nodes objects
 type Node struct {
-	SystemStats       *SystemStats `json:"systemStats"`
-	RecoveryType      *string      `json:"recoveryType"`
-	Status            *string      `json:"status" metric_name:"node.status" source_type:"attribute"`
-	Uptime            *string      `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
-	Services          []string     `json:"services"`
-	ClusterMembership *string      `json:"clusterMembership"`
-	Hostname          *string      `json:"hostname" metric_name:"hostname" source_type:"attribute"`
-	OS                *string      `json:"os"`
-	Version           *string      `json:"version"`
+	SystemStats       *SystemStats      `json:"systemStats"`
+	RecoveryType      *string           `json:"recoveryType"`
+	Status            *string           `json:"status" metric_name:"node.status" source_type:"attribute"`
+	Uptime            *string           `json:"uptime" metric_name:"node.uptimeInMilliseconds" source_type:"gauge"`
+	Services          []string          `json:"services"`
+	ClusterMembership *string           `json:"clusterMembership"`
+	Hostname          *string           `json:"hostname" metric_name:"hostname" source_type:"attribute"`
+	OS                *string           `json:"os"`
+	Version           *string           `json:"version"`
+	InterestingStats  *InterestingStats `json:"interestingStats"`
 }
 
 // SystemStats struct for pools/default endpoint, nodes/systemStats objects
@@ -86,6 +87,25 @@ type SystemStats struct {
 	SwapUsed       *int64   `json:"swap_used" metric_name:"node.swapUsedInBytes" source_type:"gauge"`
 	MemoryTotal    *int64   `json:"mem_total" metric_name:"node.memoryTotalInBytes" source_type:"gauge"`
 	MemoryFree     *int64   `json:"mem_free" metric_name:"node.memoryFreeInBytes" source_type:"gauge"`
+}
+
+// InterestingStats is a set of metrics reported as interesting by the couchbase cluster
+type InterestingStats struct {
+	CmdGet                   *int `json:"cmd_get" metric_name:"node.cmdGet" source_type:"gauge"`
+	CouchDocsActualDiskSize  *int `json:"couch_docs_actual_disk_size" metric_name:"node.couchDocsActualDiskSizeInBytes" source_type:"gauge"`
+	CouchDocsDataSize        *int `json:"couch_docs_data_size" metric_name:"node.couchDocsDataSizeInBytes" source_type:"gauge"`
+	CouchSpatialDataSize     *int `json:"couch_spatial_data_size" metric_name:"node.couchSpatialDataSizeInBytes" source_type:"gauge"`
+	CouchSpatialDiskSize     *int `json:"couch_spatial_disk_size" metric_name:"node.couchSpatialDiskSizeInBytes" source_type:"gauge"`
+	CouchViewsActualDiskSize *int `json:"couch_views_actual_disk_size" metric_name:"node.couchViewsActualDiskSizeInBytes" source_type:"gauge"`
+	CouchViewsDataSize       *int `json:"couch_views_data_size" metric_name:"node.couchViewsDataSizeInBytes" source_type:"gauge"`
+	CurrItems                *int `json:"curr_items" metric_name:"node.currentItems" source_type:"gauge"`
+	CurrItemsTot             *int `json:"curr_items_tot" metric_name:"node.currentItemsTotal" source_type:"gauge"`
+	EpBgFetched              *int `json:"ep_bg_fetched" metric_name:"node.backgroundFetches" source_type:"gauge"`
+	GetHits                  *int `json:"get_hits" metric_name:"node.getHits" source_type:"gauge"`
+	MemUsed                  *int `json:"mem_used" metric_name:"node.memoryUsedInBytes" source_type:"gauge"`
+	Ops                      *int `json:"ops" metric_name:"node.ops" source_type:"gauge"`
+	VbActiveNumNonResident   *int `json:"vb_active_num_non_resident" metric_name:"node.vbucketActiveNonResidentItems" source_type:"gauge"`
+	VbReplicaCurrItems       *int `json:"vb_replica_curr_items" metric_name:"node.vbucketInMemoryItems" source_type:"gauge"`
 }
 
 // =========
