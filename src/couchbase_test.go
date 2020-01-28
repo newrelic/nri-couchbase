@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	update = flag.Bool("update", true, "update .golden files")
+	update = flag.Bool("update", false, "update .golden files")
 )
 
 func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
@@ -56,13 +56,13 @@ func Test_EndToEnd(t *testing.T) {
 
 func getMappedMockServerAndClient(t *testing.T) (*httptest.Server, *client.HTTPClient) {
 	endpointMap := map[string]string{
-		"/pools":                                     filepath.Join("testdata", "input", "end-to-end", "pools.json"),
-		"/pools/default":                             filepath.Join("testdata", "input", "end-to-end", "pools-default.json"),
-		"/pools/default/buckets":                     filepath.Join("testdata", "input", "end-to-end", "pools-default-buckets.json"),
+		"/pools":                 filepath.Join("testdata", "input", "end-to-end", "pools.json"),
+		"/pools/default":         filepath.Join("testdata", "input", "end-to-end", "pools-default.json"),
+		"/pools/default/buckets": filepath.Join("testdata", "input", "end-to-end", "pools-default-buckets.json"),
 		"/pools/default/buckets/sample-bucket/stats": filepath.Join("testdata", "input", "end-to-end", "bucket-stats.json"),
-		"/admin/settings":                            filepath.Join("testdata", "input", "end-to-end", "admin-settings.json"),
-		"/admin/vitals":                              filepath.Join("testdata", "input", "end-to-end", "admin-vitals.json"),
-		"/settings/autoFailover":                     filepath.Join("testdata", "input", "end-to-end", "auto-failover.json"),
+		"/admin/settings":        filepath.Join("testdata", "input", "end-to-end", "admin-settings.json"),
+		"/admin/vitals":          filepath.Join("testdata", "input", "end-to-end", "admin-vitals.json"),
+		"/settings/autoFailover": filepath.Join("testdata", "input", "end-to-end", "auto-failover.json"),
 	}
 
 	testServer := testutils.GetTestServer(t, endpointMap)
