@@ -86,6 +86,8 @@ func GetClusterCollectors(args *arguments.ArgumentList, i *integration.Integrati
 		return nil, err
 	}
 
+	sanitizeAutocompactionSettings(&clusterDetails)
+
 	collectors := make([]Collector, 0, 10)
 	clusterCollector := &clusterCollector{
 		defaultCollector{
@@ -165,4 +167,30 @@ func GetBucketCollectors(args *arguments.ArgumentList, i *integration.Integratio
 	}
 
 	return collectors, nil
+}
+
+func sanitizeAutocompactionSettings(response *definition.PoolsDefaultResponse) {
+	switch response.AutoCompactionSettings.DatabaseFragmentationThreshold.Percentage.(type) {
+	case int:
+		break
+	default:
+		log.Debug("Skipping metric cluster.databaseFragmentationThreshold because a non-integer value was received")
+		response.AutoCompactionSettings.DatabaseFragmentationThreshold.Percentage = nil
+	}
+
+	switch response.AutoCompactionSettings.IndexFragmentationThreshold.Percentage.(type) {
+	case int:
+		break
+	default:
+		log.Debug("Skipping metric cluster.indexFragmentationThreshold because a non-integer value was received")
+		response.AutoCompactionSettings.IndexFragmentationThreshold.Percentage = nil
+	}
+
+	switch response.AutoCompactionSettings.ViewFragmentationThreshold.Percentage.(type) {
+	case int:
+		break
+	default:
+		log.Debug("Skipping metric cluster.viewFragmentationThreshold because a non-integer value was received")
+		response.AutoCompactionSettings.ViewFragmentationThreshold.Percentage = nil
+	}
 }

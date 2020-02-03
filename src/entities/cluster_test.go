@@ -57,3 +57,37 @@ func createClusterCollector(i *integration.Integration, httpClient *http.Client,
 		&poolsDefault,
 	}
 }
+
+func Test_sanitizeAutocompactionSettings(t *testing.T) {
+	input := &definition.PoolsDefaultResponse{
+		AutoCompactionSettings: &definition.AutoCompactionSettings{
+			DatabaseFragmentationThreshold: &definition.DatabaseFragmentationThreshold{
+				Percentage: 46,
+			},
+			IndexFragmentationThreshold: &definition.IndexFragmentationThreshold{
+				Percentage: "undefined",
+			},
+			ViewFragmentationThreshold: &definition.ViewFragmentationThreshold{
+				Percentage: 68.8,
+			},
+		},
+	}
+
+	expected := &definition.PoolsDefaultResponse{
+		AutoCompactionSettings: &definition.AutoCompactionSettings{
+			DatabaseFragmentationThreshold: &definition.DatabaseFragmentationThreshold{
+				Percentage: 46,
+			},
+			IndexFragmentationThreshold: &definition.IndexFragmentationThreshold{
+				Percentage: nil,
+			},
+			ViewFragmentationThreshold: &definition.ViewFragmentationThreshold{
+				Percentage: nil,
+			},
+		},
+	}
+	sanitizeAutocompactionSettings(input)
+
+	assert.Equal(t, expected, input)
+
+}
