@@ -174,6 +174,7 @@ func sanitizeAutocompactionSettings(response *definition.PoolsDefaultResponse) {
 	case int:
 		break
 	default:
+		log.Debug("Skipping metric cluster.databaseFragmentationThreshold because a non-integer value was received")
 		response.AutoCompactionSettings.DatabaseFragmentationThreshold.Percentage = nil
 	}
 
@@ -181,6 +182,7 @@ func sanitizeAutocompactionSettings(response *definition.PoolsDefaultResponse) {
 	case int:
 		break
 	default:
+		log.Debug("Skipping metric cluster.indexFragmentationThreshold because a non-integer value was received")
 		response.AutoCompactionSettings.IndexFragmentationThreshold.Percentage = nil
 	}
 
@@ -188,6 +190,7 @@ func sanitizeAutocompactionSettings(response *definition.PoolsDefaultResponse) {
 	case int:
 		break
 	default:
+		log.Debug("Skipping metric cluster.viewFragmentationThreshold because a non-integer value was received")
 		response.AutoCompactionSettings.ViewFragmentationThreshold.Percentage = nil
 	}
 }
