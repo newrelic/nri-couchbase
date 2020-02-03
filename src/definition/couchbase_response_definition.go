@@ -27,17 +27,17 @@ type AutoCompactionSettings struct {
 
 // DatabaseFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/databaseFragmentationThreshold object
 type DatabaseFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.databaseFragmentationThreshold" source_type:"gauge"`
+	Percentage interface{} `json:"percentage" metric_name:"cluster.databaseFragmentationThreshold" source_type:"gauge"`
 }
 
 // IndexFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/indexFragmentationThreshold object
 type IndexFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.indexFragmentationThreshold" source_type:"gauge"`
+	Percentage interface{} `json:"percentage" metric_name:"cluster.indexFragmentationThreshold" source_type:"gauge"`
 }
 
 // ViewFragmentationThreshold struct for pools/default endpoint, autoCompactionSettings/viewFragmentationThreshold object
 type ViewFragmentationThreshold struct {
-	Percentage *int `json:"percentage" metric_name:"cluster.viewFragmentationThreshold" source_type:"gauge"`
+	Percentage interface{} `json:"percentage" metric_name:"cluster.viewFragmentationThreshold" source_type:"gauge"`
 }
 
 // StorageTotals struct for pools/default endpoint, storageTotals object
