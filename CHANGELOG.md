@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.5 (2020-02-03)
+### Fixed
+- Crash when API returns string values for fields that are normally integers
+
 ## 2.3.4 (2020-01-27)
 ### Fixed
 - Added safer defaults for ClusterName
