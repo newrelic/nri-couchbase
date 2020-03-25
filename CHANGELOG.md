@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.6 (2020-03-25)
+### Fixed
+- Crash when API returns float values for fields that look like integers
+
 ## 2.3.5 (2020-02-03)
 ### Fixed
 - Crash when API returns string values for fields that are normally integers
@@ -30,15 +34,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.1.0 (2019-11-18)
 ### Changed
 - Renamed the integration executable from nr-couchbase to nri-couchbase in order to be consistent with the package naming. **Important Note:** if you have any security module rules (eg. SELinux), alerts or automation that depends on the name of this binary, these will have to be updated.
- 
+
 ## 2.0.4 - 2019-10-23
 ### Fixed
 - Unique GUIDS for windows components
- 
+
 ## 2.0.3 - 2019-10-23
 ### Added
 - Windows installer packaging
-- 
+-
 ## 2.0.2 - 2019-07-26
 ### Added
 - provided sidecar Kubernetes containers
@@ -64,7 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.0.0 - 2018-11-29
 ### Changes
-- Bumped version for GA release 
+- Bumped version for GA release
 
 ## 0.1.1 - 2018-11-15
 ### Added
