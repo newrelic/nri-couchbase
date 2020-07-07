@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.7 (2020-07-07)
+### Fixed
+- Crash when additional fields may come back as floats
+
 ## 2.3.6 (2020-03-25)
 ### Fixed
 - Crash when API returns float values for fields that look like integers
