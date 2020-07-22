@@ -127,12 +127,12 @@ type PoolsDefaultBucket struct {
 // BasicStats struct for pools/default/buckets endpoint, basicStats objects
 type BasicStats struct {
 	QuotaPercentUsed *float64 `json:"quotaPercentUsed" metric_name:"bucket.quotaUtilization" source_type:"gauge"`
-	OpsPerSec        *int     `json:"opsPerSec" metric_name:"bucket.totalOperationsPerSecond" source_type:"gauge"`
-	DiskFetches      *int     `json:"diskFetches" metric_name:"bucket.diskFetchesPerSecond" source_type:"gauge"`
-	ItemCount        *int     `json:"itemCount" metric_name:"bucket.itemCount" source_type:"gauge"`
-	DiskUsed         *int64   `json:"diskUsed" metric_name:"bucket.diskUsedInBytes" source_type:"gauge"`
-	DataUsed         *int64   `json:"dataUsed" metric_name:"bucket.dataUsedInBytes" source_type:"gauge"`
-	MemUsed          *int64   `json:"memUsed" metric_name:"bucket.memoryUsedInBytes" source_type:"gauge"`
+	OpsPerSec        *float64 `json:"opsPerSec" metric_name:"bucket.totalOperationsPerSecond" source_type:"gauge"`
+	DiskFetches      *float64 `json:"diskFetches" metric_name:"bucket.diskFetchesPerSecond" source_type:"gauge"`
+	ItemCount        *float64 `json:"itemCount" metric_name:"bucket.itemCount" source_type:"gauge"`
+	DiskUsed         *float64 `json:"diskUsed" metric_name:"bucket.diskUsedInBytes" source_type:"gauge"`
+	DataUsed         *float64 `json:"dataUsed" metric_name:"bucket.dataUsedInBytes" source_type:"gauge"`
+	MemUsed          *float64 `json:"memUsed" metric_name:"bucket.memoryUsedInBytes" source_type:"gauge"`
 }
 
 // =========
