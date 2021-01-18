@@ -22,6 +22,7 @@ type ArgumentList struct {
 	EnableBuckets         bool   `default:"true" help:"If true, collects bucket resources"`
 	EnableBucketStats     bool   `default:"true" help:"If true, collects additional bucket statistics"`
 	Timeout               int    `default:"30" help:"Timeout for an API call"`
+	ShowVersion           bool   `default:"false" help:"Print build information and exit"`
 }
 
 // Validate validates an argument list and returns an error if something is wrong
