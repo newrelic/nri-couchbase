@@ -73,13 +73,6 @@ nfpms:
     formats:
       - rpm
     bindir: "/var/db/newrelic-infra/newrelic-integrations/bin"
-    files:
-      "couchbase-config.yml.sample": "/etc/newrelic-infra/integrations.d/couchbase-config.yml.sample"
-      "CHANGELOG.md": "/usr/share/doc/nri-couchbase/CHANGELOG.md"
-      "README.md":  "/usr/share/doc/nri-couchbase/README.md"
-      "LICENSE": "/usr/share/doc/nri-couchbase/LICENSE"
-    config_files:
-      "couchbase-definition.yml": "/var/db/newrelic-infra/newrelic-integrations/couchbase-definition.yml"
     contents:
       - src: couchbase-config.yml.sample
         dst: /etc/newrelic-infra/integrations.d/couchbase-config.yml.sample
