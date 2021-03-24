@@ -5,7 +5,8 @@ INTEGRATION  := couchbase
 BINARY_NAME   = nri-$(INTEGRATION)
 GO_PKGS      := $(shell go list ./... | grep -v "/vendor/")
 GO_FILES     := ./src/
-GOTOOLS       = github.com/axw/gocov/gocov \
+GOTOOLS       = github.com/kardianos/govendor \
+		github.com/axw/gocov/gocov \
 		github.com/AlekSi/gocov-xml \
 
 all: build
