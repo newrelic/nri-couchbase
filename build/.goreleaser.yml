@@ -107,7 +107,7 @@ archives:
       - nri-win
     name_template: "{{ .ProjectName }}-{{ .Arch }}.{{ .Version }}_dirty"
     files:
-      - couchbase-win-config.yml.sample
+      - couchbase-config.yml.sample
       - couchbase-win-definition.yml
     format: zip
 
