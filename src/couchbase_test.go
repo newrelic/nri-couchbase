@@ -1,8 +1,6 @@
 package main
 
 import (
-	"flag"
-	"io/ioutil"
 	"net/http/httptest"
 	"path/filepath"
 	"strconv"
@@ -16,18 +14,6 @@ import (
 	"github.com/newrelic/nri-couchbase/src/testutils"
 	"github.com/stretchr/testify/assert"
 )
-
-var (
-	update = flag.Bool("update", false, "update .golden files")
-)
-
-func writeGoldenFile(t *testing.T, goldenPath string, data []byte) {
-	if *update {
-		t.Log("Writing .golden file")
-		err := ioutil.WriteFile(goldenPath, data, 0644)
-		assert.NoError(t, err)
-	}
-}
 
 func Test_EndToEnd(t *testing.T) {
 	entities.ClusterName = "testcluster"

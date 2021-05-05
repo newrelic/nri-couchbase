@@ -28,7 +28,7 @@ func Test_NodeCollection(t *testing.T) {
 		"CouchCluster",
 	}
 
-	nodeCollector.Collect(true, true)
+	assert.NoError(t, nodeCollector.Collect(true, true))
 
 	output, _ := i.MarshalJSON()
 	goldenFile := filepath.Join("..", "testdata", "node.json")

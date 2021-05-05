@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
@@ -44,10 +45,10 @@ func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) e
 
 func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsResponse *definition.AdminSettings, vitalsResponse *definition.AdminVitals, clusterName, hostname string) {
 	queryEngineMetricSet := queryEngineEntity.NewMetricSet("CouchbaseQueryEngineSample",
-		metric.Attribute{Key: "displayName", Value: queryEngineEntity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
-		metric.Attribute{Key: "cluster", Value: clusterName},
-		metric.Attribute{Key: "hostname", Value: hostname},
+		attribute.Attribute{Key: "displayName", Value: queryEngineEntity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
+		attribute.Attribute{Key: "cluster", Value: clusterName},
+		attribute.Attribute{Key: "hostname", Value: hostname},
 	)
 
 	// marshal metrics from /admin/settings
@@ -129,7 +130,7 @@ func getQueryEngineResponses(client *client.HTTPClient) (*definition.AdminSettin
 func convertTimeUnits(time string) (float64, error) {
 	// go's regexp package does not support lookaround,
 	// which would have been a lot cleaner.
-	timeRegex, err := regexp.Compile("[\\d\\.]+[a-zµ]+")
+	timeRegex, err := regexp.Compile(`[\d\.]+[a-zµ]+`)
 	if err != nil {
 		return 0, err
 	}
@@ -146,7 +147,7 @@ func convertTimeUnits(time string) (float64, error) {
 }
 
 func convertTimeUnit(time string) (float64, error) {
-	timeRegex, err := regexp.Compile("[\\d\\.]+")
+	timeRegex, err := regexp.Compile(`[\d\.]+`)
 	if err != nil {
 		return 0, err
 	}
