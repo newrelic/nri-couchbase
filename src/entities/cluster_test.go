@@ -27,7 +27,9 @@ func Test_ClusterCollection(t *testing.T) {
 	i := getTestingIntegration(t)
 	collector := createClusterCollector(i, testServer.Client(), testServer.URL)
 
-	collector.Collect(true, true)
+	// set the ClusterName global variable for the test
+	ClusterName = "test"
+	assert.NoError(t, collector.Collect(true, true))
 
 	output, _ := i.MarshalJSON()
 	goldenPath := filepath.Join("..", "testdata", "cluster.json")
@@ -40,7 +42,7 @@ func Test_ClusterCollection(t *testing.T) {
 func createClusterCollector(i *integration.Integration, httpClient *http.Client, url string) *clusterCollector {
 	var poolsDefault definition.PoolsDefaultResponse
 	data, _ := ioutil.ReadFile(filepath.Join("..", "testdata", "input", "pools-default.json"))
-	json.Unmarshal(data, &poolsDefault)
+	json.Unmarshal(data, &poolsDefault) //nolint
 
 	return &clusterCollector{
 		defaultCollector{

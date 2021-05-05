@@ -34,7 +34,7 @@ func Test_QueryEngineCollection(t *testing.T) {
 		"CouchCluser",
 	}
 
-	qeCollector.Collect(true, true)
+	assert.NoError(t, qeCollector.Collect(true, true))
 
 	output, _ := i.MarshalJSON()
 	goldenFile := filepath.Join("..", "testdata", "query-engine.json")

@@ -84,7 +84,6 @@ func collectExtendedBucketMetrics(metricSet *metric.Set, bucketStats *definition
 			log.Error("Could not set metric '%s': %v", metricName, err)
 		}
 	}
-	return
 }
 
 func getValueFromArray(values reflect.Value) (float64, error) {

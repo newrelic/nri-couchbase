@@ -66,7 +66,9 @@ func (t *testCollector) Collect(collectInventory, collectMetrics bool) error {
 	if err != nil {
 		return err
 	}
-	e.SetInventoryItem("testitem", "value", "some-attribute")
+	if err := e.SetInventoryItem("testitem", "value", "some-attribute"); err != nil {
+		return err
+	}
 
 	ms := e.NewMetricSet("testSample")
 	return ms.SetMetric("test-metric", 17, metric.GAUGE)

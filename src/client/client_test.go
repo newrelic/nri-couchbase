@@ -45,7 +45,7 @@ func Test_Request(t *testing.T) {
 		assert.True(t, ok)
 		assert.Equal(t, username, "testUser")
 		assert.Equal(t, password, "testPass")
-		res.Write([]byte("{\"ok\":true}"))
+		res.Write([]byte("{\"ok\":true}")) //nolint
 	}))
 	defer func() { testServer.Close() }()
 

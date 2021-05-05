@@ -130,7 +130,7 @@ func getQueryEngineResponses(client *client.HTTPClient) (*definition.AdminSettin
 func convertTimeUnits(time string) (float64, error) {
 	// go's regexp package does not support lookaround,
 	// which would have been a lot cleaner.
-	timeRegex, err := regexp.Compile("[\\d\\.]+[a-zµ]+")
+	timeRegex, err := regexp.Compile(`[\d\.]+[a-zµ]+`)
 	if err != nil {
 		return 0, err
 	}
@@ -147,7 +147,7 @@ func convertTimeUnits(time string) (float64, error) {
 }
 
 func convertTimeUnit(time string) (float64, error) {
-	timeRegex, err := regexp.Compile("[\\d\\.]+")
+	timeRegex, err := regexp.Compile(`[\d\.]+`)
 	if err != nil {
 		return 0, err
 	}

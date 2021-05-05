@@ -26,7 +26,7 @@ func Test_FunctionalCollection(t *testing.T) {
 	testClient := testServer.Client()
 	collector := createBucketCollector(i, testClient, testServer.URL)
 
-	collector.Collect(true, true)
+	assert.NoError(t, collector.Collect(true, true))
 
 	output, _ := i.MarshalJSON()
 	goldenPath := filepath.Join("..", "testdata", "bucket.json")
@@ -92,17 +92,6 @@ func createBucketCollector(i *integration.Integration, httpClient *http.Client, 
 		createBucketResponse(),
 		true,
 	}
-}
-
-func createBucketExtendedResponse() *definition.BucketStats {
-	bucketExtended := definition.BucketStats{
-		Op: &definition.OpStats{
-			Samples: &definition.SampleStats{
-				BytesRead: []float64{5.5, 7.5, 1.0, 0.0},
-			},
-		},
-	}
-	return &bucketExtended
 }
 
 func createBucketResponse() definition.PoolsDefaultBucket {
