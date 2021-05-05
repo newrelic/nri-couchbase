@@ -1,7 +1,7 @@
 package entities
 
 import (
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/client"
@@ -72,8 +72,8 @@ func collectClusterInventory(clusterEntity *integration.Entity, clusterResponse 
 
 func collectClusterMetrics(clusterEntity *integration.Entity, clusterDetailsResponse *definition.PoolsDefaultResponse, autoFailoverResponse *definition.AutoFailover) {
 	clusterMetricSet := clusterEntity.NewMetricSet("CouchbaseClusterSample",
-		metric.Attribute{Key: "displayName", Value: clusterEntity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: clusterEntity.Metadata.Namespace + ":" + clusterEntity.Metadata.Name},
+		attribute.Attribute{Key: "displayName", Value: clusterEntity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: clusterEntity.Metadata.Namespace + ":" + clusterEntity.Metadata.Name},
 	)
 
 	err := clusterMetricSet.MarshalMetrics(clusterDetailsResponse)

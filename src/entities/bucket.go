@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
@@ -52,8 +53,8 @@ func (b *bucketCollector) Collect(collectInventory, collectMetrics bool) error {
 
 func collectBucketMetrics(bucketEntity *integration.Entity, baseBucketResponse definition.PoolsDefaultBucket) *metric.Set {
 	bucketMetricSet := bucketEntity.NewMetricSet("CouchbaseBucketSample",
-		metric.Attribute{Key: "displayName", Value: bucketEntity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
+		attribute.Attribute{Key: "displayName", Value: bucketEntity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: bucketEntity.Metadata.Namespace + ":" + bucketEntity.Metadata.Name},
 	)
 
 	if err := bucketMetricSet.MarshalMetrics(baseBucketResponse); err != nil {

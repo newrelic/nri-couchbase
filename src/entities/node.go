@@ -3,7 +3,7 @@ package entities
 import (
 	"strings"
 
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-couchbase/src/definition"
@@ -39,9 +39,9 @@ func (n *nodeCollector) Collect(collectInventory, collectMetrics bool) error {
 
 func collectNodeMetrics(nodeEntity *integration.Entity, nodeResponse definition.Node, clusterName string) {
 	nodeMetricSet := nodeEntity.NewMetricSet("CouchbaseNodeSample",
-		metric.Attribute{Key: "displayName", Value: nodeEntity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: nodeEntity.Metadata.Namespace + ":" + nodeEntity.Metadata.Name},
-		metric.Attribute{Key: "cluster", Value: clusterName},
+		attribute.Attribute{Key: "displayName", Value: nodeEntity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: nodeEntity.Metadata.Namespace + ":" + nodeEntity.Metadata.Name},
+		attribute.Attribute{Key: "cluster", Value: clusterName},
 	)
 
 	err := nodeMetricSet.MarshalMetrics(nodeResponse)

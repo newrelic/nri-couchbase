@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
@@ -44,10 +45,10 @@ func (qe *queryEngineCollector) Collect(collectInventory, collectMetrics bool) e
 
 func collectQueryEngineMetrics(queryEngineEntity *integration.Entity, settingsResponse *definition.AdminSettings, vitalsResponse *definition.AdminVitals, clusterName, hostname string) {
 	queryEngineMetricSet := queryEngineEntity.NewMetricSet("CouchbaseQueryEngineSample",
-		metric.Attribute{Key: "displayName", Value: queryEngineEntity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
-		metric.Attribute{Key: "cluster", Value: clusterName},
-		metric.Attribute{Key: "hostname", Value: hostname},
+		attribute.Attribute{Key: "displayName", Value: queryEngineEntity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: queryEngineEntity.Metadata.Namespace + ":" + queryEngineEntity.Metadata.Name},
+		attribute.Attribute{Key: "cluster", Value: clusterName},
+		attribute.Attribute{Key: "hostname", Value: hostname},
 	)
 
 	// marshal metrics from /admin/settings
