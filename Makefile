@@ -5,8 +5,7 @@ INTEGRATION  := couchbase
 BINARY_NAME   = nri-$(INTEGRATION)
 GO_PKGS      := $(shell go list ./... | grep -v "/vendor/")
 GO_FILES     := ./src/
-GOTOOLS       = github.com/kardianos/govendor \
-		gopkg.in/alecthomas/gometalinter.v2 \
+GOTOOLS       = gopkg.in/alecthomas/gometalinter.v2 \
 		github.com/axw/gocov/gocov \
 		github.com/AlekSi/gocov-xml \
 
@@ -20,33 +19,29 @@ clean:
 
 tools: check-version
 	@echo "=== $(INTEGRATION) === [ tools ]: Installing tools required by the project..."
-	@go get $(GOTOOLS)
-	@gometalinter.v2 --install
+	@GO111MODULE=off go get $(GOTOOLS)
+	@GO111MODULE=off gometalinter.v2 --install
 
 tools-update: check-version
 	@echo "=== $(INTEGRATION) === [ tools-update ]: Updating tools required by the project..."
-	@go get -u $(GOTOOLS)
-	@gometalinter.v2 --install
+	@GO111MODULE=off go get -u $(GOTOOLS)
+	@GO111MODULE=off gometalinter.v2 --install
 
-deps: tools deps-only
-
-deps-only:
-	@echo "=== $(INTEGRATION) === [ deps ]: Installing package dependencies required by the project..."
-	@govendor sync
+deps: tools 
 
 validate: deps
 	@echo "=== $(INTEGRATION) === [ validate ]: Validating source code running gometalinter..."
-	@gometalinter.v2 --config=.gometalinter.json ./...
+	@GO111MODULE=off gometalinter.v2 --config=.gometalinter.json ./...
 
 validate-all: deps
 	@echo "=== $(INTEGRATION) === [ validate ]: Validating source code running gometalinter..."
-	@gometalinter.v2 --config=.gometalinter.json --enable=interfacer --enable=gosimple ./...
+	@GO111MODULE=off gometalinter.v2 --config=.gometalinter.json --enable=interfacer --enable=gosimple ./...
 
 compile: deps
 	@echo "=== $(INTEGRATION) === [ compile ]: Building $(BINARY_NAME)..."
 	@go build -o bin/$(BINARY_NAME) ./src
 
-compile-only: deps-only
+compile-only: 
 	@echo "=== $(INTEGRATION) === [ compile ]: Building $(BINARY_NAME)..."
 	@go build -o bin/$(BINARY_NAME) ./src
 
@@ -61,12 +56,12 @@ include $(CURDIR)/build/release.mk
 check-version:
 ifdef GOOS
 ifneq "$(GOOS)" "$(NATIVEOS)"
-	$(error GOOS is not $(NATIVEOS). Cross-compiling is only allowed for 'clean', 'deps-only' and 'compile-only' targets)
+	$(error GOOS is not $(NATIVEOS). Cross-compiling is only allowed for 'clean' and 'compile-only' targets)
 endif
 endif
 ifdef GOARCH
 ifneq "$(GOARCH)" "$(NATIVEARCH)"
-	$(error GOARCH variable is not $(NATIVEARCH). Cross-compiling is only allowed for 'clean', 'deps-only' and 'compile-only' targets)
+	$(error GOARCH variable is not $(NATIVEARCH). Cross-compiling is only allowed for 'clean' and 'compile-only' targets)
 endif
 endif
 

@@ -37,8 +37,6 @@ If you want to know more about usage of `./bin/nri-couchbase`, pass the `-help` 
 $ ./bin/nri-couchbase -help
 ```
 
-External dependencies are managed through the [govendor tool](https://github.com/kardianos/govendor). Locking all external dependencies to a specific version (if possible) into the vendor directory is required.
-
 ## Testing
 
 To run the tests execute:
