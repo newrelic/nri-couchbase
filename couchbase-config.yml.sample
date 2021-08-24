@@ -1,22 +1,22 @@
 integrations:
 - name: .\bin\nri-couchbase.exe
   env:
-    hostname: <The hostname or IP of the Couchbase node being monitored (default "localhost")>
-    port: <The port used to connect to the Couchbase API (default 8091)>
-    query_port: <The port used to connect to the N1QL service (default 8093)>
+    HOSTNAME: <The hostname or IP of the Couchbase node being monitored (default "localhost")>
+    PORT: <The port used to connect to the Couchbase API (default 8091)>
+    QUERY_PORT: <The port used to connect to the N1QL service (default 8093)>
 
-    username: <The username used to connect to the Couchbase API>
-    password: <The password used to connect to the Couchbase API>
+    USERNAME: <The username used to connect to the Couchbase API>
+    PASSWORD: <The password used to connect to the Couchbase API>
 
-    use_ssl: <true or false. Signals whether to use SSL or not. Certificate bundle must be supplied. (default false)>
-    ca_bundle_dir: <Alternative Certificate Authority bundle directory, required if use_ssl is true>
-    ca_bundle_file: <Alternative Certificate Authority bundle file, required if use_ssl is true>
+    USE_SSL: <true or false. Signals whether to use SSL or not. Certificate bundle must be supplied. (default false)>
+    CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if use_ssl is true>
+    CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if use_ssl is true>
 
-    enable_buckets: <(Optional) true or false. If true, collects bucket resources (default true)>
-    enable_bucket_stats: <(Optional) true or false. If true, collects additional bucket statistics (default true)>
-    enable_cluster_and_nodes: <(Optional) true or false. If true, collects cluster and node resources (default true)>
+    ENABLE_BUCKETS: <(Optional) true or false. If true, collects bucket resources (default true)>
+    ENABLE_BUCKET_STATS: <(Optional) true or false. If true, collects additional bucket statistics (default true)>
+    ENABLE_CLUSTER_AND_NODES: <(Optional) true or false. If true, collects cluster and node resources (default true)>
 
-    timeout: <(Optional) Timeout, in seconds, for an API call (default 30)>
+    TIMEOUT: <(Optional) Timeout, in seconds, for an API call (default 30)>
 
   interval: 15s
   labels:
