@@ -1,5 +1,5 @@
 integrations:
-- name: .\bin\nri-couchbase.exe
+- name: nri-couchbase
   env:
     HOSTNAME: <The hostname or IP of the Couchbase node being monitored (default "localhost")>
     PORT: <The port used to connect to the Couchbase API (default 8091)>
