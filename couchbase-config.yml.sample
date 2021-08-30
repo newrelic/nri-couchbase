@@ -1,22 +1,39 @@
 integrations:
 - name: nri-couchbase
   env:
-    HOSTNAME: <The hostname or IP of the Couchbase node being monitored (default "localhost")>
-    PORT: <The port used to connect to the Couchbase API (default 8091)>
-    QUERY_PORT: <The port used to connect to the N1QL service (default 8093)>
+    # The hostname or IP of the Couchbase node being monitored (default "localhost")
+    HOSTNAME: localhost
 
-    USERNAME: <The username used to connect to the Couchbase API>
-    PASSWORD: <The password used to connect to the Couchbase API>
+    # The port used to connect to the Couchbase API (default 8091)
+    PORT: "8091"
 
-    # USE_SSL: <true or false. Signals whether to use SSL or not. Certificate bundle must be supplied. (default false)>
-    # CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if use_ssl is true>
-    # CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if use_ssl is true>
+    # The port used to connect to the N1QL service (default 8093)
+    QUERY_PORT: "8093"
 
-    # ENABLE_BUCKETS: <(Optional) true or false. If true, collects bucket resources (default true)>
-    # ENABLE_BUCKET_STATS: <(Optional) true or false. If true, collects additional bucket statistics (default true)>
-    # ENABLE_CLUSTER_AND_NODES: <(Optional) true or false. If true, collects cluster and node resources (default true)>
+    # The username used to connect to the Couchbase API
+    USERNAME:
 
-    # TIMEOUT: <(Optional) Timeout, in seconds, for an API call (default 30)>
+    # The password used to connect to the Couchbase API
+    PASSWORD:
+
+    # true or false. Signals whether to use SSL or not. Certificate bundle must be supplied. (default false)
+    # USE_SSL: false
+
+    # Alternative Certificate Authority bundle directory and file, required if use_ssl is true
+    # CA_BUNDLE_DIR:
+    # CA_BUNDLE_FILE:
+
+    # (Optional) true or false. If true, collects bucket resources (default true)
+    # ENABLE_BUCKETS: true
+
+    # (Optional) true or false. If true, collects additional bucket statistics (default true)
+    # ENABLE_BUCKET_STATS: true
+
+    # (Optional) true or false. If true, collects cluster and node resources (default true)
+    # ENABLE_CLUSTER_AND_NODES: true
+
+    # (Optional) Timeout, in seconds, for an API call (default 30)
+    # TIMEOUT: 30
 
   interval: 15s
   labels:
