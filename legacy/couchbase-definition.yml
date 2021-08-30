@@ -1,5 +1,5 @@
 name: com.newrelic.couchbase
-description: Reports status and metrics for Couchbase service. Legacy file kept for compatibility.
+description: Reports status and metrics for Couchbase service
 protocol_version: 2
 os: linux
 
