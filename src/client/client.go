@@ -35,7 +35,18 @@ func CreateClient(args *arguments.ArgumentList, hostnameOverride string) (*HTTPC
 		return args.Hostname
 	}()
 
-	httpClient, err := nrHttp.New(args.CABundleFile, args.CABundleDir, time.Duration(args.Timeout)*time.Second)
+	options := []nrHttp.ClientOption{
+		nrHttp.WithTimeout(time.Duration(args.Timeout) * time.Second),
+	}
+	if args.CABundleFile != "" {
+		options = append(options, nrHttp.WithCABundleFile(args.CABundleFile))
+	}
+
+	if args.CABundleDir != "" {
+		options = append(options, nrHttp.WithCABundleDir(args.CABundleDir))
+	}
+
+	httpClient, err := nrHttp.New(options...)
 	if err != nil {
 		return nil, err
 	}

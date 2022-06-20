@@ -21,7 +21,7 @@ type ArgumentList struct {
 	EnableClusterAndNodes bool   `default:"true" help:"If true, collects cluster and node resources"`
 	EnableBuckets         bool   `default:"true" help:"If true, collects bucket resources"`
 	EnableBucketStats     bool   `default:"true" help:"If true, collects additional bucket statistics"`
-	Timeout               int    `default:"30" help:"Timeout for an API call"`
+	Timeout               int    `default:"30" help:"Timeout for an API call in seconds"`
 	ShowVersion           bool   `default:"false" help:"Print build information and exit"`
 }
 
