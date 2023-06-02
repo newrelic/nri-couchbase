@@ -1,10 +1,10 @@
 module github.com/newrelic/nri-couchbase
 
-go 1.18
+go 1.20
 
 require (
 	github.com/newrelic/infra-integrations-sdk v3.7.3+incompatible
-	github.com/stretchr/testify v1.7.3
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
