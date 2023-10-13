@@ -53,3 +53,5 @@ src/versioninfo.json
 src/resource.syso
 
 vendor/
+# Release toolkit
+CHANGELOG.partial.md
