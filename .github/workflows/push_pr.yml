@@ -51,7 +51,7 @@ jobs:
 
   test-windows:
     name: Run unit tests on Windows
-    runs-on: windows-latest
+    runs-on: windows-2022
     env:
       GOPATH: ${{ github.workspace }}
     defaults:
@@ -95,7 +95,7 @@ jobs:
 
   test-build-windows:
     name: Create MSI
-    runs-on: windows-latest
+    runs-on: windows-2022
     needs: [test-build-nix]
     env:
       GOPATH: ${{ github.workspace }}
