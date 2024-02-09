@@ -3,7 +3,7 @@ module github.com/newrelic/nri-couchbase
 go 1.21
 
 require (
-	github.com/newrelic/infra-integrations-sdk v3.7.3+incompatible
+	github.com/newrelic/infra-integrations-sdk v3.8.0+incompatible
 	github.com/stretchr/testify v1.8.4
 )
 
