@@ -13,6 +13,6 @@ jobs:
     uses: newrelic/coreint-automation/.github/workflows/reusable_push_pr.yaml@v2
     secrets: inherit
     with:
+      integration: couchbase
       run_test_build_fake_prerelease: true
       test_integration_nix: false
-      integration: couchbase
