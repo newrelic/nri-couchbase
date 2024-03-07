@@ -13,4 +13,5 @@ jobs:
     with:
       tag: ${{ github.event.release.tag_name }}
       integration: "couchbase"
+      run_integration_nix: false
     secrets: inherit
