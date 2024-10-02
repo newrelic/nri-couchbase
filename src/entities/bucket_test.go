@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/v3/integration"
 	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/newrelic/nri-couchbase/src/testutils"

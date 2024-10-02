@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
-	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/v3/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/v3/integration"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/newrelic/nri-couchbase/src/client"
 	"github.com/newrelic/nri-couchbase/src/entities"

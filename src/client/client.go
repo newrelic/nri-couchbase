@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	nrHttp "github.com/newrelic/infra-integrations-sdk/http"
-	"github.com/newrelic/infra-integrations-sdk/log"
+	nrHttp "github.com/newrelic/infra-integrations-sdk/v3/http"
+	"github.com/newrelic/infra-integrations-sdk/v3/log"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 )
 

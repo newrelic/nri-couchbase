@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/newrelic/infra-integrations-sdk/args"
+	"github.com/newrelic/infra-integrations-sdk/v3/args"
 	"github.com/newrelic/nri-couchbase/src/arguments"
 	"github.com/stretchr/testify/assert"
 )
