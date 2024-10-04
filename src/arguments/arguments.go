@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/newrelic/infra-integrations-sdk/args"
+	"github.com/newrelic/infra-integrations-sdk/v3/args"
 )
 
 // ArgumentList struct to hold all arguments needed to connect to a Couchbase environment

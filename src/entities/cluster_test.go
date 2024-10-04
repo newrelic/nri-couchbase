@@ -10,7 +10,7 @@ import (
 	"github.com/newrelic/nri-couchbase/src/definition"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/newrelic/infra-integrations-sdk/integration"
+	"github.com/newrelic/infra-integrations-sdk/v3/integration"
 	"github.com/newrelic/nri-couchbase/src/client"
 
 	"github.com/newrelic/nri-couchbase/src/testutils"
