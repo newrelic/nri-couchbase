@@ -114,7 +114,7 @@ nfpms:
       - nri-nix-fips
 
     dependencies:
-      - newrelic-infra (>= 1.60.0)
+      - newrelic-infra-fips (>= 1.60.0)
 
     bindir: "/var/db/newrelic-infra/newrelic-integrations/bin"
     contents:
