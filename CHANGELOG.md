@@ -9,6 +9,10 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 
 ## Unreleased
 
+### enhancement
+- update windows compilation to use winres
+- update go to v1.26.2
+
 ## v2.10.0 - 2026-04-22
 
 ### 🛡️ Security notices
