@@ -9,9 +9,14 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 
 ## Unreleased
 
-### enhancement
+## v2.11.0 - 2026-05-15
+
+### 🚀 Enhancements
 - update windows compilation to use winres
 - update go to v1.26.2
+
+### ⛓️ Dependencies
+- Updated go module directive to v1.26.3
 
 ## v2.10.0 - 2026-04-22
 
