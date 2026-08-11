@@ -9,6 +9,9 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 
 ## Unreleased
 
+### Bugfix
+- Fixed Windows installer build failing with a SignTool error when `NO_SIGN` is set, by skipping the signing step instead of invoking `signtool` with no certificate imported
+
 ## v2.11.2 - 2026-07-22
 
 ### ⛓️ Dependencies
