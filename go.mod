@@ -1,6 +1,6 @@
 module github.com/newrelic/nri-couchbase
 
-go 1.26.10
+go 1.27.3
 
 require (
 	github.com/newrelic/infra-integrations-sdk/v3 v3.9.1
